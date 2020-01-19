@@ -1,4 +1,6 @@
-	const Foo = { template: '<div>foo</div>' }
+
+
+const Foo = { template: '<div>foo</div>' }
 const Bar = { template: '<div>bar</div>' }
 
 // 2. 定义路由

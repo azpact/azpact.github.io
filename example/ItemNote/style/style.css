@@ -394,7 +394,7 @@ li {
   #TheMoreBox div:nth-of-type(2) {
     width: 100%;
     height: 100vh;
-    padding: 2% 15%; }
+    padding: 2% 5%; }
     #TheMoreBox div:nth-of-type(2) tr:nth-of-type(1) td {
       font-size: 1.5rem;
       text-align: center;
@@ -402,7 +402,7 @@ li {
     #TheMoreBox div:nth-of-type(2) td {
       font-size: 1.25rem;
       padding-bottom: 1rem;
-      padding-right: 6rem; }
+      padding-right: 1em; }
     #TheMoreBox div:nth-of-type(2) button {
       height: 1.75rem; }
 

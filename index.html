@@ -8,30 +8,47 @@
   <link rel="stylesheet" href="https://unpkg.com/normalize.css@8.0.1/normalize.css">
   <link rel="stylesheet" href="plugins/element-ui@2.12.0/theme-chalk/index.css">
   <link rel="stylesheet" href="static/style/index.css">
-  <!-- <script src="https://cdn.jsdelivr.net/npm/gulp-babel@8.0.0/index.js"></script> -->
   <script src="plugins/jquery-3.4.1.js"></script>
   <script src="plugins/vue.min.js"></script>
   <script src="plugins/vue-router@3.1.5.js"></script>
   <script src="plugins/axios.js"></script>
   <script src="plugins/element-ui.js"></script>
-  <script src="static/js/main.js"></script>
   <script src="static/js/router.js"></script>
   <script src="components/VSide.js"></script>
+  <script src="components/TheIndex.js"></script>
+  <!--  <script src="static/js/main.js" type="module"></script> -->
+  <!-- <script src="static/js/components.js" type="module"></script> -->
+  <style>
+    h1{
+      margin: 0;
+    }
+    a{
+      margin: 1rem;
+    }
+  </style>
 </head>
 
 <body>
   <div id="app">
     <div id="index">
-      首頁<br>
-      <v-side></v-side>
-      <br>
-      <a href="views/AboutMe.html">關於我</a>
+      <h1>文件編輯中</h1>
+      <!--  <the-index></the-index>
+      <v-side></v-side> -->
+      <div>
+        <a href="example/ItemNote/ItemNote.html">ItemNote</a>
+      </div>
       <router-view></router-view>
     </div>
   </div>
   <script>
   new Vue({
-    router
+    router,
+    data() {
+      return {
+        ms: '123'
+      }
+    }
+
   }).$mount("#app");
   </script>
 </body>
