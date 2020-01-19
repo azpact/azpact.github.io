@@ -1,0 +1,669 @@
+$color1: #e5ebe7;
+$color2: rgb(65, 64, 64);
+$color3: rgb(41, 41, 41);
+$color4: rgb(194, 163, 128);
+$color5: #F4606C;
+$color6: rgba(65, 64, 64, 0.4);
+$color7: salmon;
+$color8: #FFF;
+$color9: #666;
+
+::-webkit-scrollbar {
+  width: 0.5rem;
+  height: 0.5rem;
+  background-color: $color1;
+}
+
+/* ÐÞ¸ÄL„Ó—lÑeÃæµÄÐ¡·½‰K˜ÓÊ½ */
+::-webkit-scrollbar-thumb {
+  border-radius: 100px;
+  background: $color2;
+}
+
+body {
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+}
+
+h1 {
+  margin: 0;
+  font-size: 1.5rem;
+  height: 1.5rem;
+  margin: 0.5rem;
+}
+
+a {
+  text-decoration: none;
+  color: $color3;
+}
+
+li {
+  display: flex;
+  height: 1rem;
+  line-height: 1rem;
+}
+
+.VButton {
+  button {
+    outline: none;
+    border: none;
+    background-color: $color4;
+    color: $color8;
+    transition: all 0.3s;
+
+    &:hover {
+      color: $color4;
+      background-color: $color8;
+      box-shadow: 1px 1px 5px 1px $color9;
+    }
+  }
+}
+
+.tc {
+  background-color: $color5;
+  color: $color1;
+}
+
+.VLightBox {
+
+  .el-icon-warning,
+  .el-icon-success {
+    font-size: 1.5rem;
+    height: 1rem;
+    line-height: 1rem;
+  }
+
+  .el-icon-warning {
+    color: #e6a23c;
+  }
+
+  .el-icon-success {
+    color: #67c23a;
+  }
+}
+
+#TheImageBox {
+  z-index: 20;
+  position: fixed;
+  top: 0;
+  background-color: $color6;
+  display: flex;
+  flex-wrap: wrap;
+
+  div:nth-of-type(1) {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+
+    .close {
+      color: $color1;
+      background-color: $color4;
+      width: 2rem;
+      height: 2rem;
+      line-height: 2rem;
+      text-align: center;
+      border-radius: 50%;
+      font-size: 1.5rem;
+      padding: 0.3rem;
+      transition: all 0.3s;
+
+      &:hover {
+        background-color: $color5;
+      }
+    }
+  }
+
+  div:nth-of-type(2) {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    img {
+      margin-top: -6rem;
+      max-width: 650px;
+      height: 380px;
+    }
+  }
+}
+
+#TheSide {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 39%;
+  max-width: 300px;
+
+  div:nth-of-type(1) {
+    display: flex;
+    justify-content: space-between;
+
+    button {
+      margin-top: 0.25rem;
+      margin-right: 0.25rem;
+      height: 2rem;
+    }
+  }
+
+  section {
+    margin-top: 200rem;
+  }
+
+  #TheScrollViewer {
+    height: 80vh;
+    overflow-y: scroll;
+
+    ul {
+      padding-left: 0.3rem;
+
+      li {
+        display: flex;
+        align-items: start;
+        height: 2rem;
+      }
+    }
+
+    span {
+      margin-right: 0.5rem;
+    }
+  }
+
+  #TheScrollViewerImage {
+    border: 1px solid $color2;
+    display: flex;
+    justify-content: center;
+
+    img {
+      max-width: 300px;
+    }
+  }
+}
+
+#TheMain {
+  margin-left: 300px;
+  width: 100%;
+  color: $color8;
+  background-color: $color3;
+  padding: 0.5rem;
+  font-size: 0.8rem;
+  letter-spacing: 0.11px;
+
+  .TheMainButton {
+    button {
+      outline: none;
+      border: none;
+      background-color: $color3;
+      color: $color1;
+      height: 1.3rem;
+      line-height: 1.3rem;
+      transition: all 0.3s;
+
+      &:hover {
+        color: $color1;
+        background-color: $color2;
+      }
+    }
+  }
+
+  section {
+    display: flex;
+
+    input {
+      color: $color1;
+      background-color: $color3;
+      outline: none;
+      border: none;
+
+      &:hover {
+        color: $color1;
+        background-color: $color2;
+      }
+    }
+
+    input:nth-of-type(1) {
+      width: 3rem;
+      text-align: left;
+    }
+
+    input:nth-of-type(2) {
+      width: 13rem;
+      margin-left: 0.5rem;
+    }
+  }
+
+  pre {
+    font-size: 0.7rem;
+    line-height: 1rem;
+    width: 100%;
+    margin-left: 0.5rem;
+    display: block;
+  }
+
+  textarea {
+    width: 100%;
+    height: 20rem;
+  }
+}
+
+#TheFeatures {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  width: 78.05%;
+  max-width: 620px;
+  background-color: $color4;
+
+  section {
+    display: flex;
+
+    div {
+      padding: 0.5rem;
+    }
+
+    div:nth-of-type(1) {
+      max-width: 180px;
+
+      input {
+        width: 180px
+      }
+    }
+
+    div:nth-of-type(2) {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+
+      .VButton {
+        max-width: 44px;
+
+        button {
+          width: 45px;
+          height: 28px;
+        }
+      }
+
+      i {
+        margin-top: 9px;
+        width: 30px;
+        height: 30px;
+        line-height: 30px;
+        text-align: center;
+        color: $color8;
+        background-color: $color4;
+        border-radius: 50%;
+        transition: all 0.2s;
+
+        &:hover {
+          background-color: $color1;
+          color: $color4;
+          ;
+          font-weight: bold;
+        }
+      }
+    }
+  }
+}
+
+#TheSearchBar {
+  z-index: 10;
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  width: 78.05%;
+  color: $color1;
+  background-color: $color2;
+
+  section {
+    padding-left: 0.5rem;
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  div:nth-of-type(1) {
+    width: 100%;
+    display: flex;
+
+    i {
+      margin-left: 1rem;
+      margin-top: 1rem;
+      font-size: 2rem;
+      width: 60px;
+      transition: all 0.3s;
+
+      &:hover {
+        transform-origin: 0;
+        transform: scale(1.2, 1.2);
+      }
+    }
+  }
+
+  div:nth-of-type(2) {
+    width: 50%;
+  }
+
+  div:nth-of-type(3) {
+    width: 50%;
+    display: flex;
+
+    .VButton {
+      max-width: 65px;
+      display: flex;
+      align-items: end;
+
+      button {
+        width: 60px;
+        height: 30px;
+      }
+    }
+  }
+
+  div:nth-of-type(4) {
+    width: 100%;
+    padding: 0.5rem 0.5rem 0.5rem 0;
+  }
+}
+
+#TheMessageBox,
+#TheSaveBox {
+  font-size: 0.9rem;
+  background-color: $color7;
+  display: flex;
+  align-items: center;
+  width: 10rem;
+  height: 3rem;
+  position: fixed;
+  left: 0;
+}
+
+#TheMessageBox {
+  z-index:30;
+  bottom: 3rem;
+
+  div {
+    width: 100%;
+    text-align: center;
+  }
+
+  i {
+    position: relative;
+    left: -10px;
+    font-size: 2rem;
+    opacity: 0.9;
+    transition: all 0.3s;
+
+    &:hover {
+      transform: rotate(180deg);
+    }
+  }
+}
+
+#TheSaveBox {
+  bottom: 0rem;
+
+  div {
+    text-align: center;
+    width: 100%;
+
+    p {
+      margin: 0 0 0.2rem 0;
+      width: 100%;
+    }
+
+    button {
+      width: 30%;
+    }
+  }
+}
+
+#TheMoreBox {
+  z-index: 20;
+  top: 0;
+  position: fixed;
+  background-color: $color2;
+  color: $color8;
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  div:nth-of-type(1) {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    max-height: 2rem;
+    .close {
+      color: $color9;
+      background-color: $color4;
+      width: 2rem;
+      height: 2rem;
+      line-height: 2rem;
+      text-align: center;
+      border-radius: 50%;
+      font-size: 1.5rem;
+      padding: 0.3rem;
+      transition: all 0.3s;
+
+      &:hover {
+        color: $color8;
+        background-color: $color5;
+      }
+    }
+  }
+
+  div:nth-of-type(2) {
+    width: 100%;
+    height:100vh;
+    padding:2% 15%;
+    tr:nth-of-type(1){
+      td{
+        font-size:1.5rem;
+        text-align:center;
+        padding:0;
+      }
+    }
+    td{
+      font-size:1.25rem;
+      padding-bottom:1rem;
+      padding-right:6rem;
+    }
+    button{
+      height:1.75rem;
+    }
+  }
+}
+
+#TheCloseBox {
+  right: 0.75rem;
+}
+
+#TheOpenMore {
+  right: 3rem;
+
+}
+
+#TheCloseBox,
+#TheOpenMore {
+  z-index: 1;
+  position: fixed;
+  bottom: 0.25rem;
+  color: $color8;
+  background-color: $color4;
+  padding: 0;
+  border-radius: 50%;
+  font-size: 1.5rem;
+  line-height: 1rem;
+  width: 1rem;
+  height: 1rem;
+  text-align: center;
+  padding: 0.5rem;
+  transition: all 0.3s;
+
+  &:hover {
+    box-shadow: 1px 1px 5px 1px $color9;
+  }
+
+  i {
+    margin-left: -0.2rem;
+    margin-top: -0.2rem;
+  }
+}
+
+
+@media only screen and (min-width: 851px) and(max-width: 870px) {
+  #TheMain {
+    margin-left: 34%;
+  }
+
+  #TheFeatures,
+  #TheSearchBar {
+    width: 64.8%;
+  }
+}
+
+@media only screen and (min-width: 831px) and(max-width: 850px) {
+  #TheMain {
+    margin-left: 35%;
+  }
+
+  #TheFeatures,
+  #TheSearchBar {
+    width: 64.15%;
+  }
+}
+
+@media only screen and (min-width: 811px) and(max-width: 830px) {
+  #TheMain {
+    margin-left: 36%;
+  }
+
+  #TheFeatures,
+  #TheSearchBar {
+    width: 63%;
+  }
+}
+
+@media only screen and (min-width: 791px) and(max-width: 810px) {
+  #TheMain {
+    margin-left: 37%;
+  }
+
+  #TheFeatures,
+  #TheSearchBar {
+    width: 63%;
+  }
+}
+
+@media only screen and (min-width: 761px) and(max-width: 790px) {
+  #TheMain {
+    margin-left: 38%;
+  }
+
+  #TheFeatures,
+  #TheSearchBar {
+    width: 61%;
+  }
+}
+
+@media only screen and (max-width: 760px) {
+  #TheMain {
+    margin-left: 39%;
+  }
+
+  #TheFeatures,
+  #TheSearchBar {
+    width: 61%;
+  }
+}
+
+.in-place-enter-active {
+  animation: goInPlace .3s;
+}
+
+.in-place-leave-active {
+  animation: backInPlace .3s;
+}
+
+.scale-y-enter-active {
+  animation: goScaleY .3s;
+}
+
+.scale-y-leave-active {
+  animation: backScaleY .3s;
+}
+
+.messageBox-enter-active {
+  animation: goMessageBox 1s;
+}
+
+.messageBox-leave-active {
+  animation: backMessageBox 1s;
+}
+
+@keyframes goInPlace {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes backInPlace {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes goScaleY {
+  from {
+    opacity: 0;
+    transform: scaleY(0);
+    transform-origin: bottom;
+  }
+
+  to {
+    opacity: 1;
+    transform: scaleY(1);
+  }
+}
+
+@keyframes backScaleY {
+  from {
+    opacity: 1;
+    transform: scaleY(1);
+  }
+
+  to {
+    opacity: 0;
+    transform: scaleY(0);
+    transform-origin: bottom;
+  }
+}
+
+@keyframes goMessageBox {
+  from {
+    margin-left: -10%;
+    opacity: 0;
+  }
+
+  to {
+    margin-left: 0;
+    opacity: 1;
+  }
+}
+
+@keyframes backMessageBox {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    margin-bottom: 5%;
+    opacity: 0;
+  }
+}

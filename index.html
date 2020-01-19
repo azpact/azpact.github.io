@@ -1,2 +1,1641 @@
-<!DOCTYPE html><html lang=en><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1"><link rel=icon href=favicon.ico><link rel=stylesheet href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons"><link rel=stylesheet href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic"><link rel=stylesheet href=https://cdn.bootcss.com/material-design-icons/3.0.1/iconfont/material-icons.css><script src="https://cdn.jsdelivr.net/gh/google/code-prettify
-@master/loader/run_prettify.js"></script><script src=https://cdnjs.cloudflare.com/ajax/libs/blueimp-md5/2.11.0/js/md5.js></script><script src=https://cdnjs.cloudflare.com/ajax/libs/is_js/0.9.0/is.min.js></script><script src=https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.js></script><title>Azpact Notes</title><link href=css/app.30238119.css rel=preload as=style><link href=css/chunk-vendors.8ff3ee64.css rel=preload as=style><link href=js/app.64ab19d3.js rel=preload as=script><link href=js/chunk-vendors.a0e7ef4d.js rel=preload as=script><link href=css/chunk-vendors.8ff3ee64.css rel=stylesheet><link href=css/app.30238119.css rel=stylesheet></head><body><noscript><strong>We're sorry but vuep doesn't work properly without JavaScript enabled. Please enable it to continue.</strong></noscript><div id=app></div><script src=js/chunk-vendors.a0e7ef4d.js></script><script src=js/app.64ab19d3.js></script></body></html>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>線上 Demo-項目筆記 Beat 版</title>
+  <link rel="icon" href="image/logo.ico" type="image/x-icon" />
+  <link rel="stylesheet" href="plugins/element-ui@2.12.0/theme-chalk/index.css" />
+  <link rel="stylesheet" href="style/style.css" />
+  <script src="plugins/jquery-3.4.1.js"></script>
+  <script src="plugins/vue.min.js"></script>
+  <script src="plugins/axios.js"></script>
+  <script src="plugins/element-ui.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    <the-main :list="listOne" @emit="fTheMainWay" @emit-main-index="fTheMainIndex"></the-main>
+    <the-side :list="listOne" @emit="fTheImageBox" @emit-search-bar="fTheSearchBar" @emit-image="fImage"></the-side>
+    <transition enter-active-class="in-place-enter-active" leave-active-class="in-place-leave-active">
+      <the-image-box v-if="theImageBoxStatus" :image="image" @emit="fTheImageBox"></the-image-box>
+    </transition>
+    <transition enter-active-class="scale-y-enter-active" leave-active-class="scale-y-leave-active">
+      <the-features v-if="theFeatures" @emit="fFeaturesData" @emit-change-text="fChangeText" :add_value="addValue" :add_label="addLabel" :add_image="addImage"></the-features>
+    </transition>
+    <transition enter-active-class="scale-y-enter-active" leave-active-class="scale-y-leave-active">
+      <the-search-bar :listOne="listOne" :search_result="searchResult" v-if="theSearchBar" @emit="fTheSearchBar" @search-confirm="fTheSearchBarConfirm" @search-afresh="fTheSearchBarAfresh"></the-search-bar>
+    </transition>
+    <transition enter-active-class="messageBox-enter-active" leave-active-class="messageBox-leave-active">
+      <the-message-box v-show="theMessageBox"></the-message-box>
+    </transition>
+    <transition enter-active-class="messageBox-enter-active" leave-active-class="messageBox-leave-active">
+      <the-save-box v-if="theSaveBox" @emit="fSaveBox"></the-save-box>
+    </transition>
+    <the-close-box @emit="fTheCloseBoxWay"></the-close-box>
+    <transition enter-active-class="in-place-enter-active" leave-active-class="in-place-leave-active">
+      <the-more-box v-if="theMoreBox" @emit="fTheMoreBox(2)" @export-data="converAndExport"></the-more-box>
+    </transition>
+    <the-open-more @emit="fTheMoreBox(1)"></the-open-more>
+  </div>
+  <script>
+  /*
+    VLightBox
+    VInput
+    VButton
+    TheImageBox
+    TheMainButton
+    TheMain
+    TheScrollViewerImage
+    TheScrollViewer
+    TheSide
+    TheFeatures
+    TheSearchBar
+    TheMessageBox
+    TheSaveBox
+    TheCloseBox
+    TheMoreBox
+    TheOpenMore
+  */
+  let VLightBox = Vue.component("v-light-box", {
+    props: {
+      nowlight: String
+    },
+    data() {
+      return {
+        listLight: [
+          { class: "el-icon-warning", check: "warning" },
+          { class: "el-icon-success", check: "success" }
+        ]
+      };
+    },
+    template: `
+    <div class="VLightBox">
+      <div v-for="light in listLight"
+       :key="light.id"
+       v-if="nowlight==light.check"
+      >
+      <i :class="light.class"></i>
+      </div>
+    </div>`
+  });
+  let VInput = Vue.component("v-input", {
+    template: `<div class="VInput"><input type="text" placeholder="test"/>{{this.inputData}}</div>`
+  });
+  let VButton = Vue.component("v-button", {
+    props: {
+      name: String,
+      value: String,
+      addValue: String,
+      addLabel: String,
+      addImage: String
+    },
+    template: `<div class="VButton"><button @click="onClick(value)">{{name}}</button></div>`,
+    methods: {
+      onClick(val) {
+        this.$emit("emit", val, this.addValue, this.addLabel, this.addImage)
+      }
+    }
+  });
+  let TheImageBox = Vue.component("the-image-box", {
+    props: {
+      image: String
+    },
+    data() {
+      return {
+        theImage: this.image
+      }
+    },
+    template: `
+    <div id="TheImageBox" @click="changeTheImageBoxStatus">
+     <div>
+     <i class="el-icon-circle-close close" @click="changeTheImageBoxStatus"></i>
+     </div>
+     <div>
+      <img :src="image" alt="預覽圖片"/>
+     </div>
+    </div>`,
+    methods: {
+      changeTheImageBoxStatus() {
+        this.$emit("emit")
+      }
+    }
+  })
+  let TheMainButton = Vue.component("the-main-button", {
+    props: {
+      name: {
+        type: String
+      },
+      changename: {
+        type: String
+      },
+      buttonway: {
+        type: Boolean
+      },
+      index: {
+        type: String
+      }
+    },
+    data() {
+      return {
+        button: this.buttonway,
+        showname: this.name
+      };
+    },
+    template: `
+    <div class="TheMainButton">
+      <button @click="fButton()">{{buttonName}}</button>
+    </div>`,
+    computed: {
+      buttonName: {
+        get() {
+          return this.showname;
+        },
+        set(val) {
+          this.showname = val;
+        }
+      }
+    },
+    methods: {
+      fButton() {
+        this.button = !this.button;
+        this.$emit("emit", this.index);
+        if (this.button) {
+          this.buttonName = this.changename;
+        } else {
+          this.buttonName = this.name;
+        }
+      }
+    }
+  });
+  let TheMain = Vue.component("the-main", {
+    props: {
+      list: Array
+    },
+    data() {
+      return {
+        theMainWay: false
+      };
+    },
+    template: `
+    <div id="TheMain">
+     <div v-for="(item,index) in list" :key="item.id" @click="fTheMainIndex(index)">
+      <section>
+       <span :id="item.label"></span>
+       <input v-model="item.value" />
+       <input v-model="item.label" />
+       <the-main-button name="修改" changename="完成" :theMainWay="item.modify" :index="index" @emit="fTheMainWay"></the-main-button>
+      </section>
+      <pre v-if="!item.modify">{{item.text}}</pre>
+      <textarea v-if="item.modify" v-model="item.text"></textarea>
+     </div>
+    </div>`,
+    methods: {
+      fTheMainWay(val) {
+        this.$emit("emit", val)
+      },
+      fTheMainIndex(val) {
+        this.$emit("emit-main-index", val)
+      }
+    },
+    component: {
+      "the-main-button": TheMainButton
+    }
+  });
+  let TheScrollViewerImage = Vue.component("the-scroll-viewer-image", {
+    props: {
+      theSideImage: String
+    },
+    template: `
+   <div id="TheScrollViewerImage">
+   <img @click="fTheSideImage()" :src="theSideImage" alt="預覽圖片"/>
+   </div>`,
+    methods: {
+      fTheSideImage() {
+        if (this.theSideImage == "") {
+          EventBus.$emit("fMessageBox3", 1, "請點選項目")
+        } else {
+          this.$emit("emit")
+        }
+      }
+    }
+  });
+  let TheScrollViewer = Vue.component("the-scroll-viewer", {
+    props: {
+      list: Array
+    },
+    template: `
+    <div id="TheScrollViewer">
+     <ul>
+      <li v-for="(item, index) in list" :key="item.id">            
+        <div :style="item.style">
+         <a :href="item.labelLink" @click="fImage(index)">
+         <span>{{item.value}}</span>{{item.label}}
+         </a>
+        <v-light-box :nowlight="item.status"></v-light-box>
+       </div>
+      </li>
+     </ul>
+    </div>`,
+    components: {
+      "v-light-box": VLightBox
+    },
+    methods: {
+      fImage(val) {
+        this.$emit("emit", val)
+      }
+    }
+  });
+  let TheSide = Vue.component("the-side", {
+    props: {
+      list: {
+        type: Array
+      }
+    },
+    data() {
+      return {
+        theSideImage: ""
+      }
+    },
+    beforeCreate() {
+      EventBus.$on("the-main-image", (val) => {
+        this.theSideImage = val
+      })
+    },
+    beforeDestroy() {
+      EventBus.$off("the-main-image", val)
+    },
+    template: `
+    <div id="TheSide">
+     <div>
+      <h1>目錄</h1><v-button name="開始搜尋" @emit="fTheSearchBar()"></v-button>
+      </div>
+      <the-scroll-viewer :list="list" @emit="fTheSideImage"></the-scroll-viewer>
+      <the-scroll-viewer-image :theSideImage="theSideImage" @emit="changeTheImageBoxStatus"></the-scroll-viewer-image>
+      <section>照片</section>
+    </div>`,
+    component: {
+      "the-scroll-viewer": TheScrollViewer,
+      "the-scroll-viewer-image": TheScrollViewerImage,
+      "v-button": VButton
+    },
+    methods: {
+      changeTheImageBoxStatus() {
+        this.$emit("emit")
+      },
+      fTheSearchBar() {
+        this.$emit("emit-search-bar")
+      },
+      fTheSideImage(val) {
+        this.theSideImage = this.list[val].image
+        this.$emit("emit-image", this.theSideImage, val)
+      }
+    }
+  });
+  let TheFeatures = Vue.component("1eatures", {
+    props: {
+      add_value: String,
+      add_label: String,
+      add_image: String
+    },
+    data() {
+      return {
+        elIconViewWay: false,
+      };
+    },
+    template: `<div id="TheFeatures">
+    <section>
+    <div>
+    <input type="text" placeholder=" Value" v-model="add_value" @change="fChangeText(1,add_value)" />
+    <input type="text" placeholder=" Label" v-model="add_label" @change="fChangeText(2,add_label)" />
+    <input type="text" placeholder=" Image" v-model="add_image" @change="fChangeText(3,add_image)" />
+    </div>
+    <div>
+    <v-button name="新增" value="2" :addValue="add_value" :addLabel="add_label" :addImage="add_image" @emit="fFeaturesData"></v-button>
+    <v-button name="修改" value="3" @emit="fFeaturesData"></v-button>
+    <i class="el-icon-view" v-if="elIconViewWay==false" @click="fElIconViewWay(),fFeaturesData(11)"></i>
+    <i class="el-icon-view" v-if="elIconViewWay==true" @click="fElIconViewWay(),fFeaturesData(12)" style="color:red;
+    background-color:#FFF;"></i>
+    <i class="el-icon-s-opportunity" @click="fFeaturesData(5)"></i>
+    <i class="el-icon-delete" @click="fFeaturesData(4)"></i>
+    </div>
+    </section>
+    </dvi>`,
+    components: {
+      "v-button": VButton
+    },
+    methods: {
+      fChangeText(type, text) {
+        this.$emit("emit-change-text", type, text)
+      },
+      fElIconViewWay() {
+        this.elIconViewWay = !this.elIconViewWay
+      },
+      fFeaturesData(val, value, label, image) {
+        this.$emit("emit", val, value, label, image)
+        // console.log(val,value,label,image)
+      },
+      /*
+        fFeaturesData(val, index){}
+        1 顯示
+        2 新增
+        3 修改-標題&圖片
+        4 刪除
+        5 燈號
+        6 左
+        7 右
+        8 上
+        9 下
+        10 修改-內文
+        11 上下左右-true
+        12 上下左右-false
+        */
+    }
+  })
+  let TheSearchBar = Vue.component("the-search-bar", {
+    props: {
+      listOne: Array,
+      search_result: String
+    },
+    data() {
+      return {
+        theSearchBarLabel: "",
+        theSearchBarText: "",
+        list: this.listOne
+      }
+    },
+    template: `<div id="TheSearchBar">
+    <section>
+    <div>
+    <h2>搜尋 Bar</h2>
+    <i class="el-icon-circle-close" @click="fTheSearchBar()"></i>
+    </div>
+    <div>
+    <input type="text" v-model="theSearchBarLabel" placeholder="標籤搜尋"/>
+    <input type="text" v-model="theSearchBarText" placeholder="內文搜尋"/>
+    </div>
+    <div>
+    <v-button name="Confirm" @emit="fTheSearchBarConfirm(theSearchBarLabel, theSearchBarText)"></v-button>
+    <v-button name="Afresh" @emit="fTheSearchBarAfresh()"></v-button>
+    </div>
+    <div>
+    <span>當前搜尋結果: {{search_result}} 筆</span>
+    </div>
+    </section>
+    </div>`,
+    components: {
+      "v-button": VButton
+    },
+    methods: {
+      fTheSearchBar() {
+        this.$emit("emit")
+      },
+      fTheSearchBarConfirm(theLabel, theText) {
+        this.$emit("search-confirm", theLabel, theText)
+      },
+      fTheSearchBarAfresh() {
+        this.theSearchBarLabel = ""
+        this.theSearchBarText = ""
+        this.$emit("search-afresh")
+      }
+    }
+  })
+  let TheMessageBox = Vue.component("the-message-box", {
+    data() {
+      return {
+        val: "",
+        text: ""
+      }
+    },
+    beforeCreate() {
+      // 監聽 B 觸發
+      EventBus.$on("fMessageBox1", (val, text) => {
+        this.text = text
+      })
+    },
+    beforeDestroy() {
+      EventBus.$off("fMessageBox1", val, text)
+    },
+    template: `<div id="TheMessageBox">
+       <div>
+       <p>{{text}}</p>
+       </div>
+       <i class="el-icon-circle-close" @click="fMessageBox(0)"></i>
+       </dvi>`,
+    methods: {
+      fMessageBox(val) {
+        EventBus.$emit("fMessageBox2", val)
+      }
+    }
+  })
+  let TheSaveBox = Vue.component("the-save-box", {
+    data() {
+      return {
+        theSaveBoxWay: false
+      }
+    },
+    template: `<div id="TheSaveBox">
+     <div v-if="!theSaveBoxWay">
+      <p>請隨時儲存資料</p>
+      <button @click="fSaveBox(3)">取消</button>
+      <button @click="fSaveBox(2)">確定</button>
+     </div>
+     <div v-if="theSaveBoxWay">
+      <p>您確定不儲存資料?</p>
+      <button @click="fSaveBox(5)">取消</button>
+      <button @click="fSaveBox(4)">確定</button>
+     </div>
+    </div>`,
+    methods: {
+      fSaveBox(val) {
+        switch (val) {
+          case 2:
+            this.$emit('emit', 2)
+            break;
+          case 3:
+            this.theSaveBoxWay = true
+            break;
+          case 4:
+            this.$emit('emit', 4)
+            this.theSaveBoxWay = true
+            break;
+          case 5:
+            this.theSaveBoxWay = false;
+          default:
+            // statements_def
+            break;
+        }
+      }
+    }
+  })
+  let TheCloseBox = Vue.component("the-close-box", {
+    data() {
+      return {
+        theCloseBoxWay: false
+      }
+    },
+    template: `
+    <div id="TheCloseBox">
+      <transition
+       enter-active-class="scale-y-enter-active"
+       leave-active-class="scale-y-leave-active">
+       <i v-if="theCloseBoxWay" @click="fTheCloseBoxWay()" class="el-icon-upload2"></i>
+      </transition>
+      <transition
+       enter-active-class="scale-y-enter-active"
+       leave-active-class="scale-y-leave-active">
+       <i v-if="!theCloseBoxWay" @click="fTheCloseBoxWay()" class="el-icon-download"></i>
+      </transition>
+    </div>`,
+    methods: {
+      fTheCloseBoxWay() {
+        this.theCloseBoxWay = !this.theCloseBoxWay
+        this.$emit("emit")
+      }
+    }
+  })
+  let TheMoreBox = Vue.component("the-more-box", {
+    template: `
+  <div id="TheMoreBox">
+    <div>
+     <i class="el-icon-circle-close close" @click="fTheMoreBoxWay()"></i>
+     </div>
+     <div>
+     <table>
+      <tr>
+        <td colspan="2">更多功能</td>
+      </tr>
+      <tr>
+        <td>清除所有資料</td>
+        <td><v-button name="清除"></v-button></td>
+      </tr>
+      <tr>
+        <td>下載項目筆記 - CSV 檔</td>
+        <td><v-button name="下載" @click.native="fExoprt"></v-button></td>
+      </tr>
+    </table>
+     </div>
+  </div>`,
+    methods: {
+      fTheMoreBoxWay() {
+        this.$emit("emit", 2)
+      },
+      fExoprt() {
+        this.$emit("export-data")
+      }
+    },
+    component: {
+      "v-button": VButton
+    }
+  })
+  let TheOpenMore = Vue.component("the-open-more", {
+    template: `
+  <div id="TheOpenMore">
+    <i class="el-icon-setting" title="Setting" @click="ftheOpenMoreWay()"></i>
+  </div>`,
+    methods: {
+      ftheOpenMoreWay() {
+        this.$emit("emit", 1)
+      }
+    }
+  })
+
+  let listOne = [
+  {
+    "value": "0",
+    "label": "使用說明",
+    "image": "assets/750x464.jpg",
+    "styleValue": 1,
+    "style": "font-weight:bold;margin-left:0",
+    "status": "warning",
+    "modify": false,
+    "text": "功能說明:\n1 事項區 Main\n2 導覽區 Side\n3 功能區 Features\n4 搜尋區 Search\n5 圖片區 Image\n6 訊息區 Message\n7 存檔區 Save",
+    "labelLink": "#使用說明"
+  },
+  {
+    "value": "1",
+    "label": "事項區 Main",
+    "image": "image/1.png",
+    "styleValue": 1,
+    "style": "font-weight:bold;margin-left:0",
+    "status": "warning",
+    "modify": false,
+    "text": "檢視你所記錄的內容，以此為範例的話:\n此項目編號為 1\n此項目標籤為 事項區 Main\n此項目內文即 你所看到可以編輯的內容\n",
+    "labelLink": "#事項區 Main"
+  },
+  {
+    "value": "1.1",
+    "label": "修改編號與修改標題",
+    "image": "image/1.1.gif",
+    "styleValue": 2,
+    "style": "margin-left:1rem;",
+    "status": "warning",
+    "modify": false,
+    "text": "",
+    "labelLink": "#修改編號與修改標題"
+  },
+  {
+    "value": "1.2",
+    "label": "檢視內文與編輯內文",
+    "image": "image/1.2.gif",
+    "styleValue": 2,
+    "style": "margin-left:1rem;",
+    "status": "warning",
+    "modify": false,
+    "text": "",
+    "labelLink": "#檢視內文與編輯內文"
+  },
+  {
+    "value": "2",
+    "label": "導覽區 Side",
+    "image": "image/2.png",
+    "styleValue": 1,
+    "style": "font-weight:bold;margin-left:0",
+    "status": "warning",
+    "modify": false,
+    "text": "",
+    "labelLink": "#導覽區 Side"
+  },
+  {
+    "value": "2.1",
+    "label": "檢視導覽列",
+    "image": "image/2.1.gif",
+    "styleValue": 2,
+    "style": "margin-left:1rem;",
+    "status": "warning",
+    "modify": false,
+    "text": "",
+    "labelLink": "#檢視導覽列"
+  },
+  {
+    "value": "2.2",
+    "label": "檢視圖片",
+    "image": "image/2.2.gif",
+    "styleValue": 2,
+    "style": "margin-left:1rem;",
+    "status": "warning",
+    "modify": false,
+    "text": "",
+    "labelLink": "#檢視圖片"
+  },
+  {
+    "value": "2.3",
+    "label": "開始搜尋",
+    "image": "image/2.3.gif",
+    "styleValue": 2,
+    "style": "margin-left:1rem;",
+    "status": "warning",
+    "modify": false,
+    "text": "",
+    "labelLink": "#開始搜尋"
+  },
+  {
+    "value": "3",
+    "label": "功能區 Features",
+    "image": "image/3.png",
+    "styleValue": 1,
+    "style": "font-weight:bold;margin-left:0",
+    "status": "warning",
+    "modify": false,
+    "text": "",
+    "labelLink": "#功能區 Features"
+  },
+  {
+    "value": "3.1",
+    "label": "輸入資料",
+    "image": " ",
+    "styleValue": 2,
+    "style": "margin-left:1rem;",
+    "status": "warning",
+    "modify": false,
+    "text": "",
+    "labelLink": "#輸入資料"
+  },
+  {
+    "value": "3.1.1",
+    "label": "編號 Value",
+    "image": "image/3.1.1.gif",
+    "styleValue": 3,
+    "style": "margin-left:2rem;font-style:italic",
+    "status": "warning",
+    "modify": false,
+    "text": "",
+    "labelLink": "#編號 Value"
+  },
+  {
+    "value": "3.1.2",
+    "label": "標籤 Label",
+    "image": "image/3.1.2.gif",
+    "styleValue": 3,
+    "style": "margin-left:2rem;font-style:italic",
+    "status": "warning",
+    "modify": false,
+    "text": "",
+    "labelLink": "#標籤 Label"
+  },
+  {
+    "value": "3.1.3",
+    "label": "圖檔位置 Image",
+    "image": "image/3.1.3.gif",
+    "styleValue": 3,
+    "style": "margin-left:2rem;font-style:italic",
+    "status": "warning",
+    "modify": false,
+    "text": "",
+    "labelLink": "#圖檔位置 Image"
+  },
+  {
+    "value": "3.2",
+    "label": "新增事項",
+    "image": "image/3.2.gif",
+    "styleValue": 2,
+    "style": "margin-left:1rem;",
+    "status": "warning",
+    "modify": false,
+    "text": "",
+    "labelLink": "#新增事項"
+  },
+  {
+    "value": "3.3",
+    "label": "修改事項",
+    "image": "image/3.3.gif",
+    "styleValue": 2,
+    "style": "margin-left:1rem;",
+    "status": "warning",
+    "modify": false,
+    "text": "",
+    "labelLink": "#修改事項"
+  },
+  {
+    "value": "3.4",
+    "label": "開始調整事項位置",
+    "image": "image/3.4.gif",
+    "styleValue": 2,
+    "style": "margin-left:1rem;",
+    "status": "warning",
+    "modify": false,
+    "text": "",
+    "labelLink": "#開始調整事項位置"
+  },
+  {
+    "value": "3.5",
+    "label": "更改事項狀態",
+    "image": "image/3.5.gif",
+    "styleValue": 2,
+    "style": "margin-left:1rem;",
+    "status": "warning",
+    "modify": false,
+    "text": "",
+    "labelLink": "#更改事項狀態"
+  },
+  {
+    "value": "3.6",
+    "label": "刪除事項",
+    "image": "image/3.6.gif",
+    "styleValue": 2,
+    "style": "margin-left:1rem;",
+    "status": "warning",
+    "modify": false,
+    "text": "",
+    "labelLink": "#刪除事項"
+  },
+  {
+    "value": "3.7",
+    "label": "隱藏功能區",
+    "image": "image/3.7.gif",
+    "styleValue": 2,
+    "style": "margin-left:1rem;",
+    "status": "warning",
+    "modify": false,
+    "text": "",
+    "labelLink": "#隱藏功能區"
+  },
+  {
+    "value": "4",
+    "label": "搜尋區 Search",
+    "image": "image/4.png",
+    "styleValue": 1,
+    "style": "font-weight:bold;margin-left:0",
+    "status": "warning",
+    "modify": false,
+    "text": "",
+    "labelLink": "#搜尋區 Search"
+  },
+  {
+    "value": "4.1",
+    "label": "輸入資料",
+    "image": " ",
+    "styleValue": 2,
+    "style": "margin-left:1rem;",
+    "status": "warning",
+    "modify": false,
+    "text": "",
+    "labelLink": "#輸入資料"
+  },
+  {
+    "value": "4.1.1",
+    "label": "標籤搜尋",
+    "image": "image/4.1.1.gif",
+    "styleValue": 3,
+    "style": "margin-left:2rem;font-style:italic",
+    "status": "warning",
+    "modify": false,
+    "text": "",
+    "labelLink": "#標籤搜尋"
+  },
+  {
+    "value": "4.1.2",
+    "label": "內文搜尋",
+    "image": "image/4.1.2.gif",
+    "styleValue": 3,
+    "style": "margin-left:2rem;font-style:italic",
+    "status": "warning",
+    "modify": false,
+    "text": "",
+    "labelLink": "#內文搜尋"
+  },
+  {
+    "value": "4.2",
+    "label": "重新開始搜尋",
+    "image": "image/4.2.gif",
+    "styleValue": 2,
+    "style": "margin-left:1rem",
+    "status": "warning",
+    "modify": false,
+    "text": "",
+    "labelLink": "#重新開始搜尋"
+  },
+  {
+    "value": "4.3",
+    "label": "檢視當前搜尋結果",
+    "image": "image/4.3.gif",
+    "styleValue": 2,
+    "style": "margin-left:1rem",
+    "status": "warning",
+    "modify": false,
+    "text": "",
+    "labelLink": "#檢視當前搜尋結果"
+  },
+  {
+    "value": "5",
+    "label": "圖片區 Image",
+    "image": "image/5.png",
+    "styleValue": 1,
+    "style": "font-weight:bold;margin-left:0",
+    "status": "warning",
+    "modify": false,
+    "text": "",
+    "labelLink": "#圖片區 Image"
+  },
+  {
+    "value": "5.1",
+    "label": "檢視圖片與關閉圖片",
+    "image": "image/5.1.gif",
+    "styleValue": 2,
+    "style": "margin-left:1rem;",
+    "status": "warning",
+    "modify": false,
+    "text": "",
+    "labelLink": "#檢視圖片與關閉圖片"
+  },
+  {
+    "value": "6",
+    "label": "訊息區 Message",
+    "image": "image/6.png",
+    "styleValue": 1,
+    "style": "font-weight:bold;margin-left:0",
+    "status": "warning",
+    "modify": false,
+    "text": "",
+    "labelLink": "#訊息區 Message"
+  },
+  {
+    "value": "6.1",
+    "label": "檢視當前提示訊息",
+    "image": "image/6.1.gif",
+    "styleValue": 2,
+    "style": "margin-left:1rem;",
+    "status": "warning",
+    "modify": false,
+    "text": "",
+    "labelLink": "#檢視當前提示訊息"
+  },
+  {
+    "value": "7",
+    "label": "存檔區 Save",
+    "image": "image/7.png",
+    "styleValue": 1,
+    "style": "font-weight:bold;margin-left:0",
+    "status": "warning",
+    "modify": false,
+    "text": "",
+    "labelLink": "#存檔區 Save"
+  },
+  {
+    "value": "7.1",
+    "label": "確定儲存",
+    "image": "image/7.1.gif",
+    "styleValue": 2,
+    "style": "margin-left:1rem;",
+    "status": "warning",
+    "modify": false,
+    "text": "",
+    "labelLink": "#確定儲存"
+  },
+  {
+    "value": "7.2",
+    "label": "取消儲存與再次取消",
+    "image": "image/7.2.gif",
+    "styleValue": 2,
+    "style": "margin-left:1rem;",
+    "status": "warning",
+    "modify": false,
+    "text": "",
+    "labelLink": "#取消儲存與再次取消"
+  },
+  {
+    "value": "7.3",
+    "label": "取消儲存與再次確認",
+    "image": "image/7.3.gif",
+    "styleValue": 2,
+    "style": "margin-left:1rem;",
+    "status": "warning",
+    "modify": false,
+    "text": "",
+    "labelLink": "#取消儲存與再次確認"
+  },
+  {
+    "value": "12",
+    "label": "旅行計畫-自助旅行-個人",
+    "image": "image/travel.jpg",
+    "styleValue": 1,
+    "style": "font-weight:bold;margin-left:0",
+    "status": "warning",
+    "modify": false,
+    "text": "計畫三天兩夜的行程。",
+    "labelLink": "#旅行計畫-自助旅行-個人"
+  },
+  {
+    "value": "12.1",
+    "label": "北台灣",
+    "image": " ",
+    "styleValue": 2,
+    "style": "margin-left:1rem;",
+    "status": "warning",
+    "modify": false,
+    "text": "",
+    "labelLink": "#北台灣"
+  },
+  {
+    "value": "12.1.1",
+    "label": "基隆 - 一日遊",
+    "image": " ",
+    "styleValue": 3,
+    "style": "margin-left:2rem;font-style:italic",
+    "status": "warning",
+    "modify": false,
+    "text": "交通工具:火車、租借機車",
+    "labelLink": "#基隆 - 一日遊"
+  },
+  {
+    "value": "12.1.2",
+    "label": "七堵 - 一日遊",
+    "image": " ",
+    "styleValue": 3,
+    "style": "margin-left:2rem;font-style:italic",
+    "status": "warning",
+    "modify": false,
+    "text": "交通工具:火車",
+    "labelLink": "#七堵 - 一日遊"
+  },
+  {
+    "value": "12.1.3",
+    "label": "大溪 - 一日遊",
+    "image": " ",
+    "styleValue": 3,
+    "style": "margin-left:2rem;font-style:italic",
+    "status": "warning",
+    "modify": false,
+    "text": "交通工具:腳踏車",
+    "labelLink": "#大溪 - 一日遊"
+  },
+  {
+    "value": "12.2",
+    "label": "中台灣",
+    "image": " ",
+    "styleValue": 2,
+    "style": "margin-left:1rem;",
+    "status": "warning",
+    "modify": false,
+    "text": "",
+    "labelLink": "#中台灣"
+  },
+  {
+    "value": "12.2.1",
+    "label": "台中、南投 - 兩日遊",
+    "image": " ",
+    "styleValue": 3,
+    "style": "margin-left:2rem;font-style:italic",
+    "status": "warning",
+    "modify": false,
+    "text": "",
+    "labelLink": "#台中、南投 - 兩日遊"
+  },
+  {
+    "value": "12.3",
+    "label": "南台灣",
+    "image": " ",
+    "styleValue": 2,
+    "style": "margin-left:1rem;",
+    "status": "warning",
+    "modify": false,
+    "text": "",
+    "labelLink": "#南台灣"
+  },
+  {
+    "value": "12.3.1",
+    "label": "高雄、屏東進香團 - 兩日",
+    "image": " ",
+    "styleValue": 3,
+    "style": "margin-left:2rem;font-style:italic",
+    "status": "warning",
+    "modify": false,
+    "text": "",
+    "labelLink": "#高雄、屏東進香團 - 兩日"
+  } ];
+
+  let EventBus = new Vue();
+
+  let vm = new Vue({
+    data() {
+      return {
+        ms: "123",
+        theImageBoxStatus: false,
+        theSearchBar: false,
+        theMessageBox: false,
+        theSaveBox: false,
+        theFeatures: true,
+        theMoreBox: false,
+        keybo: false,
+        searchWay: false,
+        time: "",
+        image: "",
+        index: "",
+        addValue: "",
+        addLabel: "",
+        addImage: "",
+        searchLabel: "",
+        searchText: "",
+        searchArray: "",
+        searchResult: "",
+        exportData: "",
+        rows: {},
+        listOne: listOne,
+      };
+    },
+    created() {
+      //全局監聽鍵盤事件
+      let vm = this;
+      document.onkeydown = function(e) {
+        let key = window.event.keyCode;
+        if (vm.keybo) {
+          switch (key) {
+            case 38:
+              vm.fFeaturesData(8, vm.index);
+              break;
+            case 40:
+              vm.fFeaturesData(9, vm.index);
+              break;
+            case 37:
+              vm.fFeaturesData(6, vm.index);
+              break;
+            case 39:
+              vm.fFeaturesData(7, vm.index);
+              break;
+            default:
+              break;
+          }
+        }
+      };
+    },
+    beforeCreate() {
+      EventBus.$on("fMessageBox2", (val) => {
+        this.fMessageBox(val, "")
+      })
+      EventBus.$on("fMessageBox3", (val, text) => {
+        this.fMessageBox(val, text)
+      })
+    },
+    beforeDestroy() {
+      EventBus.$off("fMessageBox2", val, text)
+      EventBus.$off("fMessageBox3", val, text)
+    },
+    methods: {
+      async feachList() {
+      //
+      },
+      async putList() {
+       //
+      },
+      fTheMainWay(val) {
+        this.listOne[val].modify = !this.listOne[val].modify
+        if (!this.listOne[val].modify) {
+          this.fSaveBox(1)
+        }
+      },
+      fTheImageBox() {
+        this.theImageBoxStatus = !this.theImageBoxStatus
+      },
+      fTheSearchBar() {
+        this.theSearchBar = !this.theSearchBar
+        if (!this.theSearchBar) {
+          this.fTheSearchBarAfresh()
+        }
+      },
+      fTheMainIndex(val) {
+        this.index = val
+        this.fFeaturesData(1)
+        EventBus.$emit("the-main-image", this.addImage)
+      },
+      fTheMoreBox(val) {
+        switch (val) {
+          case 1:
+            this.theMoreBox = !this.theMoreBox
+            break;
+          case 2:
+            this.theMoreBox = false
+            break;
+          default:
+            break;
+        }
+      },
+      fImage(val, index) {
+        this.image = val
+        this.index = index
+        this.fFeaturesData(1)
+      },
+      fChangeText(type, text) {
+        switch (type) {
+          case 1:
+            this.addValue = text
+            break;
+          case 2:
+            this.addLabel = text
+            break;
+          case 3:
+            this.addImage = text
+            break;
+          default:
+            break;
+        }
+      },
+      fTheCloseBoxWay() {
+        this.theFeatures = !this.theFeatures
+      },
+      fSaveBox(val) {
+        /*
+          1 顯示
+          2 Save > putList
+          3 close > 你確定不儲存此次文件修改?
+          4         yes
+          5         No
+        */
+        switch (val) {
+          case 1:
+            this.theSaveBox = true
+            if (this.time) {
+              clearInterval(this.time);
+            }
+            this.time = setTimeout(
+              () => (
+                this.fMessageBox(2, "尚未儲存文件"),
+                this.fSaveBox(2)),
+              300000
+            );
+            break;
+          case 2:
+            this.theSaveBox = false
+            this.putList();
+            this.fMessageBox(1, "已完成儲存文件");
+            break;
+          case 4:
+            this.theSaveBox = false
+            this.fMessageBox(1, "尚未編輯的儲存文件");
+            break;
+          default:
+            break;
+        }
+      },
+      fMessageBox(val, text) {
+        /* val
+        0 隱藏
+        1 顯示
+        */
+        if (val == 0) {
+          this.theMessageBox = false
+        } else {
+          this.theMessageBox = true
+          EventBus.$emit("fMessageBox1", val, text)
+          if (this.time) {
+            clearInterval(this.time);
+          }
+          this.time = setTimeout(
+            () => ((this.theMessageBox = false)),
+            2500
+          );
+        }
+      },
+      fFeaturesData(val, value, label, image) {
+        let [vm, p, i] = [this, this.listOne, this.index]
+        let key = Number(val)
+        // console.log(`function input to ${key}`)
+        /*
+         fFeaturesData(val, index){}
+         1 顯示
+         2 新增
+         3 修改-標題&圖片
+         4 刪除
+         5 燈號
+         6 左
+         7 右
+         8 上
+         9 下
+         10 修改-內文
+         11 上下左右-true
+         12 上下左右-false
+         */
+        switch (key) {
+          case 1:
+            this.addValue = p[i].value
+            this.addLabel = p[i].label
+            this.addImage = p[i].image
+            break;
+          case 2:
+            if (
+              this.addValue == "" ||
+              this.addLabel == "" ||
+              this.addImage == ""
+            ) {
+              this.fMessageBox(1, "尚未填滿資料")
+            } else {
+              vm.rows = {
+                value: this.addValue,
+                label: this.addLabel,
+                image: this.addImage,
+                styleValue: 1,
+                style: "font-weight:bold;margin-left:0",
+                status: "warning",
+                modify: true,
+                text: "",
+                labelLink: this.anchor,
+              };
+              p.push(vm.rows)
+              this.sortData()
+            }
+            break;
+          case 3:
+            if (i == "") {
+              this.fMessageBox(1, "請點選項目")
+            } else if (
+              this.addValue == "" ||
+              this.addLabel == "" ||
+              this.addImage == "") {
+              this.fMessageBox(1, "修改資料尚未填滿");
+            } else {
+              p[i].value = this.addValue;
+              p[i].label = this.addLabel;
+              p[i].image = this.addImage;
+              p[i].labelLink = this.anchor;
+              this.sortData()
+              this.fSaveBox(1);
+            }
+            break;
+          case 4:
+            if (i === "") {
+              this.fMessageBox(1, "請點選項目 delete");
+            } else {
+              p.splice(i, 1);
+              this.fSaveBox(1);
+              this.fMessageBox(1, "已刪除項目");
+            }
+            break;
+          case 5:
+            if (i === "") {
+              this.fMessageBox(1, "請點選項目 change Light");
+            } else if (p[i].status == "success") {
+              p[i].status = "warning";
+              this.fSaveBox(1);
+              this.fMessageBox(1, "燈號已變換為 warning");
+            } else {
+              p[i].status = "success";
+              this.fSaveBox(1);
+              this.fMessageBox(1, "燈號已變換為 success");
+            }
+            break;
+          case 6:
+            if (i === "") {
+              this.fMessageBox(1, "請點選項目位置 to Left");
+            } else {
+              let style = p[i].style;
+              let styleValue = p[i].styleValue;
+              if (styleValue > 0) {
+                let newValue = --styleValue;
+                p[i].styleValue = newValue;
+                switch (newValue) {
+                  case 1:
+                    p[i].style = "font-weight:bold;margin-left:0";
+                    break;
+                  case 2:
+                    p[i].style = "margin-left:1rem";
+                    break;
+                  case 3:
+                    p[i].style = "margin-left:2rem;font-style:italic";
+                    break;
+                  default:
+                    break;
+                }
+                this.fSaveBox(1);
+              }
+            }
+            break;
+          case 7:
+            if (i === "") {
+              this.fMessageBox(1, "請點選項目位置 to  Right");
+            } else {
+              let style = p[i].style;
+              let styleValue = p[i].styleValue;
+              if (styleValue < 3) {
+                let newValue = ++styleValue;
+                p[i].styleValue = newValue;
+                switch (newValue) {
+                  case 1:
+                    p[i].style = "font-weight:bold;margin-left:0; ";
+                    break;
+                  case 2:
+                    p[i].style = "margin-left:1rem;";
+                    break;
+                  case 3:
+                    p[i].style = "margin-left:2rem;font-style:italic";
+                    break;
+                  default:
+                    break;
+                }
+                this.fSaveBox(1);
+              }
+            }
+            break;
+          case 8:
+            if (i === "") {
+              this.fMessageBox(1, "請點選項目位置 to Top");
+            } else {
+              if (i > 0) {
+                //限制 i 操作 1
+                p.splice(i - 1, 0, p[i]); //新增一個新的
+                p.splice(i + 1, 1); // 刪除原本的
+                this.index = i - 1;
+                this.fSaveBox(1);
+              }
+            }
+            break;
+          case 9:
+            if (i === "") {
+              this.fMessageBox(1, "請點選項目位置 to Down");
+            } else {
+              p.splice(i + 2, 0, p[i]);
+              p.splice(i, 1);
+              this.index = i + 1;
+              this.fSaveBox(1);
+            }
+            break;
+          case 11:
+            this.keybo = true
+            break;
+          case 12:
+            this.keybo = false
+            break;
+          default:
+            console.log('lose message')
+            break;
+        }
+      },
+      sortData() {
+        let [vm, p, i] = [this, this.listOne, this.index]
+        let value = []
+        // 分割單一屬性值
+        value = p.map((e) => {
+          return e.value.split('.')
+        })
+        // 增加屬性一個屬性值
+        value.map((e, i) => {
+          return vm.$set(p[i], "LvOne", e[0])
+        })
+        value.map((e, i) => {
+          return vm.$set(p[i], "LvTwo", e[1])
+        })
+        value.map((e, i) => {
+          return vm.$set(p[i], "LvThree", e[2])
+        })
+        // 排序一個屬性值
+        p.sort(function(a, b) {
+          let [aLvOne, bLvOne] = [Number(a.LvOne), Number(b.LvOne)]
+          return aLvOne > bLvOne
+        })
+        p.sort(function(a, b) {
+          let [aLvOne, bLvOne] = [Number(a.LvOne), Number(b.LvOne)]
+          let [aLvTwo, bLvTwo] = [Number(a.LvTwo), Number(b.LvTwo)]
+          if (aLvOne == bLvOne) {
+            return aLvTwo > bLvTwo
+          }
+        })
+        p.sort(function(a, b) {
+          let [aLvOne, bLvOne] = [Number(a.LvOne), Number(b.LvOne)]
+          let [aLvTwo, bLvTwo] = [Number(a.LvTwo), Number(b.LvTwo)]
+          let [aLvThree, bLvThree] = [Number(a.LvThree), Number(b.LvThree)]
+          if (aLvOne == bLvOne) {
+            if (aLvTwo == bLvTwo) {
+              return aLvThree > bLvThree
+            }
+          }
+        })
+        // 刪除一個屬性值
+        p.map((e, i) => {
+          return vm.$delete(p[i], "LvOne")
+        })
+        p.map((e, i) => {
+          return vm.$delete(p[i], "LvTwo")
+        })
+        p.map((e, i) => {
+          return vm.$delete(p[i], "LvThree")
+        })
+        // 清除資料
+        this.addValue = "";
+        this.addLabel = "";
+        this.addImage = "";
+        this.anchor = "";
+        this.index = "";
+        this.fSaveBox(1)
+      },
+      fTheSearchBarConfirm(theLabel, theText) {
+        let [sl, ll] = [this.searchArray.length, this.listOne.length]
+        this.searchLabel = theLabel
+        this.searchText = theText
+        this.searchWay = true
+        let wayArray = false
+
+        function fway(dataOne, dataTwo) {
+          // 篩選狀態
+          let [label, text] = [false, false]
+          let [numLabel, numText] = [0, 0]
+          if (!dataOne && !text) {
+            // console.log('導覽列請輸入資料')
+          } else {
+            numText++
+            text = true
+          }
+          if (!dataTwo && !label) {
+            // console.log('內文請輸入資料')
+          } else {
+            numLabel++
+            label = true
+          }
+          return `${numLabel}${numText}`
+        }
+
+        function checkObj(obj, name) {
+          // 返回符合的物件屬性判別
+          return obj.toLowerCase().indexOf(name.toLowerCase()) > -1
+        }
+
+        function filterByLabel(item) {
+          // 返回物件
+          if (checkObj(item.label, theLabel)) {
+            return true
+          }
+          return false
+        }
+
+        function filterByText(item) {
+          if (checkObj(item.text, theText)) {
+            return true
+          }
+          return false
+        }
+        let way = fway(this.searchLabel, this.searchText)
+
+        switch (way) {
+          case "00":
+            this.fMessageBox(1, '導覽列或內文輸入資料')
+            break;
+          case "01":
+            this.fMessageBox(1, '篩選導覽列')
+            if (sl == 0 && !wayArray) {
+              this.searchArray = this.listOne
+              this.listOne = this.listOne.filter(filterByLabel)
+              //console.log(this.listOne.length)
+            }
+            if (ll < sl && !wayArray) {
+              //console.log('重新再篩選')
+              this.listOne = this.searchArray
+              this.listOne = this.listOne.filter(filterByLabel)
+              //console.log(this.listOne.length)
+            }
+            if (ll = sl) {
+              this.listOne = this.listOne.filter(filterByLabel)
+              wayArray = true
+            }
+            this.searchResult = this.listOne.length
+            break;
+          case "10":
+            this.fMessageBox(1, '篩選內文')
+            if (sl == 0 && !wayArray) {
+              this.searchArray = this.listOne
+              this.listOne = this.listOne.filter(filterByText)
+            }
+            if (ll < sl && !wayArray) {
+              //console.log('重新再篩選')
+              this.listOne = this.searchArray
+              this.listOne = this.listOne.filter(filterByText)
+            }
+            if (ll = sl) {
+              this.listOne = this.listOne.filter(filterByText)
+              wayArray = true
+            }
+            this.searchResult = this.listOne.length
+            break;
+          case "11":
+            this.fMessageBox(1, '僅限輸入一種搜尋')
+            break;
+          default:
+            break;
+        }
+      },
+      fTheSearchBarAfresh() {
+        this.fMessageBox(1, "清除搜尋結果")
+        if (!this.searchWay) {
+          //console.log('尚未進入搜尋,請輸入點甚麼')
+        } else {
+          //console.log('已進入搜尋,賦歸')
+          this.listOne = this.searchArray
+          this.searchWay = false
+          this.searchResult = 0
+        }
+      },
+      conver() {
+        let json = this.listOne
+        if (json == '') return
+        let [largestEntry, header] = [0, ""]
+        // Find the largest element
+        // 找到最大的元素
+        for (let i = 0; i < json.length; i++) {
+          if (!Object.keys) {
+            Object.keys = function(obj) {
+              let keys = [];
+              for (let i in obj) {
+                console.log(i)
+                if (obj.hasOwnProperty(i)) {
+                  keys.push(i);
+                }
+              }
+              return keys;
+            };
+          }
+          if (Object.keys(json[i]).length > largestEntry) {
+            largestEntry = Object.keys(json[i]).length;
+            header = Object.keys(json[i]);
+          }
+        };
+        // Assemble the header
+        // 組裝頭
+        let convertedjson = "";
+        if (typeof Array.prototype.forEach != 'function') {
+          Array.prototype.forEach = function(callback) {
+            for (let i = 0; i < this.length; i++) {
+              callback.apply(this, [this[i], i, this]);
+            }
+          };
+        }
+
+        header.forEach(function(header) {
+          if (header == 'label' || header == 'value' || header == 'text'|| header == 'status') {
+            convertedjson += "\"";
+            convertedjson += header
+            convertedjson += "\"";
+            convertedjson += ",";
+          }
+        })
+        convertedjson = convertedjson.substring(0, convertedjson.length - 1);
+        convertedjson += "\r\n";
+
+        // Iterate through the header for all elements
+        // 遍歷所有元素的頭
+
+        json.forEach(function(entry) {
+          header.forEach(function(heading) {
+            if (heading == 'label' || heading == 'value' || heading == 'text' || heading == 'status') {
+              convertedjson += "\"";
+              convertedjson += (entry[heading] || "");
+              convertedjson += "\"";
+              convertedjson += ",";
+            }
+          });
+
+          convertedjson = convertedjson.substring(0, convertedjson.length - 1);
+          convertedjson += "\r\n";
+        })
+        this.exportData = convertedjson
+        console.log(this.exportData)
+      },
+      async export (fileName, uri) {
+        let link = document.createElement("a");
+        $(link).hide();
+        link.href = uri;
+        link.download = fileName + ".csv";
+        $("body").append(link);
+        link.click();
+        $("body").remove(link);
+        this.fMessageBox(1,"下載設定中...")
+      },
+      converAndExport() {
+        this.conver()
+        let csv = this.exportData
+        if (csv == "") return
+        // Exporting
+        // 輸出
+        let months = new Array("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
+        let now = new Date();
+        let date = now.getDate();
+        let year = now.getFullYear();
+        let month = months[now.getMonth()];
+        let fileName = "CSV" + year + month + date;
+        let uri = 'data:text/csv;charset=utf-8,\uFEFF' + encodeURI(csv); //encodeURI用來轉為UTF-8編碼
+        this.export(fileName, uri)
+        this.fMessageBox(1,"下載檔案中...")
+      }
+    },
+    computed: {
+      anchor: function() {
+        return "#" + this.addLabel
+      }
+    },
+    mounted() {
+      this.feachList()
+    },
+    components: {
+      "the-side": TheSide,
+      "the-main": TheMain,
+      "the-image-box": TheImageBox,
+      "the-features": TheFeatures,
+      "the-search-bar": TheSearchBar,
+      "the-message-box": TheMessageBox,
+      "the-save-box": TheSaveBox,
+      "the-close-box": TheCloseBox,
+      "the-more-box": TheMoreBox,
+      "the-open-more": TheOpenMore
+    }
+  }).$mount("#app");
+  </script>
+</body>
+
+</html>
