@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/element-ui/lib/theme-chalk/index.css"
+    />
+    <script
+      src="https://code.jquery.com/jquery-3.4.1.min.js"
+      integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.js"></script>
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <style>
+      * {
+        padding: 0.1rem;
+      }
+      #app {
+        background-color: cadetblue;
+      }
+      .vItem {
+        background-color: #fff;
+        border: 2px solid black;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <v-item
+        v-for="item in listOne"
+        :list="item"
+        :key="item.id"
+        @click.native="add(item)"
+      ></v-item>
+    </div>
+    <script>
+      let vItem = Vue.component("v-item", {
+        props: {
+          list: Object
+        },
+        template: `
+        <div class="vItem">
+          <ul>
+           <li>{{list.label}} -- {{list.value}}</li>
+          </ul>
+        </div>`
+      });
+
+      new Vue({
+        data() {
+          return {
+            listOne: [
+              { label: "A", value: 001 },
+              { label: "B", value: 002 },
+              { label: "C", value: 003 }
+            ]
+          };
+        },
+        methods: {
+          add(val) {
+            alert(val.label);
+          }
+        },
+        components: {
+          "v-item": vItem
+        }
+      }).$mount("#app");
+    </script>
+  </body>
+</html>

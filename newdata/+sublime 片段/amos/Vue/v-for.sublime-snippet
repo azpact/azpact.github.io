@@ -1,0 +1,7 @@
+<snippet>
+  <content><![CDATA[<div v-for="item in $1listOne" :key="item.id">
+	$0{{item}}
+</div>]]></content>
+  <tabTrigger>am_vue_vfor</tabTrigger>
+  <description>Vue v-for 片段</description>
+</snippet>

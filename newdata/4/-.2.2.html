@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/element-ui/lib/theme-chalk/index.css"
+    />
+    <script
+      src="https://code.jquery.com/jquery-3.4.1.min.js"
+      integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.js"></script>
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <style>
+      body:hover .rightButton {
+        opacity: 1;
+      }
+      .rightButton {
+        background-color: rgb(53, 53, 53);
+        color: #fff;
+        border: none;
+        border-radius: 8px;
+        margin-left: 1rem;
+        width: 1.5rem;
+        height: 1.2rem;
+        outline: none;
+        opacity: 0;
+        transition: all 0.3s;
+      }
+      .rightButton:hover {
+        border: 1px solid #666;
+      }
+      .move-enter-active {
+        animation: goMove 1s;
+      }
+      .move-leave-active {
+        animation: backMove 1s;
+      }
+      .text-enter-active {
+        animation: goText 1s;
+      }
+      .text-leave-active {
+        animation: backText 1s;
+      }
+      @keyframes goMove {
+        from {
+          margin-left: -13%;
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+          margin-left: 0.3rem;
+        }
+      }
+      @keyframes backMove {
+        from {
+          opacity: 1;
+          margin-left: 0.3rem;
+        }
+        to {
+          opacity: 0;
+          margin-left: 13%;
+        }
+      }
+      @keyframes goText {
+        from {
+          opacity: 0;
+          margin-left: -12%;
+        }
+        to {
+          opacity: 1;
+          margin-left: 0;
+        }
+      }
+      @keyframes backText {
+        from {
+          opacity: 1;
+          margin-left: 0;
+        }
+        to {
+          opacity: 0;
+          margin-left: -12%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <el-button @click="fAllFeatures(0)">Close Features</el-button>
+      <el-button @click="fAllFeatures(1)">Open Features</el-button>
+      <ul v-for="(item,index) in listOne" :key="item.id">
+        <li :style="item.style" style="display:flex">
+          <transition
+            enter-active-class="text-enter-active"
+            leave-active-class="text-leave-active"
+          >
+            <div v-if="!item.modify" style="display:flex">
+              <span>{{item.value}} </span>
+              <span> {{item.label}}</span>
+              <div
+                v-for="light in listLight"
+                :key="light.id"
+                v-if="item.status==light.check"
+              >
+                <i :class="light.class"></i>
+              </div>
+            </div>
+          </transition>
+          <input
+            type="text"
+            v-if="item.modify"
+            v-model="item.label"
+            style="height:1rem;line-height:1rem;border:none;background-color:#ddd;"
+          />
+
+          <button class="rightButton" @click="showIndex(index)">></button>
+          <transition
+            enter-active-class="move-enter-active"
+            leave-active-class="move-leave-active"
+          >
+            <div class="features" v-if="item.features">
+              <i
+                @click="fModify(index)"
+                class="el-icon-edit"
+                title="Modify"
+              ></i>
+              <i
+                @click="fLeft(index)"
+                class="el-icon-caret-left"
+                title="Left"
+              ></i>
+              <i
+                @click="fRight(index)"
+                class="el-icon-caret-right"
+                title="Right"
+              ></i>
+              <i
+                @click="fspliceTop(index)"
+                class="el-icon-caret-top"
+                title="Top"
+              ></i>
+              <i
+                @click="fspliceDown(index)"
+                class="el-icon-caret-bottom"
+                title="Down"
+              ></i>
+              <i
+                @click="fDelete(index)"
+                class="el-icon-delete"
+                title="Delete"
+              ></i>
+            </div>
+          </transition>
+        </li>
+      </ul>
+    </div>
+    <script>
+      let listOne = [
+        {
+          value: "0.1 ",
+          label: "開始編輯",
+          image: "saasds.jsd",
+          style: "font-weight:bold;margin-left:0",
+          status: "warning",
+          modify: false,
+          features: false
+        },
+        {
+          value: "0.2",
+          label: "開始編輯",
+          style: "font-weight:bold;margin-left:0",
+          status: "warning",
+          modify: false,
+          features: false
+        },
+        {
+          label: "3 開始編輯",
+          value: "",
+          style: "font-weight:bold;margin-left:0",
+          status: "warning",
+          modify: false,
+          features: false
+        }
+      ];
+      var vm = new Vue({
+        el: "#app",
+        data: {
+          listOne: listOne,
+          listLight: [
+            { class: "el-icon-warning", check: "warning" },
+            { class: "el-icon-success", check: "success" }
+          ]
+        },
+        methods: {
+          showIndex(index) {
+            let p = this.listOne;
+            let i = index;
+            this.index = i;
+            p[i].features = !p[i].features;
+          },
+          fAllFeatures(val) {
+            if (val === 0) {
+              this.listOne.forEach(e => {
+                e.features = false;
+                e.modify = false;
+              });
+            } else {
+              this.listOne.forEach(e => {
+                e.features = true;
+              });
+            }
+          },
+          fModify(index) {
+            let p = this.listOne;
+            let i = index;
+            p[i].modify = !p[i].modify;
+          },
+          fLeft(index) {
+            let p = this.listOne;
+            let i = index;
+            p[i].style = "font-weight:bold;margin-left:0";
+          },
+          fRight(index) {
+            let p = this.listOne;
+            let i = index;
+            p[i].style = "margin-left:2rem";
+          },
+          fspliceTop(index) {
+            let p = this.listOne;
+            let i = index;
+            if (i > 0) {
+              //限制 i 操作 1
+              p.splice(i - 1, 0, p[i]); //新增一個新的
+              p.splice(i + 1, 1); // 刪除原本的
+            }
+          },
+          fspliceDown(index) {
+            let p = this.listOne;
+            let i = index;
+            p.splice(i + 2, 0, p[i]);
+            p.splice(i, 1);
+          },
+          fDelete(index) {
+            let p = this.listOne;
+            let i = index;
+            p.splice(i, 1);
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

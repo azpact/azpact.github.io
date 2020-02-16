@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/element-ui/lib/theme-chalk/index.css"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.js"></script>
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <style>
+      .el-icon-error,
+      .el-icon-warning,
+      .el-icon-success {
+        font-size: 2rem;
+      }
+      .el-icon-error {
+        color: #f56c6c;
+      }
+      .el-icon-warning {
+        color: #e6a23c;
+      }
+      .el-icon-success {
+        color: #67c23a;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <div v-for="item in listOne" :key="item.id">
+        <div>
+          <el-select v-model="selectValue" placeholder="請選擇">
+            <el-option
+              v-for="item in listLight"
+              :key="item.check"
+              :label="item.check"
+              :value="item.class"
+            >
+            </el-option>
+          </el-select>
+        </div>
+        <span>{{item.label}}</span>
+        <div
+          v-for="light in listLight"
+          :key="light.id"
+          v-if="item.lightStatus==light.check"
+        >
+          <i :class="light.class"></i>
+        </div>
+      </div>
+    </div>
+    <script>
+      let listOne = [{ label: "One", lightStatus: "success" }];
+      new Vue({
+        data: {
+          selectValue: "",
+          listOne: listOne,
+          listLight: [
+            {
+              class: "el-icon-warning",
+              check: "warning"
+            },
+            {
+              class: "el-icon-success",
+              check: "success"
+            },
+            {
+              class: "el-icon-error",
+              check: "error"
+            }
+          ]
+        }
+      }).$mount("#app");
+    </script>
+  </body>
+</html>

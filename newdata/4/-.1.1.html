@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/element-ui/lib/theme-chalk/index.css"
+    />
+    <script
+      src="https://code.jquery.com/jquery-3.4.1.min.js"
+      integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.js"></script>
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <style>
+      * {
+        margin: 0;
+      }
+      #app {
+        display: flex;
+        flex-wrap: wrap;
+        padding: 2rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <section style="width:100%">
+        <!-- 輸入資料 -->
+        V:<input type="text" v-model="addValue" />{{addValue}}<br />
+        L:<input type="text" v-model="addLabel" />{{addLabel}}<br />
+        <!-- 增加一筆資料 -->
+        <button @click="fAdd()">新增</button>
+        <button @click="sd()">排序</button>
+      </section>
+      <section style="width:100%">
+        <!-- 顯示資料 -->
+        <ul v-for="(item,index) in listOne" :key="index">
+          <li>
+            {{item.value}} / {{item.label}} / {{index}}
+          </li>
+        </ul>
+      </section>
+      <section>
+        <div v-for="item in rowCheck" :key="item.id">
+          {{item}}
+        </div>
+      </section>
+    </div>
+    <script>
+      // 原始資料
+      let listOne = [
+        { value: "1", label: "標" },
+        { value: "1.2", label: "標" },
+        { value: "1.6", label: "標" },
+        { value: "1.9", label: "標" },
+        { value: "6", label: "標" },
+        { value: "9", label: "標" },
+        { value: "12", label: "標" }
+      ];
+      new Vue({
+        data: {
+          nowValue: "",
+          listOne: listOne,
+          addValue: "12.1.19",
+          addLabel: "標誌",
+          rows: [],
+          rowCheck: [],
+          r: []
+        },
+        methods: {
+          fAdd() {
+            let p = this.listOne;
+            let vm = this;
+            vm.rows = {
+              value: this.addValue,
+              label: this.addLabel
+            }; // 新增資料
+            let r = this.listOne.length; //計算原始資料(陣列長度)
+
+            let l = listOne.filter(e => {
+              return Number(e.value) > Number(this.addValue);
+            }); //陣列值 e.value 若大於輸入值 this.addValue，則回傳物件，並計算回傳物件的 lenght
+            let i = r - l;
+            p.splice(i, 0, vm.rows); // 插入資料
+            return p.sort(compareValue); //排序資料
+
+            // console.log(`listOne 總長度: ${r}`);
+            // console.log(`與L: 比較後回傳長度: ${l}`);
+            // console.log(`listOne - L: ${i}`);
+          },
+          sd() {
+            let [resultInput, resultPrimeval] = [[], []];
+            let [
+              inputOne,
+              inputTwo,
+              inputThree,
+              primevalOne,
+              primevalTwo,
+              primevalThree
+            ] = ["", "", "", "", "", ""];
+            let n = 0;
+            let primevalN = 0;
+
+            // 來自原始資料的分析
+            let index = 3;
+            let primevalValue = listOne[index].value; //原始第 2 (index)
+            let checkPrimeval = primevalValue.split("", primevalValue.length); //分割字串
+            for (let i = 0; i < primevalValue.length; i++) {
+              let checkA = checkPrimeval[i].includes("."); //是否包含 .
+              resultPrimeval.push(checkA);
+              if (resultPrimeval[i]) {
+                primevalN++;
+              } else if (primevalN === 0) {
+                // console.log("第一階段");
+                primevalOne += checkPrimeval[i];
+              } else if (primevalN === 1) {
+                // console.log("第二階段");
+                primevalTwo += checkPrimeval[i];
+              } else if (primevalN === 2) {
+                // console.log("第三階段");
+                primevalThree += checkPrimeval[i];
+              }
+            }
+            /*
+1      1
+2      1
+1      1
+index
+*/
+            let vm = this;
+            vm.rowCheck = {
+              v1: primevalOne,
+              v2: primevalTwo,
+              v3: primevalThree,
+              index: index
+            };
+            console.log(`p: ${primevalOne}`);
+            console.log(`p: ${primevalTwo}`);
+            console.log(`p: ${primevalThree}`);
+            console.log(vm.rowCheck);
+
+            // input 分析
+            let inputValue = this.addValue; //輸入 input 12.1.19
+            let checkInput = inputValue.split("", inputValue.length); //分割 字串
+            // 輸入資料
+            let p = this.listOne;
+
+            vm.rows = {
+              value: this.addValue,
+              label: this.addLabel
+            };
+
+            for (let i = 0; i < checkInput.length; i++) {
+              let checkB = checkInput[i].includes(".");
+              resultInput.push(checkB);
+              if (resultInput[i]) {
+                // console.log("true");
+                n++;
+              } else if (n === 0) {
+                // console.log("第一階段");
+                inputOne += checkInput[i];
+              } else if (n === 1) {
+                // console.log("第二階段");
+                inputTwo += checkInput[i];
+              } else if (n === 2) {
+                // console.log("第三階段");
+                inputThree += checkInput[i];
+              }
+            }
+            // console.log(`i: ${inputOne}`); //12
+            // console.log(`i: ${inputTwo}`);  //1
+            // console.log(`i: ${inputThree}`); //19
+
+            let r = this.listOne.length; //7
+            let ll = 2; //判斷要插進去的位置的前一個
+            let ii = r - ll; //5
+          }
+        },
+        mounted() {
+          this.sd();
+        }
+      }).$mount("#app");
+      //排序資料 function
+      function compareValue(a, b) {
+        // a 舊
+        // b 新
+        if (Number(a.value) < Number(b.value)) return -1;
+        return 0;
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/element-ui/lib/theme-chalk/index.css"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.js"></script>
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <style>
+      .leftMain {
+        margin-left: 14%;
+        transition: all 1s;
+      }
+      .rightMain {
+        margin-left: 0%;
+        transition: all 1s;
+      }
+      .move-enter-active {
+        animation: goMove 1s;
+      }
+      .move-leave-active {
+        animation: backMove 1s;
+      }
+      .menu .delectButton {
+        text-align: right;
+        font-size: 1rem;
+      }
+      #allServerStatus {
+        display: flex;
+        flex-wrap: wrap;
+      }
+      @keyframes goMove {
+        from {
+          margin-left: -13%;
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+          margin-left: 0%;
+        }
+      }
+      @keyframes backMove {
+        from {
+          opacity: 1;
+          margin-left: 0%;
+          visibility: visible;
+        }
+        to {
+          opacity: 0;
+          margin-left: -11%;
+          visibility: visible;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <section>
+        <h2>Menu Drawer</h2>
+        <button @click="clickMenu()">按鈕</button>
+        <div style="height:2rem;">
+          <transition
+            enter-active-class="move-enter-active"
+            leave-active-class="move-leave-active"
+          >
+            <div
+              v-if="moveMenu"
+              style="background-color:rgb(219, 161, 161);margin-left:0;position: relative;top:0;width:200px;"
+            >
+              menu
+            </div>
+          </transition>
+        </div>
+      </section>
+      <hr />
+      <section style="display:flex;">
+        <transition
+          enter-active-class="move-enter-active"
+          leave-active-class="move-leave-active"
+        >
+          <section class="menu" v-if="moveMenu">
+            <div class="delectButton">
+              <i @click="closeMenu()" class="el-icon-close"></i>
+            </div>
+            <h2 @click="toAllServerStatus()">Menu</h2>
+            <ul>
+              <li>menu 1</li>
+            </ul>
+          </section>
+        </transition>
+        <section :class="{leftMain:moveMenu,rightMain:!moveMenu}">
+          <div style="height:1rem;">
+            <transition
+              enter-active-class="move-enter-active"
+              leave-active-class="move-leave-active"
+            >
+              <section class="delectButton" v-if="!moveMenu">
+                <i @click="clickMenu()" class="el-icon-d-arrow-right"></i>
+              </section>
+            </transition>
+          </div>
+          <div>
+            <h1>
+              Server
+            </h1>
+          </div>
+          <div>
+            <section id="allServerStatus">
+              <h2>
+                All Server Status
+              </h2>
+              Main
+            </section>
+          </div>
+        </section>
+      </section>
+    </div>
+    <script>
+      new Vue({
+        data: {
+          moveMenu: false
+        },
+        methods: {
+          clickMenu() {
+            this.moveMenu = !this.moveMenu
+          },
+          closeMenu() {
+            this.moveMenu = false
+          }
+        }
+      }).$mount('#app')
+    </script>
+  </body>
+</html>

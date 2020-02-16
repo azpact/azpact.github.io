@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/element-ui/lib/theme-chalk/index.css"
+    />
+    <script
+      src="https://code.jquery.com/jquery-3.4.1.min.js"
+      integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.js"></script>
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <div>
+        <h2>Prop 一層一層傳遞下去</h2>
+        <v-component-a></v-component-a>
+      </div>
+      <div>
+        <h2>Prop 透過 $attrs 從組件最上層傳到最下層</h2>
+        <v-a></v-a>
+      </div>
+    </div>
+    <script>
+      let v_componentC = {
+        props: {
+          CgetText: ""
+        },
+        template: `<div>This is Data C >> {{CgetText}}</div>`
+      };
+      let v_componentB = {
+        props: {
+          BgetText: ""
+        },
+        template: `<div>This is Data B >> {{BgetText}} <v-c :CgetText="BgetText"></v-c></div>`,
+        components: {
+          "v-c": v_componentC
+        }
+      };
+      let v_componentA = {
+        data() {
+          return {
+            text: "From Data A 100"
+          };
+        },
+        template: `<div>This is Data A <v-b :BgetText="text"></v-b></div>`,
+        components: {
+          "v-b": v_componentB
+        }
+      };
+
+      let v_c = {
+        props: ["text"],
+        template: `<div>這是資料 C {{text}}</div>`,
+        created() {
+          console.log(this.$attrs);
+        }
+      };
+      let v_b = {
+        props: ["msg"],
+        template: `<div>這是資料 B {{msg}} <v-c v-bind="$attrs" age="22"></v-c></div>`,
+        components: {
+          "v-c": v_c
+        },
+        created() {
+          console.log(this.$attrs);
+        }
+      };
+      let v_a = {
+        data() {
+          return {
+            text: "這是來自 A 資料",
+            msg: 100
+          };
+        },
+        template: `<div>這是資料 A <v-b :msg="msg" :text="text"></v-b></div>`,
+        components: {
+          "v-b": v_b
+        }
+      };
+
+      new Vue({
+        data: {
+          //
+        },
+        components: {
+          "v-component-a": v_componentA,
+          "v-a": v_a
+        }
+      }).$mount("#app");
+    </script>
+  </body>
+</html>

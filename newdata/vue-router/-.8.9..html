@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/element-ui/lib/theme-chalk/index.css"
+    />
+    <script
+      src="https://code.jquery.com/jquery-3.4.1.min.js"
+      integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.js"></script>
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+    <style>
+      a {
+        text-decoration: none;
+      }
+      .layout {
+        background-color: #eee;
+        display: flex;
+      }
+
+      .layout > div {
+        width: 20%;
+        border: 5px solid #444;
+      }
+      .layout > div a {
+        display: block;
+        height: 3rem;
+        line-height: 3rem;
+        text-align: center;
+        transition: 0.3s all;
+      }
+      .layout > div a:hover {
+        background-color: #333;
+        color: #fff;
+      }
+      .layout > section {
+        width: 80%;
+      }
+      .layout > section div {
+        height: 100%;
+      }
+      .layout > section > div:nth-child(1) {
+        background-color: burlywood;
+      }
+      .layout > section > div:nth-child(2) {
+        background-color: cornflowerblue;
+      }
+      .layout > section > div:nth-child(3) {
+        background-color: rgb(223, 237, 100);
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <div>
+        <router-link to="/">Home</router-link>
+        <router-link to="/other">Other</router-link>
+      </div>
+      <div class="layout">
+        <router-view></router-view>
+        <section>
+          <router-view name="a"></router-view>
+          <router-view name="b"></router-view>
+          <router-view name="c"></router-view>
+        </section>
+      </div>
+    </div>
+    <script>
+      // 組件
+      const User = {
+        template: `
+          <div class="user">
+            <h2>User 當前 Id: {{ $route.params.id }}</h2>
+            <router-view></router-view>
+          </div>
+        `
+      };
+
+      const UserHome = {
+        template: `<div>
+        <router-link to='/'>Home</router-link><br>
+        <router-link to="/other">Other</router-link>
+        </div>`
+      };
+      const UserFoo = { template: "<div>Foo..</div>" };
+      const UserBar = { template: "<div>Bar...</div>" };
+      const UserMain = { template: "<div>Main...</div>" };
+      // router.js
+      const routes = [
+        {
+          path: "/",
+          components: {
+            default: UserHome,
+            a: UserFoo,
+            b: UserBar
+          }
+        },
+        {
+          path: "/other",
+          components: {
+            default: UserHome,
+            a: UserBar,
+            b: UserFoo,
+            c: UserMain
+          }
+        }
+      ];
+      // main.js
+      const router = new VueRouter({
+        routes
+      });
+      new Vue({
+        router,
+        data() {
+          return {
+            ms: "123"
+          };
+        }
+      }).$mount("#app");
+    </script>
+  </body>
+</html>

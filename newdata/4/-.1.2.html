@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>Document</title>
+  <link
+  rel="stylesheet"
+  href="https://unpkg.com/element-ui/lib/theme-chalk/index.css"
+  />
+  <script
+  src="https://code.jquery.com/jquery-3.4.1.min.js"
+  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+  crossorigin="anonymous"
+  ></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.js"></script>
+  <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+</head>
+<body>
+  <div id="app">
+    <input type="text" v-model="addValue" placeholder="addValue"  />
+    <ul v-for="(item,index) in listOne">
+      <li>{{item.value}}</li>
+    </ul>
+    <button @click="add()">add</button>
+  </div>
+  <script>
+   let listOne = [
+     {
+      value: "5.1",
+      label: "總編輯",
+      image: "assets/1.gif",
+      styleValue: 1,
+      style: "font-weight:bold;margin-left:0",
+      status: "warning",
+      modify: false,
+      text: "...",
+      labelLink:"#總編輯"
+      },
+      {
+        value: "1.8.1",
+        label: "初始樣板-文件版",
+        image: "assets/750x464.jpg",
+        styleValue: 2,
+        style: "margin-left:1rem;",
+        status: "warning",
+        modify: true,
+        text: "...2",
+        labelLink:"#初始樣板-文件版"
+      },
+      {
+        value: "1.5.5",
+        label: "初始樣板-CDN版",
+        image: "assets/750x464.jpg",
+        styleValue: 2,
+        style: "margin-left:1rem;",
+        status: "warning",
+        modify: true,
+        text: "...3",
+        labelLink:"#初始樣板-CDN版"
+      },
+      {
+        value: "1.5.2",
+        label: "開始編輯",
+        image: "assets/750x464.jpg",
+        styleValue: 1,
+        style: "font-weight:bold;margin-left:0",
+        status: "warning",
+        modify: true,
+        text: "...4",
+        labelLink:"#開始編輯"
+      },
+      {
+        value: "15.3.8",
+        label: "開始編輯",
+        image: "assets/750x464.jpg",
+        styleValue: 1,
+        style: "font-weight:bold;margin-left:0",
+        status: "warning",
+        modify: true,
+        text: "...4",
+        labelLink:"#開始編輯"
+      },
+      {
+        value: "9.3.8",
+        label: "開始編輯",
+        image: "assets/750x464.jpg",
+        styleValue: 1,
+        style: "font-weight:bold;margin-left:0",
+        status: "warning",
+        modify: true,
+        text: "...4",
+        labelLink:"#開始編輯"
+      }
+    ];
+  new Vue({
+    data() {
+      return {
+        addValue:"",
+        rows:{},
+        listOne:listOne,
+      };
+    },
+    methods:{
+    add(){
+      // s0 原始資料 [{ value:"12.1.6"},{value:"13.2.5"}...]
+      // s1 瀏覽器新增一筆物件到原始資料末 
+      //    this.rows = {value:"12.1.6"}
+      // s2 新增屬性與分割儲存 
+      //    { value:"12.1.6",LvOne:"12",LvTwo:"1",Three:"6"} 
+      // s3 排序 LvOne 
+      //    if LvOne(a,b) a 與 b 相同時
+      // s4 排序 LvTwo [僅限排序 LvOne 相同的物件做排序]
+      //    if LvTwo(a,b) a 與 b 相同時
+      // s5 排序 LvThree
+      // s6 刪除屬性 LvOne、LvTwo、LvThree 只有 value 屬性 {value:""}
+      // s7 畫面更新
+      let [that,p] = [this,this.listOne]
+      let value = []
+
+        // 增加物件筆數
+        that.rows = {
+          value:that.addValue
+        }
+        p.push(that.rows)
+
+        // 分割單一屬性值
+        value = p.map((e)=>{
+          return e.value.split('.')
+        })
+        // 增加屬性一個屬性值
+        value.map((e,i)=>{
+          return that.$set(p[i],"LvOne",e[0])
+        })
+        value.map((e,i)=>{
+          return that.$set(p[i],"LvTwo",e[1])
+        })
+        value.map((e,i)=>{
+          return that.$set(p[i],"LvThree",e[2])
+        })
+        // 排序一個屬性值
+        p.sort(function(a,b){
+          let [aLvOne,bLvOne] = [Number(a.LvOne),Number(b.LvOne)]
+          return aLvOne > bLvOne
+        })
+        p.sort(function(a,b){
+          let [aLvOne,bLvOne] = [Number(a.LvOne),Number(b.LvOne)]
+          let [aLvTwo,bLvTwo] = [Number(a.LvTwo),Number(b.LvTwo)]
+          if( aLvOne == bLvOne ){
+            return aLvTwo > bLvTwo
+          }
+        })
+        p.sort(function(a,b){
+          let [aLvOne,bLvOne] = [Number(a.LvOne),Number(b.LvOne)]
+          let [aLvTwo,bLvTwo] = [Number(a.LvTwo),Number(b.LvTwo)]
+          let [aLvThree,bLvThree] = [Number(a.LvThree),Number(b.LvThree)]
+          if( aLvOne == bLvOne){
+            if(aLvTwo == bLvTwo){
+              return aLvThree > bLvThree
+            }
+          }
+        })
+        // 刪除一個屬性值
+        p.map((e,i)=>{
+          return that.$delete(p[i],"LvOne")
+        })
+        p.map((e,i)=>{
+          return that.$delete(p[i],"LvTwo")
+        })
+        p.map((e,i)=>{
+          return that.$delete(p[i],"LvThree")
+        })
+      }
+    }
+  }).$mount("#app");
+
+ </script>
+</body>
+</html>

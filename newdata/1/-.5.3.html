@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/element-ui/lib/theme-chalk/index.css"
+    />
+    <script
+      src="https://code.jquery.com/jquery-3.4.1.min.js"
+      integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.js"></script>
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <style>
+      @media only screen and (min-width: 900px) {
+        body {
+          background-color: rgb(255, 221, 159);
+        }
+      }
+      @media only screen and (min-width: 741px) and (max-width: 899px) {
+        body {
+          background-color: rgb(141, 117, 192);
+        }
+      }
+      @media only screen and (max-width: 740px) {
+        body {
+          background-color: rgb(129, 207, 152);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script>
+      new Vue({
+        data() {
+          return {
+            inputOne: "123"
+          };
+        },
+        computed: {
+          anchor: function() {
+            return `#${this.inputOne}`;
+          }
+        }
+      }).$mount("#app");
+    </script>
+  </body>
+</html>

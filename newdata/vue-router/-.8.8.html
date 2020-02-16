@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/element-ui/lib/theme-chalk/index.css"
+    />
+    <script
+      src="https://code.jquery.com/jquery-3.4.1.min.js"
+      integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.js"></script>
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+    <style>
+      .menu {
+        display: inline-block;
+        margin-right: 0.5rem;
+      }
+      .menu a {
+        color: #333;
+        text-decoration: none;
+        padding: 0.9rem 0.5rem;
+      }
+      .menu a:hover {
+        background-color: rgb(240, 205, 205);
+        border-top: 3px solid #385;
+        border-bottom: 3px solid #385;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <h2>Rouer-Link</h2>
+      <div v-for="item in list" :key="item.id" class="menu">
+        <router-link :to="item.to">{{item.label}}</router-link>
+      </div>
+      <router-view></router-view>
+    </div>
+    <script>
+      // 組件
+      const User = {
+        template: `
+          <div class="user">
+            <h2>User 當前 Id: {{ $route.params.id }}</h2>
+            <router-view></router-view>
+          </div>
+        `
+      };
+
+      const UserHome = { template: "<div>Home..</div>" };
+      const UserFoo = { template: "<div>Foo..</div>" };
+      const UserBar = { template: "<div>Bar...</div>" };
+      // router.js
+      const routes = [
+        {
+          path: "/user/:id",
+          component: User,
+          children: [
+            { path: "", component: UserHome, name: "userHome" },
+            { path: "foo", component: UserFoo, name: "userFoo" },
+            { path: "bar", component: UserBar, name: "userBar" }
+          ]
+        }
+      ];
+      // main.js
+      const router = new VueRouter({
+        routes
+      });
+      new Vue({
+        router,
+        data() {
+          return {
+            ms: "123",
+            list: [
+              { label: "Home", to: { name: "userHome", params: { id: 1 } } },
+              { label: "Foo", to: { name: "userFoo", params: { id: 2 } } },
+              { label: "Bar", to: { name: "userBar", params: { id: 3 } } }
+            ]
+          };
+        }
+      }).$mount("#app");
+    </script>
+  </body>
+</html>

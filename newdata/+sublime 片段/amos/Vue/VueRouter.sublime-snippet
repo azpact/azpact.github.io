@@ -1,0 +1,27 @@
+<snippet>
+  <content><![CDATA[<template>
+<div>
+  <router-link to="/use/foo"></router-link>
+  <router-link to="/use/bar"></router-link>
+</div>
+</template>
+<script>
+// 組件
+const Foo = { template: "<div>foo</div>" };
+const Bar = { template: "<div>bar</div>" };
+// router.js
+const routes = [
+  { path: "/use/foo", component: Foo },
+  { path: "/use/bar", component: Bar }
+];
+// main.js
+const router = new VueRouter({
+  routes
+});
+// el 加上
+router
+</script>
+]]></content>
+  <tabTrigger>am_vue_router</tabTrigger>
+  <description>ue Router 實例片段</description>
+</snippet>

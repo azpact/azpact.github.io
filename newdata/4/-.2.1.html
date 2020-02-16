@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/element-ui/lib/theme-chalk/index.css"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.js"></script>
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <div>
+        <ul v-for="(item,index) in listOne" :key="item.id">
+          <li style="display:flex">
+            <span>
+              {{item.label}}
+            </span>
+            <div style="display:flex">
+              <i
+                @click="fspliceTop(index)"
+                class="el-icon-caret-top"
+                title="Top"
+              ></i>
+              <i
+                @click="fspliceDown(index)"
+                class="el-icon-caret-bottom"
+                title="Down"
+              ></i>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <script>
+      let listOne = [
+        { label: "你好" },
+        { label: "大家好" },
+        { label: "昨日安好" }
+      ];
+      new Vue({
+        data: {
+          listOne: listOne
+        },
+        methods: {
+          fspliceTop(index) {
+            let p = this.listOne;
+            let i = index;
+            if (i > 0) {
+              //限制 i 操作 1
+              p.splice(i - 1, 0, p[i]); //新增一個新的
+              p.splice(i + 1, 1); // 刪除原本的
+            }
+          },
+          fspliceDown(index) {
+            let p = this.listOne;
+            let i = index;
+            p.splice(i + 2, 0, p[i]);
+            p.splice(i, 1);
+          }
+        }
+      }).$mount("#app");
+    </script>
+  </body>
+</html>

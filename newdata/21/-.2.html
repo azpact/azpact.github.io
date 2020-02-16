@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/element-ui/lib/theme-chalk/index.css"
+    />
+    <script
+      src="https://code.jquery.com/jquery-3.4.1.min.js"
+      integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.js"></script>
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <style>
+      * {
+        margin: 0;
+      }
+      #app {
+        display: flex;
+      }
+      section {
+        color: #fff;
+        background-color: rgb(56, 56, 56);
+        border: 1px solid black;
+      }
+      section:nth-child(1) {
+        width: 30%;
+        overflow-y: scroll;
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100vh;
+      }
+      section:nth-child(2) {
+        margin-left: 30%;
+        width: 70%;
+        height: 120vh;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <section>
+        12322
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        1231
+      </section>
+      <section>
+        右側
+      </section>
+    </div>
+    <script>
+      new Vue({
+        data: {
+          ms: "123"
+        },
+        mounted() {
+          // 接API通常放這兒
+          $.ajax({
+            url: endpoint
+          }).done(res => console.log(JSON.parse(res)));
+        },
+        methods: {
+          //各種要用的 function 寫在這
+          m1: function(event) {
+            //方法一
+          }
+        },
+        computed: {
+          //計算屬性
+          c1: function() {
+            //計算一
+            return this.col1 + " " + this.col2;
+          }
+        }
+      }).$mount("#app");
+    </script>
+  </body>
+</html>

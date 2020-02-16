@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/element-ui/lib/theme-chalk/index.css"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.js"></script>
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+  </head>
+  <style>
+    body {
+      /* text-align: center;  */
+      margin: auto 5%;
+    }
+    h2 {
+      box-shadow: 1px 1px 2px rgb(161, 161, 161);
+    }
+    .text-left {
+      text-align: left;
+    }
+
+    .el-icon-error,
+    .el-icon-warning,
+    .el-icon-success {
+      font-size: 2.5rem;
+    }
+    .el-icon-error {
+      color: #f56c6c;
+    }
+    .el-icon-warning {
+      color: #e6a23c;
+    }
+    .el-icon-success {
+      color: #67c23a;
+    }
+    .styleOne,
+    .styleTwo {
+      padding-left: 10%;
+    }
+    .styleOne > .el-col:nth-of-type(1) {
+      padding-bottom: 2rem;
+    }
+    .styleOne > .el-col:nth-of-type(2),
+    .styleTwo > .el-col:nth-of-type(3) {
+      border: 1px solid rgba(102, 102, 102, 0.37);
+    }
+    .styleOne > .el-col:nth-of-type(2) div,
+    .styleTwo > .el-col:nth-of-type(3) .el-col:nth-of-type(1) {
+      padding: 0.3rem 2rem;
+      min-height: 150px;
+      /* background-color: blanchedalmond; */
+      background-image: url('background.png');
+      width: 50%;
+      max-width: 50vw;
+    }
+    .styleOne > .el-col:nth-of-type(2) section i {
+      text-align: right;
+      position: absolute;
+      top: 80px;
+      right: 15px;
+    }
+    .styleTwo > .el-col:nth-of-type(3) .el-col:nth-of-type(2) i {
+      position: absolute;
+      top: 8px;
+      right: 12px;
+    }
+    footer {
+      height: 5rem;
+    }
+  </style>
+  <body>
+    <div id="app">
+      <main>
+        <h2>下拉燈號</h2>
+        <el-row class="styleOne">
+          <el-col :span="24">
+            <el-select v-model="selectValue">
+              <el-option-group
+                v-for="group in listOne"
+                :key="group.label"
+                :label="group.label"
+              >
+                <el-option
+                  v-for="item in group.options"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value"
+                >
+                  <span>{{ item.label }}</span>
+                  <span style="float:right">
+                    <div v-for="light in listLightStatus" :key="light.id">
+                      <i
+                        v-if="light.check==item.lightStatus"
+                        :class="light.class"
+                        style="font-size:1.5rem;"
+                      ></i>
+                    </div>
+                  </span>
+                </el-option>
+              </el-option-group>
+            </el-select>
+          </el-col>
+        </el-row>
+      </main>
+      <footer></footer>
+    </div>
+  </body>
+  <script>
+    // API 接口
+    // lightStatus 燈狀態
+    // listOne 清單一
+    let listOne = [
+      {
+        label: 'Calient',
+        options: [
+          {
+            label: 'Calient_1',
+            value: 'ca1',
+            text: '關於 Calient_1 設備描述',
+            lightStatus: 'success'
+          },
+          {
+            label: 'Calient_2',
+            value: 'ca2',
+            text: '關於 Calient_2 設備描述',
+            lightStatus: 'success'
+          },
+          {
+            label: 'Calient_3',
+            value: 'ca3',
+            text: '關於 Calient_3 設備描述',
+            lightStatus: 'success'
+          },
+          {
+            label: 'Calient_4',
+            value: 'ca4',
+            text: '關於 Calient_4 設備描述',
+            lightStatus: 'success'
+          },
+          {
+            label: 'Calient_5',
+            value: 'ca5',
+            text: '關於 Calient_5 設備描述',
+            lightStatus: 'warning'
+          }
+        ]
+      },
+      {
+        label: 'Cubro',
+        options: [
+          {
+            label: 'Cubro_1',
+            value: 'cu1',
+            text: '關於 Cubro_1 設備描述',
+            lightStatus: 'success'
+          },
+          {
+            label: 'Cubro_2',
+            value: 'cu2',
+            text: '關於 Cubro_2 設備描述',
+            lightStatus: 'success'
+          },
+          {
+            label: 'Cubro_3',
+            value: 'cu3',
+            text: '關於 Cubro_3 設備描述',
+            lightStatus: 'success'
+          },
+          {
+            label: 'Cubro_4',
+            value: 'cu4',
+            text: '關於 Cubro_4 設備描述',
+            lightStatus: 'success'
+          },
+          {
+            label: 'Cubro_5',
+            value: 'cu5',
+            text: '關於 Cubro_5 設備描述',
+            lightStatus: 'success'
+          }
+        ]
+      }
+    ]
+    new Vue({
+      data() {
+        return {
+          selectValue: '請下拉選擇',
+          listOne: listOne,
+          listLightStatus: [
+            { class: 'el-icon-error', check: 'danger' },
+            { class: 'el-icon-warning', check: 'warning' },
+            { class: 'el-icon-success', check: 'success' }
+          ]
+        }
+      },
+      computed: {},
+      methods: {
+        getLightStatus(val) {
+          this.lightStatus = val
+        },
+        feachData() {
+          //按下按鈕，response 成功時匯入資料
+          let instance = axios.create({
+            timeout: 6000,
+            headers: {
+              'secret-key':
+                '$2a$10$XflNqIVbG42ADERhOMsvp.KChlqUCodB/fEQFGSdjmIfKOqonOJci'
+            }
+          })
+          instance
+            .get('https://api.jsonbin.io/b/5da135f1d652575452b5b09e')
+            .then(response => (this.listTwo = response.data.data))
+            .catch(function(error) {
+              console.log(error)
+            })
+          this.checkStatus()
+        },
+        checkStatus() {
+          //解析出 status
+          //  return this.listTwo
+          let t = 0
+          let fliter = this.listTwo.filter(function(item, index, array) {
+            if (item.status === 1) {
+              t++
+            }
+          })
+          this.lightStatus = t
+        },
+        showLight() {
+          if (this.checkLight > 3) {
+            this.lightStatus = 'success'
+          } else {
+            this.lightStatus = 'danger'
+          }
+          console.log(this.lightStatus)
+        }
+      }
+    }).$mount('#app')
+  </script>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/element-ui/lib/theme-chalk/index.css"
+    />
+    <script
+      src="https://code.jquery.com/jquery-3.4.1.min.js"
+      integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.js"></script>
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <v-base :put_num="dnum"></v-base>
+      <v-base title="行內輸入"></v-base>
+      <v-base :title="ms"></v-base>
+      <v-base :title="listOne[0].label"></v-base>
+      <v-base :put_object="listOne[0]"></v-base>
+      <v-base :put_array="listOne"></v-base>
+    </div>
+    <script>
+      Vue.component("v-base", {
+        props: {
+          title: String,
+          put_num: Number,
+          put_array: Array,
+          put_object: Object
+        },
+        template: `<div> Base Test... {{title}}{{put_object}}{{put_array}} {{put_num}} </div>`
+      });
+
+      new Vue({
+        data: {
+          ms: "根實例輸入",
+          dnum: 212,
+          listOne: [
+            { label: "根實例 物件輸入" },
+            { label: "看到這段表示，根實例 陣列輸入" }
+          ]
+        }
+      }).$mount("#app");
+    </script>
+  </body>
+</html>

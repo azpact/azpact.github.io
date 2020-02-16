@@ -1,0 +1,5 @@
+<snippet>
+  <content><![CDATA[this.\$emit("$1emit"$0)]]></content>
+  <tabTrigger>am_vue_emit</tabTrigger>
+  <description>$emit 片段</description>
+</snippet>
