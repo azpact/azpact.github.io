@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<meta
+	 name="description"
+	 content="個人所製作的網站"
+	>
+	<meta
+	 name="keywords"
+	 content="HTML,CSS,JavaScript,PHP,IPMA"
+	>
+	<meta
+	 name="author"
+	 content="Li LUXUAN"
+	>
+	<meta
+	 name="viewport"
+	 content="width=device-width, initial-scale=1.0"
+	>
+	<title>Learning Distribution - Deer Blog</title>
+	<link
+	 rel="icon"
+	 type="images/png"
+	 href="../images/logo.png"
+	>
+	<link
+	 rel="stylesheet"
+	 type="text/css"
+	 href="../css/reset.css"
+	>
+	<link
+	 rel="stylesheet"
+	 href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+	>
+	<link
+	 rel="stylesheet"
+	 type="text/css"
+	 href="../css/common.css"
+	>
+	<link
+	 rel="stylesheet"
+	 type="text/css"
+	 href="../css/webfonts/webfonts.css"
+	>
+	<link
+	 rel="stylesheet"
+	 type="text/css"
+	 href="../css/style.css"
+	>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+	<script src="../js/jquery-3.3.1.js"></script>
+	<script src="../js/script.js"></script>
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script
+	 async
+	 src="https://www.googletagmanager.com/gtag/js?id=UA-124802210-1"
+	></script>
+</head>
+
+<body
+ data-spy="scroll"
+ data-target=".navbar"
+ data-offset="10"
+>
+	<div id="gotop"><a
+		 href="#pageheader"
+		 class="icon-angle-double-up"
+		></a></div>
+	<div>
+		<header id="indexheader">
+			<section
+			 id="t-navbar"
+			 class="fixed flexbox"
+			>
+				<div class="flexboxc p-3">
+					<img
+					 src="../images/logo.png"
+					 alt="網站icon"
+					 class="p-1"
+					>
+					<h1>Deer website</h1>
+				</div>
+				<div id="t-icon">
+					<span class="icon-align-justify"></span>
+				</div>
+				<div id="t-pnav">
+					<div
+					 id="accordion"
+					 class="p-1"
+					>
+						<div class="card">
+							<div
+							 class="card-header"
+							 data-toggle="collapse"
+							 href="#collapseOne"
+							>
+								<a class="card-link">
+									<a href="../index.html">Home / 首頁 </a><span class="icon-chevron-down"></span>
+								</a>
+							</div>
+							<div
+							 id="collapseOne"
+							 class="collapse"
+							 data-parent="#accordion"
+							>
+								<div class="card-body">
+									<ul>
+										<li><a href="latest-articles.html">最新文章</a></li>
+										<li><a href="recent-news.html">最近新聞</a></li>
+										<li><a
+											 href="https://dq.yam.com/list.php"
+											 target="_blank"
+											>網路文章</a></li>
+									</ul>
+								</div>
+							</div>
+						</div>
+						<div class="card">
+							<div
+							 class="card-header"
+							 data-toggle="collapse"
+							 href="#collapseTwo"
+							>
+								<a class="collapsed card-link">
+									<a href="about-me.html">ABOUT ME / 關於我 </a><span class="icon-chevron-down"></span>
+								</a>
+							</div>
+							<div
+							 id="collapseTwo"
+							 class="collapse"
+							 data-parent="#accordion"
+							>
+								<div class="card-body">
+									<ul>
+										<li><a href="learning-distribution.html">學習分佈</a></li>
+										<li><a
+											 href="https://dotblogs.com.tw/deer_nots/2018/10/23/031950"
+											 target="_blank"
+											>Vue notes</a></li>
+										<li><a
+											 href="http://www.dungeonsanddevelopers.com/#_a2b2dhklm_19_Deer"
+											 target="_blank"
+											>網站天賦樹</a></li>
+										<li><a href="about-website.html">關於本站</a></li>
+									</ul>
+								</div>
+							</div>
+						</div>
+						<div class="card">
+							<div
+							 class="card-header"
+							 data-toggle="collapse"
+							 href="#collapseThree"
+							>
+								<a class="collapsed card-link">
+									<a href="contact-me.html">CONTACTS / 聯絡我 </a><span class="icon-chevron-down"></span>
+								</a>
+							</div>
+							<div
+							 id="collapseThree"
+							 class="collapse"
+							 data-parent="#accordion"
+							>
+								<div class="card-body">
+									<ul>
+										<li><a href="track-me.html">追蹤我</a></li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div
+				 id="t-nav"
+				 class="flexboxsp"
+				>
+					<ul class="relativeR">
+						<li class="relativeR"><a href="../index.html"><span>Home </span>首頁</a>
+							<div class="relativeA icon-caret-down ticon"></div>
+							<ul class="relativeA">
+								<li><a href="latest-articles.html">最新文章</a></li>
+								<li><a href="recent-news.html">最近新聞</a></li>
+								<li><a
+									 href="https://dq.yam.com/list.php"
+									 target="_blank"
+									>網路文章</a></li>
+							</ul>
+						</li>
+						<li class="relativeR"><a href="about-me.html"><span>ABOUT ME </span>關於我</a>
+							<div class="relativeA icon-caret-down ticon"></div>
+							<ul class="relativeA">
+								<li><a href="learning-distribution.html">學習分佈</a></li>
+								<li><a
+									 href="https://dotblogs.com.tw/deer_nots/2018/10/23/031950"
+									 target="_blank"
+									>Vue notes</a></li>
+								<li><a
+									 href="http://www.dungeonsanddevelopers.com/#_a2b2dhklm_19_Deer"
+									 target="_blank"
+									>網站天賦樹</a></li>
+								<li><a href="about-website.html">關於本站</a></li>
+							</ul>
+						</li>
+						<li class="relativeR"><a href="contact-me.html"><span>CONTACTS </span>聯絡我</a>
+							<div class="relativeA icon-caret-down ticon"></div>
+							<ul class="relativeA">
+								<li><a href="track-me.html">追蹤我</a></li>
+							</ul>
+						</li>
+					</ul>
+				</div>
+			</section>
+		</header>
+		<main id="pagemainf">
+			<section>&nbsp;</section>
+			<section>
+				<div id="cmain">
+					<div>
+						<h1>學習分佈</h1>
+					</div>
+					<div id="section1">
+						<h2>1:技術熟練</h2>
+						<p></p>
+					</div>
+					<div id="section11">
+						<h2>軟體 <span>Software</span></h2>
+						<table class="t-table">
+							<thead>
+								<tr>
+									<td>項目</td>
+									<td>指標功能</td>
+									<td>熟練百分比</td>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>Visual Studio Cord</td>
+									<td>編寫程式碼</td>
+									<td>
+										<div
+										 class="progress"
+										 style="height:20px !important"
+										>
+											<div
+											 class="progress-bar progress-bar-striped progress-bar-animated bg-success"
+											 style="width:90%"
+											>90%</div>
+										</div>
+										<span>90%</span>
+									</td>
+								</tr>
+								<tr>
+									<td>Microsoft Word 2016</td>
+									<td>文字排版、標題樣式、頁碼使用</td>
+									<td>
+										<div
+										 class="progress"
+										 style="height:20px !important"
+										>
+											<div
+											 class="progress-bar progress-bar-striped progress-bar-animated bg-success"
+											 style="width:90%"
+											>90%</div>
+										</div>
+										<span>90%</span>
+									</td>
+								</tr>
+								<tr>
+									<td>Xmind</td>
+									<td>繪製心智圖，繪製功能地圖(function map)</td>
+									<td>
+										<div
+										 class="progress"
+										 style="height:20px !important"
+										>
+											<div
+											 class="progress-bar progress-bar-striped progress-bar-animated bg-success"
+											 style="width:90%"
+											>90%</div>
+										</div>
+										<span>90%</span>
+									</td>
+								</tr>
+								<tr>
+									<td>Microsoft Access 2010</td>
+									<td>建構主要資料表、查詢資料表、設計1對1與1對多關聯式連結、製作計算報表</td>
+									<td>
+										<div class="progress">
+											<div
+											 class="progress-bar progress-bar-striped progress-bar-animated"
+											 style="width:70%"
+											>70%</div>
+										</div>
+										<span>70%</span>
+									</td>
+								</tr>
+								<tr>
+									<td>Microsoft Visio 2016</td>
+									<td>繪製流程圖、繪製決策樹</td>
+									<td>
+										<div class="progress">
+											<div
+											 class="progress-bar progress-bar-striped progress-bar-animated"
+											 style="width:70%"
+											>70%</div>
+										</div>
+										<span>70%</span>
+									</td>
+								</tr>
+								<tr>
+									<td>Microsoft Excel 2016</td>
+									<td>統計、計算資料</td>
+									<td>
+										<div class="progress">
+											<div
+											 class="progress-bar progress-bar-striped progress-bar-animated"
+											 style="width:60%"
+											>60%</div>
+										</div>
+										<span>60%</span>
+									</td>
+								</tr>
+								<tr>
+									<td>Microsoft Project 2016</td>
+									<td>規劃專案管理、追蹤專案管理</td>
+									<td>
+										<div class="progress">
+											<div
+											 class="progress-bar progress-bar-striped progress-bar-animated"
+											 style="width:60%"
+											>60%</div>
+										</div>
+										<span>60%</span>
+									</td>
+								</tr>
+								<tr>
+									<td>Photoshop CS6</td>
+									<td>影像處理，批次修改檔案名稱</td>
+									<td>
+										<div class="progress">
+											<div
+											 class="progress-bar progress-bar-striped progress-bar-animated bg-secondary"
+											 style="width:20%"
+											>20%</div>
+										</div>
+										<span>20%</span>
+									</td>
+								</tr>
+								<tr>
+									<td>Illustrator CS6</td>
+									<td>平面向量處理，圖像遮色片處理、圖像背景去背處理</td>
+									<td>
+										<div class="progress">
+											<div
+											 class="progress-bar progress-bar-striped progress-bar-animated bg-secondary"
+											 style="width:20%"
+											>20%</div>
+										</div>
+										<span>20%</span>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<div id="section12">
+						<h2>線上軟體 <span>Online Software</span></h2>
+						<table class="t-table">
+							<thead>
+								<tr>
+									<td>項目</td>
+									<td>指標功能</td>
+									<td>熟練百分比</td>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>Google Calendar</td>
+									<td>協作日期事項、規劃日期事項</td>
+									<td>
+										<div
+										 class="progress"
+										 style="height:20px !important"
+										>
+											<div
+											 class="progress-bar progress-bar-striped progress-bar-animated bg-success"
+											 style="width:90%"
+											>90%</div>
+										</div>
+										<span>90%</span>
+									</td>
+								</tr>
+								<tr>
+									<td>Mockflow</td>
+									<td>UI設計，設計網站樣式</td>
+									<td>
+										<div class="progress">
+											<div
+											 class="progress-bar progress-bar-striped progress-bar-animated"
+											 style="width:70%"
+											>70%</div>
+										</div>
+										<span>70%</span>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<div id="section13">
+						<h2>函式庫 <span>Library</span></h2>
+						<table class="t-table">
+							<thead>
+								<tr>
+									<td>項目</td>
+									<td>指標功能</td>
+									<td>熟練百分比</td>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>Bootstrap 4</td>
+									<td>CSS函式庫，跳出警告式窗(modal)</td>
+									<td>
+										<div class="progress">
+											<div
+											 class="progress-bar progress-bar-striped progress-bar-animated "
+											 style="width:60%"
+											>60%</div>
+										</div>
+										<span>60%</span>
+									</td>
+								</tr>
+								<tr>
+									<td>Vue.js</td>
+									<td>前端框架</td>
+									<td>
+										<div class="progress">
+											<div
+											 class="progress-bar progress-bar-striped progress-bar-animated bg-secondary"
+											 style="width:50%"
+											>50%</div>
+										</div>
+										<span>50%</span>
+									</td>
+								</tr>
+								<tr>
+									<td>Smarty</td>
+									<td>後端框架，使用MVC資料架構</td>
+									<td>
+										<div class="progress">
+											<div
+											 class="progress-bar progress-bar-striped progress-bar-animated  bg-secondary"
+											 style="width:40%"
+											>40%</div>
+										</div>
+										<span>40%</span>
+									</td>
+								</tr>
+								<tr>
+									<td>jQuery</td>
+									<td>JavaScript函式庫</td>
+									<td>
+										<div class="progress">
+											<div
+											 class="progress-bar progress-bar-striped progress-bar-animated bg-secondary"
+											 style="width:20%"
+											>20%</div>
+										</div>
+										<span>20%</span>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<div id="section14">
+						<h2>指令 <span>Command</span></h2>
+						<table class="t-table">
+							<thead>
+								<tr>
+									<td>項目</td>
+									<td>指標功能</td>
+									<td>熟練百分比</td>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>Git</td>
+									<td>將資料加入暫存(git add)、將資料加入資料庫(git commit)、將資料上傳遠端(git push)</td>
+									<td>
+										<div class="progress">
+											<div
+											 class="progress-bar progress-bar-striped progress-bar-animated "
+											 style="width:60%"
+											>60%</div>
+										</div>
+										<span>60%</span>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<div id="section2">
+						<h2>2:網路語言</h2>
+						<p></p>
+					</div>
+					<div id="section21">
+						<h2>前端 <span>Front-End</span></h2>
+						<table class="t-table">
+							<thead>
+								<tr>
+									<td>項目</td>
+									<td>指標功能</td>
+									<td>熟練百分比</td>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>HTML</td>
+									<td>適當使用標籤、適當使用id與class</td>
+									<td>
+										<div class="progress">
+											<div
+											 class="progress-bar progress-bar-striped progress-bar-animated bg-success"
+											 style="width:90%"
+											>90%</div>
+										</div>
+										<span>90%</span>
+									</td>
+								</tr>
+								<tr>
+									<td>CSS</td>
+									<td>適當使用選擇器，修飾HTML排版樣式、修飾HTML動畫樣式</td>
+									<td>
+										<div class="progress">
+											<div
+											 class="progress-bar progress-bar-striped progress-bar-animated bg-success"
+											 style="width:90%"
+											>90%</div>
+										</div>
+										<span>90%</span>
+									</td>
+								</tr>
+								<tr>
+									<td>JavaScript</td>
+									<td>適當使用選擇器，操作HTML事件</td>
+									<td>
+										<div class="progress">
+											<div
+											 class="progress-bar progress-bar-striped progress-bar-animated "
+											 style="width:60%"
+											>60%</div>
+										</div>
+										<span>60%</span>
+									</td>
+								</tr>
+								<tr>
+									<td>AJAX</td>
+									<td>使原網頁跳出另一網頁</td>
+									<td>
+										<div class="progress">
+											<div
+											 class="progress-bar progress-bar-striped progress-bar-animated bg-secondary"
+											 style="width:5%"
+											>5%</div>
+										</div>
+										<span>5%</span>
+									</td>
+								</tr>
+								<tr>
+									<td>JSON</td>
+									<td>使用JSON方式傳遞資料</td>
+									<td>
+										<div class="progress">
+											<div
+											 class="progress-bar progress-bar-striped progress-bar-animated bg-secondary"
+											 style="width:5%"
+											>5%</div>
+										</div>
+										<span>5%</span>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<div id="section22">
+						<h2>後端 <span>Back-End</span></h2>
+						<table class="t-table">
+							<thead>
+								<tr>
+									<td>項目</td>
+									<td>指標功能</td>
+									<td>熟練百分比</td>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>PHP</td>
+									<td>使用物件導向</td>
+									<td>
+										<div class="progress">
+											<div
+											 class="progress-bar progress-bar-striped progress-bar-animated bg-secondary"
+											 style="width:20%"
+											>20%</div>
+										</div>
+										<span>20%</span>
+									</td>
+								</tr>
+								<tr>
+									<td>MySQL</td>
+									<td>設計資料庫</td>
+									<td>
+										<div class="progress">
+											<div
+											 class="progress-bar progress-bar-striped progress-bar-animated bg-secondary"
+											 style="width:10%"
+											>10%</div>
+										</div>
+										<span>10%</span>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<div id="section3">
+						<h2>3:專案管理</h2>
+						<p>網站建置專案管理</p>
+					</div>
+					<div id="section4">
+						<h2>4:網路行銷</h2>
+						<p></p>
+					</div>
+					<div id="section5">
+						<h2>5:大數據</h2>
+						<p></p>
+					</div>
+				</div>
+				<div
+				 id="smain"
+				 class="fixed"
+				>
+					<div>
+						<ul id="breadcrumbs">
+							<li><a href="../index.html">首頁</a></li>
+							<li><a href="learning-distribution.html">學習分佈</a></li>
+						</ul>
+					</div>
+					<nav class="navbar bg-dark navbar-dark">
+						<ul class="navbar-nav">
+							<li class="nav-item dropdown">
+								<a
+								 class="nav-link dropdown-toggle"
+								 href="#section1"
+								>1:技術熟練</a>
+								<div>
+									<a
+									 class="dropdown-item nav-link tc"
+									 href="#section11"
+									>軟體</a>
+									<a
+									 class="dropdown-item nav-link tc"
+									 href="#section12"
+									>線上軟體</a>
+									<a
+									 class="dropdown-item nav-link tc"
+									 href="#section13"
+									>函式庫</a>
+									<a
+									 class="dropdown-item nav-link tc"
+									 href="#section14"
+									>指令</a>
+								</div>
+							</li>
+							<li class="nav-item dropdown">
+								<a
+								 class="nav-link dropdown-toggle"
+								 href="#section2"
+								>2:網路語言</a>
+								<div>
+									<a
+									 class="dropdown-item nav-link tc"
+									 href="#section21"
+									>前端</a>
+									<a
+									 class="dropdown-item nav-link tc"
+									 href="#section22"
+									>後端</a>
+								</div>
+							</li>
+							<li class="nav-item">
+								<a
+								 class="nav-link"
+								 href="#section3"
+								>3:專案管理</a>
+							</li>
+							<li class="nav-item">
+								<a
+								 class="nav-link"
+								 href="#section4"
+								>4:網路行銷</a>
+							</li>
+							<li class="nav-item">
+								<a
+								 class="nav-link"
+								 href="#section5"
+								>5:大數據</a>
+							</li>
+						</ul>
+					</nav>
+				</div>
+			</section>
+		</main>
+		<footer
+		 id="pagefooter"
+		 class="p-5"
+		>
+			<div class="width1280">
+				<section class="flexboxsp">
+					<div>
+						<h3>導覽列</h3>
+						<table class="t-table2">
+							<tr>
+								<td><a href="../index.html">首頁</a></td>
+								<td><a href="latest-articles.html">最新文章</a></td>
+							</tr>
+							<tr>
+								<td></td>
+								<td><a href="recent-news.html">最近新聞</a></td>
+							</tr>
+							<tr>
+								<td></td>
+								<td><a
+									 href="https://dq.yam.com/list.php"
+									 target="_blank"
+									>網路文章</a></td>
+							</tr>
+							<tr>
+								<td><a href="about-me.html">關於我</a></td>
+								<td><a href="learning-distribution.html">學習分佈</a></td>
+							</tr>
+							<tr>
+								<td></td>
+								<td><a
+									 href="https://dotblogs.com.tw/deer_nots/2018/10/23/031950"
+									 target="_blank"
+									>Vue notes</a></td>
+							</tr>
+							<tr>
+								<td></td>
+								<td><a
+									 href="http://www.dungeonsanddevelopers.com/#_a2b2dhklm_19_Deer"
+									 target="_blank"
+									>網站天賦樹</a></td>
+							</tr>
+							<tr>
+								<td></td>
+								<td><a href="about-website.html">關於本站</a></td>
+							</tr>
+							<tr>
+								<td><a href="contact-me.html">聯絡我</a></td>
+								<td><a href="track-me.html">追蹤我</a></td>
+							</tr>
+						</table>
+					</div>
+					<div>
+						<h3>網路文章</h3>
+						<ul>
+							<li><a
+								 href="https://dq.yam.com/list.php"
+								 target="_blank"
+								>地球圖輯隊</a></li>
+							<li><a
+								 href="https://www.thenewslens.com/"
+								 target="_blank"
+								>關鍵評論</a></li>
+							<li><a
+								 href="https://www.bnext.com.tw"
+								 target="_blank"
+								>數位時代</a></li>
+							<li><a
+								 href="https://www.inside.com.tw"
+								 target="_blank"
+								>INSIDE</a></li>
+							<li><a
+								 href="https://tympanus.net/codrops"
+								 target="_blank"
+								>codrops</a></li>
+						</ul>
+					</div>
+					<div>
+						<h3>追蹤我</h3>
+						<ul>
+							<li><span class="icon-instagram"></span><a
+								 href="https://www.instagram.com/luxuan2651/"
+								 target="_blank"
+								>Instagram</a></li>
+							<li><span class="icon-facebook-1"><a
+									 href="https://www.facebook.com/l1704"
+									 target="_blank"
+									>FACEBOOK</a></li>
+							<li><img
+								 src="../images/github.png"
+								 alt="GitHub"
+								><a
+								 href="https://github.com/azpact"
+								 target="_blank"
+								>GitHub</a></li>
+						</ul>
+					</div>
+					<div>
+						<h3>聯絡我</h3>
+						<table class="t-table2">
+							<tr>
+								<td><span class="icon-home-house-streamline"></span></td>
+								<td>新北市樹林區</td>
+							</tr>
+							<tr>
+								<td><span class="icon-phone-square"></span></td>
+								<td>手機:0973-XXX-XXX</td>
+							</tr>
+							<tr>
+								<td><span class="icon-envelope"></span></td>
+								<td>信箱:w53652456@gmail.com</td>
+							</tr>
+						</table>
+					</div>
+				</section>
+				<section class="flexboxl mt-5">
+					<div class="flexboxc">
+						<div><img
+							 src="../images/logo.png"
+							 alt="圖示"
+							></div>
+						<span>Personal website</span>
+					</div>
+					<div class="flexboxc">
+						<span>©2018&nbsp;|&nbsp;<a href="#">版權所有</a></span>
+					</div>
+				</section>
+			</div>
+		</footer>
+	</div>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag() { dataLayer.push(arguments); }
+		gtag('js', new Date());
+
+		gtag('config', 'UA-124802210-1');
+	</script>
+</body>
+
+</html>

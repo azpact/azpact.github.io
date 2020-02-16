@@ -1,0 +1,84 @@
+@charset "UTF-8";
+
+
+/*common.css 標準化樣式*/
+
+	/*--- 區塊 ---*/
+	.flexbox,.flexboxl,.flexboxr,.flexboxc,.flexboxsp{display:flex;flex-wrap:wrap;}
+	.flexboxl{justify-content:left;}
+	.flexboxr{justify-content:right;}
+	.flexboxc{justify-content:center;}
+	.flexboxsp{justify-content:space-between;}
+	.gridbox{display:grid;}
+	.fixed{position:fixed;top:0px;left:0px;}
+	.relativeR{position:relative;}
+	.relativeA{position:absolute;top:0px;left:0px;}
+
+	.cred{background-color:red;}
+	.lv1{background-color:#F2F0F0;}
+	.lv2{background-color:#676666;}
+
+		/*--- div.label-block>section>div*2 ---*/
+		.label-block section{display:flex;flex-wrap:wrap;justify-content:space-between;width:100%;border-top:1px solid #111;padding:0.5rem;line-height:1.5rem;letter-spacing:0.15px;font-size:1.1rem;}
+		.label-block section>div:nth-of-type(1),.label-block section>div:nth-of-type(2){background-color:#fdfddd;}
+		.label-block section>div:nth-of-type(1){width:10%;}
+		.label-block section>div:nth-of-type(2){width:90%;}
+
+		/*--- div.rcode>code ---*/
+		.rcode{width:100%;padding:1rem;background-color:#ffe6e6;font-weight:bold;}
+		.rcode code{color:#ff4d4d;}
+		.rcode span{font-size:0.9rem;color:#111;margin-left:0.8rem;}
+	
+		/*--- div.color-code>section>div*2 ---*/
+		.color-code{width:100%;font-size:1.5rem;font-weight:bold;}
+		.color-code div{width:100%;padding:0.1rem 0;line-height:1.2rem;text-align:center;}
+		.color-code div:nth-of-type(2n+1){width:100%;}
+		.color-code div:nth-of-type(2n+2){width:60%;background-color:#FFF;margin-left:40%}
+
+		/*--- div.mixcolor-code>section>div*3 --*/
+		.mixcolor-code{width:100%;font-size:0.9rem;font-weight:bold;}
+		.mixcolor-code section{display:flex;justify-content:space-between;padding:0.5rem;}
+		.mixcolor-code div{width:33%;background-color:#FFF;text-align:center;}
+		.mixcolor-code div:nth-of-type(4n+4){width:100%;margin-top:1rem;}
+
+	.box50{width:50px;height:50px;border:1px solid #ddd;}
+	.box100{width:100px;height:100px;border:1px solid #ddd;}
+
+	/*--- 麵包屑 ---*/
+	.breadcrumb{display:flex;}
+	.breadcrumb>li+li:before{
+		color:#333;
+    	content:" / ";
+    	padding:0 5px;
+	}
+
+	
+	/*--- margin ---*/
+	/*--- paddong ---*/
+	/*--- font style ---*/
+	body{font-family:Geneva,sans-serif;}
+	a{color:#333;}
+	h1{font-size:2.5rem;}
+	h2{font-size:2rem;}
+	h3{font-size:1.75rem;}
+	h4{font-size:1.5rem;}
+	h5{font-size:1.25rem;}
+	h6{font-size:1rem;}
+
+    .tc{text-align:center;}
+	.font-sp1{font-size:1rem;line-height:1.5rem;letter-spacing:0.15px;}
+	.font-sp2{font-size:2rem;line-height:3rem;letter-spacing:0.3px;}
+	/*--- font style ---*/
+
+
+	/*--- nav ---*/
+	/*--- code ---*/
+	/*--- color 單色 ---*/
+	.lightblue{background-color:lightblue;}
+
+	/*--- color 主題色 ---*/
+
+	/*---  ---*/
+	/*---  ---*/
+	/*---  ---*/
+

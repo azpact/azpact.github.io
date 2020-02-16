@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<meta
+	 name="description"
+	 content="個人所製作的網站"
+	>
+	<meta
+	 name="keywords"
+	 content="HTML,CSS,JavaScript,PHP,IPMA"
+	>
+	<meta
+	 name="author"
+	 content="Li LUXUAN"
+	>
+	<meta
+	 name="viewport"
+	 content="width=device-width, initial-scale=1.0"
+	>
+	<title>Latest Articles - Deer Blog</title>
+	<link
+	 rel="icon"
+	 type="images/png"
+	 href="../images/logo.png"
+	>
+	<link
+	 rel="stylesheet"
+	 type="text/css"
+	 href="../css/reset.css"
+	>
+	<link
+	 rel="stylesheet"
+	 href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+	>
+	<link
+	 rel="stylesheet"
+	 type="text/css"
+	 href="../css/common.css"
+	>
+	<link
+	 rel="stylesheet"
+	 type="text/css"
+	 href="../css/webfonts/webfonts.css"
+	>
+	<link
+	 rel="stylesheet"
+	 type="text/css"
+	 href="../css/style.css"
+	>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+	<script src="../js/jquery-3.3.1.js"></script>
+	<script src="../js/script.js"></script>
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script
+	 async
+	 src="https://www.googletagmanager.com/gtag/js?id=UA-124802210-1"
+	></script>
+</head>
+
+<body
+ data-spy="scroll"
+ data-target=".navbar"
+ data-offset="10"
+>
+	<div id="gotop"><a
+		 href="#pageheader"
+		 class="icon-angle-double-up"
+		></a></div>
+	<div>
+		<header id="indexheader">
+			<section
+			 id="t-navbar"
+			 class="fixed flexbox"
+			>
+				<div class="flexboxc p-3">
+					<img
+					 src="../images/logo.png"
+					 alt="網站icon"
+					 class="p-1"
+					>
+					<h1>Deer website</h1>
+				</div>
+				<div id="t-icon">
+					<span class="icon-align-justify"></span>
+				</div>
+				<div id="t-pnav">
+					<div
+					 id="accordion"
+					 class="p-1"
+					>
+						<div class="card">
+							<div
+							 class="card-header"
+							 data-toggle="collapse"
+							 href="#collapseOne"
+							>
+								<a class="card-link">
+									<a href="../index.html">Home / 首頁 </a><span class="icon-chevron-down"></span>
+								</a>
+							</div>
+							<div
+							 id="collapseOne"
+							 class="collapse"
+							 data-parent="#accordion"
+							>
+								<div class="card-body">
+									<ul>
+										<li><a href="latest-articles.html">最新文章</a></li>
+										<li><a href="recent-news.html">最近新聞</a></li>
+										<li><a
+											 href="https://dq.yam.com/list.php"
+											 target="_blank"
+											>網路文章</a></li>
+									</ul>
+								</div>
+							</div>
+						</div>
+						<div class="card">
+							<div
+							 class="card-header"
+							 data-toggle="collapse"
+							 href="#collapseTwo"
+							>
+								<a class="collapsed card-link">
+									<a href="about-me.html">ABOUT ME / 關於我 </a><span class="icon-chevron-down"></span>
+								</a>
+							</div>
+							<div
+							 id="collapseTwo"
+							 class="collapse"
+							 data-parent="#accordion"
+							>
+								<div class="card-body">
+									<ul>
+										<li><a href="learning-distribution.html">學習分佈</a></li>
+										<li><a
+											 href="https://dotblogs.com.tw/deer_nots/2018/10/23/031950"
+											 target="_blank"
+											>Vue notes</a></li>
+										<li><a
+											 href="http://www.dungeonsanddevelopers.com/#_a2b2dhklm_19_Deer"
+											 target="_blank"
+											>網站天賦樹</a></li>
+										<li><a href="about-website.html">關於本站</a></li>
+									</ul>
+								</div>
+							</div>
+						</div>
+						<div class="card">
+							<div
+							 class="card-header"
+							 data-toggle="collapse"
+							 href="#collapseThree"
+							>
+								<a class="collapsed card-link">
+									<a href="contact-me.html">CONTACTS / 聯絡我 </a><span class="icon-chevron-down"></span>
+								</a>
+							</div>
+							<div
+							 id="collapseThree"
+							 class="collapse"
+							 data-parent="#accordion"
+							>
+								<div class="card-body">
+									<ul>
+										<li><a href="track-me.html">追蹤我</a></li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div
+				 id="t-nav"
+				 class="flexboxsp"
+				>
+					<ul class="relativeR">
+						<li class="relativeR"><a href="../index.html"><span>Home </span>首頁</a>
+							<div class="relativeA icon-caret-down ticon"></div>
+							<ul class="relativeA">
+								<li><a href="latest-articles.html">最新文章</a></li>
+								<li><a href="recent-news.html">最近新聞</a></li>
+								<li><a
+									 href="https://dq.yam.com/list.php"
+									 target="_blank"
+									>網路文章</a></li>
+							</ul>
+						</li>
+						<li class="relativeR"><a href="about-me.html"><span>ABOUT ME </span>關於我</a>
+							<div class="relativeA icon-caret-down ticon"></div>
+							<ul class="relativeA">
+								<li><a href="learning-distribution.html">學習分佈</a></li>
+								<li><a
+									 href="https://dotblogs.com.tw/deer_nots/2018/10/23/031950"
+									 target="_blank"
+									>Vue notes</a></li>
+								<li><a
+									 href="http://www.dungeonsanddevelopers.com/#_a2b2dhklm_19_Deer"
+									 target="_blank"
+									>網站天賦樹</a></li>
+								<li><a href="about-website.html">關於本站</a></li>
+							</ul>
+						</li>
+						<li class="relativeR"><a href="contact-me.html"><span>CONTACTS </span>聯絡我</a>
+							<div class="relativeA icon-caret-down ticon"></div>
+							<ul class="relativeA">
+								<li><a href="track-me.html">追蹤我</a></li>
+							</ul>
+						</li>
+					</ul>
+				</div>
+			</section>
+		</header>
+		<main id="pagemainf">
+			<section>&nbsp;</section>
+			<section>
+				<div id="cmain">
+					<div>
+						<h1>最新文章</h1>
+					</div>
+					<div id="section1">
+						<h2>何謂專案、專案管理?</h2>
+						<p>
+							<h3>專案概念</h3>
+							<table class="t-table">
+								<tbody>
+									<tr>
+										<td>專案 Project</td>
+										<td>為組織在一定時間內，達成特定目標的臨時性投入和努力。<br>
+											<ul class="ulset">
+												<li>不重複的一次性活動。</li>
+												<li>有預先定好的專案目標。</li>
+												<li>投入的資源數量受到限制。</li>
+												<li>執行時間限制於設定好的開始與結束日期。</li>
+												<li>完成後要產出期望的成果。</li>
+											</ul>
+										</td>
+									</tr>
+									<tr>
+										<td>專案管理 Project Management</td>
+										<td>專案管理定的限制條件下(時程、成本、品質、範圍)，利用有效的管理方法和工具，以有限的資源達成組織的策略性目標。</td>
+									</tr>
+								</tbody>
+							</table>
+						</p>
+						<p>
+							<h3>專案管理</h3>
+							以<b>解決問題</b>或<b>創造機會</b>為主軸成立一個專案管理。
+							<br>專案管理流程與方法以五大流程、十大知識體系。<br><br>
+							<table
+							 class="t-table table-hover"
+							 style="font-size:0.9rem;"
+							>
+								<thead>
+									<tr>
+										<td>五大流程及<br>十大知識體系</td>
+										<td>發起</td>
+										<td>規劃</td>
+										<td>執行</td>
+										<td>控制</td>
+										<td>結束</td>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>1.整合管理</td>
+										<td>1.1發展專案章程</td>
+										<td>1.2發展專案管理計畫</td>
+										<td>1.3指導與專案管理工作</td>
+										<td>1.4監視和控制專案工作<br>
+											1.5執行整合變更控制
+										</td>
+										<td>1.6結束專案或階段</td>
+									</tr>
+									<tr>
+										<td>2.範疇管理</td>
+										<td></td>
+										<td>2.1規劃範疇管理計畫<br>
+											2.2蒐集需求<br>
+											2.3定義範疇<br>
+											2.4建立WBS
+										</td>
+										<td></td>
+										<td>2.5驗證範疇<br>
+											2.6控制範疇
+										</td>
+										<td></td>
+									</tr>
+									<tr>
+										<td>3.時間管理</td>
+										<td></td>
+										<td>3.1規劃時程管理計畫<br>
+											3.2定義活動<br>
+											3.3排序活動<br>
+											3.4估算活動資源<br>
+											3.5估算活動期程<br>
+											3.6發展時程
+										</td>
+										<td></td>
+										<td>3.7控制時程</td>
+										<td></td>
+									</tr>
+									<tr>
+										<td>4.成本管理</td>
+										<td></td>
+										<td>4.1規劃成本管理計畫<br>
+											4.2估算成本<br>
+											4.3制定預算
+										</td>
+										<td></td>
+										<td>4.4控制成本</td>
+										<td></td>
+									</tr>
+									<tr>
+										<td>5.品質管理</td>
+										<td></td>
+										<td>5.1規劃品質管理計畫</td>
+										<td>5.2實施品質保證</td>
+										<td>5.3控制品質</td>
+										<td></td>
+									</tr>
+									<tr>
+										<td>6.人力資源管理</td>
+										<td></td>
+										<td>6.1規劃人力資源管理</td>
+										<td>6.2獲得專案團隊<br>
+											6.3發展專案團隊<br>
+											6.4管理專案團隊
+										</td>
+										<td></td>
+										<td></td>
+									</tr>
+									<tr>
+										<td>7.溝通管理</td>
+										<td></td>
+										<td>7.1規劃溝通管理計畫</td>
+										<td>7.2管理溝通</td>
+										<td>7.3控制溝通</td>
+										<td></td>
+									</tr>
+									<tr>
+										<td>8.風險管理</td>
+										<td></td>
+										<td>8.1規劃風險管理計畫<br>
+											8.2辨識風險<br>
+											8.3執行風險定性分析<br>
+											8.4執行風險定量分析<br>
+											8.5規劃風險應對
+										</td>
+										<td></td>
+										<td>8.6控制風險</td>
+										<td></td>
+									</tr>
+									<tr>
+										<td>9.採購管理</td>
+										<td></td>
+										<td>9.1規劃採購管理計畫</td>
+										<td>9.2執行採購</td>
+										<td>9.3控制採購</td>
+										<td>9.4結束採購</td>
+									</tr>
+									<tr>
+										<td>10.利害關係人管理</td>
+										<td>10.1辨識利害關係人</td>
+										<td>10.2規劃利害關係人管理計畫</td>
+										<td>10.3管理利害關係人參與</td>
+										<td>10.4控制利害關係人參與</td>
+										<td></td>
+									</tr>
+								</tbody>
+							</table>
+						</p>
+						<p>而專案成立與否，在於專案發起階段的<b>專案授權書</b>與<b>專案概念書</b>，合宜於專案環境。
+							<div class="flexboxc"><img
+								 src="../images/project environment.png"
+								 alt="專案環境"
+								></div>
+						</p>
+					</div>
+
+					<template>
+						<div id="section2">
+							<h2>2:文章2</h2>
+							<p></p>
+						</div>
+						<div id="section3">
+							<h2>3:文章2</h2>
+							<p></p>
+						</div>
+						<div id="section4">
+							<h2>4:文章4</h2>
+							<p></p>
+						</div>
+						<div id="section5">
+							<h2>5:文章5</h2>
+							<p></p>
+						</div>
+					</template>
+
+				</div>
+				<div
+				 id="smain"
+				 class="fixed"
+				>
+					<div>
+						<ul id="breadcrumbs">
+							<li><a href="../index.html">首頁</a></li>
+							<li><a href="latest-articles.html">最新文章</a></li>
+						</ul>
+					</div>
+					<nav class="navbar navbar-dark">
+						<ul class="navbar-nav">
+							<li class="nav-item">
+								<a
+								 class="nav-link"
+								 href="#section1"
+								>何謂專案、專案管理?</a>
+							</li>
+
+							<template>
+								<li class="nav-item">
+									<a
+									 class="nav-link"
+									 href="#section2"
+									>2:文章2</a>
+								</li>
+								<li class="nav-item">
+									<a
+									 class="nav-link"
+									 href="#section3"
+									>3:文章3</a>
+								</li>
+								<li class="nav-item">
+									<a
+									 class="nav-link"
+									 href="#section4"
+									>4:文章4</a>
+								</li>
+								<li class="nav-item">
+									<a
+									 class="nav-link"
+									 href="#section5"
+									>5:文章5</a>
+								</li>
+							</template>
+
+						</ul>
+					</nav>
+				</div>
+			</section>
+		</main>
+		<footer
+		 id="pagefooter"
+		 class="p-5"
+		>
+			<div class="width1280">
+				<section class="flexboxsp">
+					<div>
+						<h3>導覽列</h3>
+						<table class="t-table2">
+							<tr>
+								<td><a href="../index.html">首頁</a></td>
+								<td><a href="latest-articles.html">最新文章</a></td>
+							</tr>
+							<tr>
+								<td></td>
+								<td><a href="recent-news.html">最近新聞</a></td>
+							</tr>
+							<tr>
+								<td></td>
+								<td><a
+									 href="https://dq.yam.com/list.php"
+									 target="_blank"
+									>網路文章</a></td>
+							</tr>
+							<tr>
+								<td><a href="about-me.html">關於我</a></td>
+								<td><a href="learning-distribution.html">學習分佈</a></td>
+							</tr>
+							<tr>
+								<td></td>
+								<td><a
+									 href="https://dotblogs.com.tw/deer_nots/2018/10/23/031950"
+									 target="_blank"
+									>Vue notes</a></td>
+							</tr>
+							<tr>
+								<td></td>
+								<td><a
+									 href="http://www.dungeonsanddevelopers.com/#_a2b2dhklm_19_Deer"
+									 target="_blank"
+									>網站天賦樹</a></td>
+							</tr>
+							<tr>
+								<td></td>
+								<td><a href="about-website.html">關於本站</a></td>
+							</tr>
+							<tr>
+								<td><a href="contact-me.html">聯絡我</a></td>
+								<td><a href="track-me.html">追蹤我</a></td>
+							</tr>
+						</table>
+					</div>
+					<div>
+						<h3>網路文章</h3>
+						<ul>
+							<li><a
+								 href="https://dq.yam.com/list.php"
+								 target="_blank"
+								>地球圖輯隊</a></li>
+							<li><a
+								 href="https://www.thenewslens.com/"
+								 target="_blank"
+								>關鍵評論</a></li>
+							<li><a
+								 href="https://www.bnext.com.tw"
+								 target="_blank"
+								>數位時代</a></li>
+							<li><a
+								 href="https://www.inside.com.tw"
+								 target="_blank"
+								>INSIDE</a></li>
+							<li><a
+								 href="https://tympanus.net/codrops"
+								 target="_blank"
+								>codrops</a></li>
+						</ul>
+					</div>
+					<div>
+						<h3>追蹤我</h3>
+						<ul>
+							<li><span class="icon-instagram"></span><a
+								 href="https://www.instagram.com/luxuan2651/"
+								 target="_blank"
+								>Instagram</a></li>
+							<li><span class="icon-facebook-1"><a
+									 href="https://www.facebook.com/l1704"
+									 target="_blank"
+									>FACEBOOK</a></li>
+							<li><img
+								 src="../images/github.png"
+								 alt="GitHub"
+								><a
+								 href="https://github.com/azpact"
+								 target="_blank"
+								>GitHub</a></li>
+						</ul>
+					</div>
+					<div>
+						<h3>聯絡我</h3>
+						<table class="t-table2">
+							<tr>
+								<td><span class="icon-home-house-streamline"></span></td>
+								<td>新北市樹林區</td>
+							</tr>
+							<tr>
+								<td><span class="icon-phone-square"></span></td>
+								<td>手機:0973-XXX-XXX</td>
+							</tr>
+							<tr>
+								<td><span class="icon-envelope"></span></td>
+								<td>信箱:w53652456@gmail.com</td>
+							</tr>
+						</table>
+					</div>
+				</section>
+				<section class="flexboxl mt-5">
+					<div class="flexboxc">
+						<div><img
+							 src="../images/logo.png"
+							 alt="圖示"
+							></div>
+						<span>Personal website</span>
+					</div>
+					<div class="flexboxc">
+						<span>©2018&nbsp;|&nbsp;<a href="#">版權所有</a></span>
+					</div>
+				</section>
+			</div>
+		</footer>
+	</div>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag() { dataLayer.push(arguments); }
+		gtag('js', new Date());
+
+		gtag('config', 'UA-124802210-1');
+	</script>
+</body>
+
+</html>
