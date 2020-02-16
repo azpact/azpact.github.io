@@ -1,5 +1,0 @@
-<snippet>
-  <content><![CDATA[<script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>]]></content>
-  <tabTrigger>am_cdn_router</tabTrigger>
-  <description>Vue Router 的片段</description>
-</snippet>
