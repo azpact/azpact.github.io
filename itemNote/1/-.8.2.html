@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>Document</title>
+  <link rel="stylesheet" href="https://unpkg.com/normalize.css@8.0.1/normalize.css" />
+  <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.js"></script>
+  <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+  <style>
+  div {
+    width: 60px;
+    height: 60px;
+    text-align: center;
+  }
+
+  #app tr:nth-of-type(1) div,
+  #app tr:nth-of-type(2) div {
+    transition: all 1s;
+  }
+
+  tr div:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+
+  tr:nth-of-type(1) div:hover {
+    transform: rotate(360deg);
+  }
+
+  tr:nth-of-type(2) div:hover {
+    transform: scaleX(2);
+  }
+
+  tr:nth-of-type(3) div:hover {
+    transform: scaleY(2);
+  }
+
+  tr:nth-of-type(4) div:hover {
+    transform: scale(2, 2);
+  }
+
+  tr:nth-of-type(5) div:hover {
+    transform: translateX(20px);
+  }
+
+  tr:nth-of-type(6) div:hover {
+    transform: translateY(10px);
+  }
+
+  tr:nth-of-type(7) div:hover {
+    transform: translate(20px, 10px);
+  }
+
+  tr:nth-of-type(8) div:hover {
+   transform-origin:top left 60px;
+   transform: rotate(45deg);
+  }
+  </style>
+</head>
+
+<body>
+  <div id="app" class="container">
+    <table>
+      <tr>
+        <td>原地旋轉</td>
+        <td>transform: rotate(360deg)</td>
+        <td>
+          <div>
+            <i class="material-icons medium">add</i>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>水平縮放</td>
+        <td>transform: scaleX(2)</td>
+        <td>
+          <div>
+            <i class="material-icons medium">add</i>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>垂直縮放</td>
+        <td>transform: scaleY(1)</td>
+        <td>
+          <div>
+            <i class="material-icons medium">add</i>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>水平垂直縮放</td>
+        <td>transform: scale(2,1)</td>
+        <td>
+          <div>
+            <i class="material-icons medium">add</i>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>水平移動</td>
+        <td>transform: translateX(200px)</td>
+        <td>
+          <div>
+            <i class="material-icons medium">add</i>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>垂直移動</td>
+        <td>transform: translateY(100px)</td>
+        <td>
+          <div>
+            <i class="material-icons medium">add</i>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>水平垂直移動</td>
+        <td>transform: translate(200px,100px)</td>
+        <td>
+          <div>
+            <i class="material-icons medium">add</i>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>右下角為旋轉圓點</td>
+        <td>transform-origin:top left 60px;<br>
+            transform: rotate(45deg);</td>
+        <td>
+          <div>
+            <i class="material-icons medium">add</i>
+          </div>
+        </td>
+      </tr>
+    </table>
+  </div>
+</body>
+
+</html>

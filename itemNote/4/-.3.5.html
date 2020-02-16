@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/element-ui/lib/theme-chalk/index.css"
+    />
+    <script
+      src="https://code.jquery.com/jquery-3.4.1.min.js"
+      integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.js"></script>
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <button @click="fetchList()">GET</button>
+      <div v-for="item in listOne" :key="item.id">
+        {{item}}
+      </div>
+    </div>
+    <script>
+      new Vue({
+        data: {
+          listOne: []
+        },
+        methods: {
+          fetchList() {},
+          putLsit() {}
+        },
+        mounted() {
+          this.fetchList = async function fetchList() {
+            try {
+              const setUrl =
+                "https://raw.githubusercontent.com/azpact/Json-Library/master/text.json";
+              const setKey = "";
+              const setTimeOut = 6000;
+              const instance = axios.create({
+                timeout: setTimeOut,
+                headers: {
+                  // "secret-key": setKey
+                }
+                // 要注意 API 是否需要 headers 內的屬性
+              });
+              // Base Set
+              const get = await instance.get(setUrl);
+              // Get Data
+              const { data } = get;
+              this.listOne = data.listOne;
+              // Out Put Data
+            } catch (err) {
+              throw new Error(err);
+            }
+          };
+          this.putList = async function putList() {
+            try {
+              const setUrl = "";
+              const setKey = "";
+              const setTimeOut = 6000;
+              const instance = axios.create({
+                timeout: setTimeOut,
+                headers: {
+                  "Content-Type": "application/json"
+                  // "secret-key": setKey,
+                  // versioning: false
+                }
+                // 要注意 API 是否需要 headers 內的屬性
+              });
+              let data = this.listOne;
+              const put = await instance.put(setUrl, { listOne: data });
+            } catch (err) {
+              throw new Error(err);
+            }
+          };
+        }
+      }).$mount("#app");
+    </script>
+  </body>
+</html>

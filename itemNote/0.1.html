@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <link rel="stylesheet" href="plugins/normaize.css" />
+    <link
+      rel="stylesheet"
+      href="plugins/element-ui@2.12.0/theme-chalk/index.css"
+    />
+    <script src="plugins/jquery-3.4.1.js"></script>
+    <script src="plugins/vue.min.js"></script>
+    <script src="plugins/axios.js"></script>
+    <script src="plugins/element-ui.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      {{ ms }}
+    </div>
+    <script>
+      new Vue({
+        data: {
+          ms: "123"
+        },
+        mounted() {
+          // 接API通常放這兒
+          $.ajax({
+            url: endpoint
+          }).done(res => console.log(JSON.parse(res)));
+        },
+        methods: {
+          //各種要用的 function 寫在這
+          m1: function(event) {
+            //方法一
+          }
+        },
+        computed: {
+          //計算屬性
+          c1: function() {
+            //計算一
+            return this.col1 + " " + this.col2;
+          }
+        }
+      }).$mount("#app");
+    </script>
+  </body>
+</html>

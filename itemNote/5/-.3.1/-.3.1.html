@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/element-ui/lib/theme-chalk/index.css"
+    />
+    <link rel="stylesheet" href="style/-.1.1.css" />
+    <script
+      src="https://code.jquery.com/jquery-3.4.1.min.js"
+      integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.js"></script>
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <div id="index">
+        <section>
+          <h1>To do list</h1>
+        </section>
+        <section>
+          <div>
+            <input type="text" placeholder=" New item" id="input" />
+            <input type="button" value="Add item" id="add" />
+            <p id="point"></p>
+          </div>
+          <div id="sohw">
+            <ol></ol>
+          </div>
+        </section>
+      </div>
+      <!--
+      id:
+      input，輸入資料
+      add，按鈕事件
+      show，顯示資料
+      point，提醒事項
+      
+      動態加入 class:
+      .txt，文字框樣式
+      .delete，刪除資料樣式
+      .modify，修改資料樣式
+      -->
+    </div>
+    <script>
+      new Vue({
+        data: {
+          ms: "123"
+        },
+        mounted() {
+          function add() {
+            const text = $("#input").val();
+            if (text == "") {
+              $("#point").text("New item 請填寫資料");
+            } else {
+              $("#point").text("");
+              $("#sohw ol").append(`
+    <li>
+      <div class="txt">${text}</div>
+      <span class="delete">delete</span>
+      <input placeholder=" Modify Item" />
+      <span class="modify">modify</span>
+    </li>
+  `);
+              $("#input").val("");
+              $("li:last-child .delete").click(del);
+              $("li:last-child .modify").click(modify);
+            }
+            console.log("add()");
+          }
+          function del() {
+            const index = $(this)
+              .parent()
+              .index();
+            $(`li:nth-child(${index + 1})`).remove();
+          }
+
+          function modify() {
+            const index = $(this)
+              .parent()
+              .index();
+            const text = $(`li:nth-child(${index + 1}) input`).val();
+            if (text == "") {
+              $("#point").text(`Modify Item 第${index + 1}行 請填寫完整資料`);
+            } else {
+              $(`li:nth-child(${index + 1}) input`).val("");
+              $(`li:nth-child(${index + 1}) .txt`).html(text);
+            }
+          }
+
+          $("#input").keypress(e => {
+            if (e.keypress == 13 || e.which == 13) {
+              add();
+              console.log("keypress");
+            }
+          });
+
+          $(() => {
+            $("#add").click(add);
+            $("#text").keypress(e => {
+              e.which === 13 && add();
+            });
+          });
+
+          /*
+          >立即執行函數
+          function:
+          add，增加資料
+            判別，id(input)是否有無資料
+          del，刪除資料
+          modify，修改資料
+            判別，其 this +1 的內容是否有無資料
+           事件:
+          $('#input').keypress(e=>{ ... })，鍵盤事件
+          $('#add').clcik(add)，新增事件
+          $('li:last-child .delete').click(del)，刪除事件
+          $('li:last-child .modify').click(modify)，修改事件
+          */
+        }
+      }).$mount("#app");
+    </script>
+  </body>
+</html>

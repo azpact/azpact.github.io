@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/element-ui/lib/theme-chalk/index.css"
+    />
+    <script
+      src="https://code.jquery.com/jquery-3.4.1.min.js"
+      integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.js"></script>
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <p>
+        <router-link to="/ben/post/1">Go to 1</router-link>
+        <router-link to="/Jan/post/10">Go to 2</router-link>
+      </p>
+      <router-view></router-view>
+    </div>
+    <script>
+      // 組件
+      const User = {
+        template: `<div>當前路徑 UserName: {{$route.params.username}}
+        <br>當前路徑 ID: {{$route.params.id}}
+        </div>`
+      };
+      // router.js
+      const routes = [{ path: "/:username/post/:id", component: User }];
+      // main.js
+      const router = new VueRouter({
+        routes
+      });
+      new Vue({
+        router,
+        data() {
+          return {
+            ms: "123"
+          };
+        }
+      }).$mount("#app");
+    </script>
+  </body>
+</html>

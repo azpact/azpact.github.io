@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/element-ui/lib/theme-chalk/index.css"
+    />
+    <script
+      src="https://code.jquery.com/jquery-3.4.1.min.js"
+      integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.js"></script>
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <style>
+      .vheader {
+        padding: 0.5rem;
+        background-color: brown;
+        color: #fff;
+      }
+      .vNavbar {
+        display: flex;
+        list-style: none;
+      }
+      .vNavbar li {
+        margin-right: 0.5rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <v-header></v-header>
+      <v-navbar></v-navbar>
+    </div>
+    <script>
+      let v_navbar = {
+        data() {
+          return {
+            listOne: [
+              { label: "壹頁", value: "1" },
+              { label: "貳頁", value: "2" },
+              { label: "叁頁", value: "3" }
+            ]
+          };
+        },
+        template: `
+        <ul class="vNavbar">
+         <li v-for="item in listOne" :key="item.id">{{item.value}} {{item.label}}</li>
+        </ul>`
+      };
+      let v_header = {
+        data() {
+          return {
+            title: "我是首頁"
+          };
+        },
+        template: `<div class="vheader">我是頂部的區塊 <v-navbar></v-navbar></div>`,
+        components: {
+          "v-navbar": v_navbar
+        }
+      };
+      new Vue({
+        data: {
+          //
+        },
+        components: {
+          "v-header": v_header,
+          "v-navbar": v_navbar
+        }
+      }).$mount("#app");
+    </script>
+  </body>
+</html>

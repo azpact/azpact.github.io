@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>Document</title>
+  <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css" />
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.js"></script>
+  <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.12.0/d3.min.js"></script>
+  <style>
+  <style>section {
+    width: 100%;
+  }
+
+  button {
+    height: 30px;
+    height: 25px;
+    outline: none;
+    border: none;
+    transition: 0.3s;
+  }
+
+  button:hover {
+    background-color: brown;
+    color: #fff;
+  }
+
+  #app {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  </style>
+</head>
+
+<body>
+  <div id="app">
+    <button @click="fBarGraph">set 長條圖</button>
+    <svg class="chart"></svg>
+  </div>
+  <script>
+  new Vue({
+    data() {
+      return {
+        listOne: [100, 8, 15, 23, 4, 2, 158, 50]
+      }
+    },
+    methods: {
+      fBarGraph() {
+        let [rHeight, listOne, chart] = [25, this.listOne, ""]
+        // [長條圖高度, listOne, 圖表]
+        chart = d3
+          .select(".chart")
+          .attr("width", 800)
+          .attr("height", 800);
+        chart
+          .selectAll("svg")
+          .data(listOne)
+          .enter()
+          .append("rect")
+          //自訂長條圖 x 軸
+          .attr("x", 35)
+          // 自訂長條圖 y 軸
+          .attr("y", function(d, i) {
+            return i * rHeight;
+          })
+          // 自訂長條圖 水平長度
+          .attr("width", function(d) {
+            return d * 3
+          })
+          //每個長條圖之間垂直的距離
+          .attr("height", rHeight - 2)
+          //長條圖顏色
+          .attr("fill", "steelblue");
+        chart
+          .selectAll("svg")
+          .data(listOne)
+          .enter()
+          .append("text")
+          //每個文字之間的水平距離
+          .attr("x", 0)
+          //每個文字之間的垂直距離
+          .attr("y", function(d, i) {
+            return i * rHeight + 18
+          })
+          // 文字樣式
+          .style("fill", "#44951D")
+          .style("font-size", "1.25rem")
+          // 返回文字
+          .text(function(d) {
+            return d;
+          });
+      }
+    },
+    mounted() {
+      this.fSetBarGraph()
+    }
+  }).$mount("#app");
+  </script>
+</body>
+
+</html>

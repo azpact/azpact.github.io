@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/element-ui/lib/theme-chalk/index.css"
+    />
+    <link rel="stylesheet" href="style/style.css" />
+    <script
+      src="https://code.jquery.com/jquery-3.4.1.min.js"
+      integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.js"></script>
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <script src="VComponent.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <h1>{{showData}}</h1> 
+      <button @click="show">show</button>
+      <V-input ref="refName"></V-input>
+    </div>
+    <script>
+      let VInput = Vue.component("v-input", {
+        data() {
+          return {
+            childData: "childData"
+          };
+        },
+        template: `<div class="VInput">           
+            <input v-model="childData"/> {{childData}}
+            </div>`
+      });
+      
+      new Vue({
+        data() {
+          return {
+            showData:""
+          };
+        },
+        methods:{
+          show(){
+             this.showData = this.$refs.refName.childData            
+          }
+        },
+        components: {
+          "v-input": VInput
+        }
+      }).$mount("#app");
+    </script>
+  </body>
+</html>

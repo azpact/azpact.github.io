@@ -1,0 +1,51 @@
+$bg-color: rgb(226, 181, 58);
+$bg-color1: rgb(54, 46, 38);
+$f-color: #ffffff;
+$f-size: 1.5rem;
+$m-bottom: 1.5rem;
+@mixin flex-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+@mixin listStyle {
+  font-weight: bold;
+  cursor: pointer;
+}
+
+body {
+  margin: 0;
+}
+.delete {
+  @include listStyle;
+  color: red;
+}
+.modify {
+  @include listStyle;
+  color: blie;
+}
+
+#index {
+  @include flex-box;
+  flex-wrap: wrap;
+}
+section:nth-of-type(1) {
+  background-color: $bg-color;
+  text-align: center;
+  width: 100%;
+  color: $f-color;
+  font-size: $f-size;
+  margin-bottom: $m-bottom;
+}
+div:nth-of-type(1) input:nth-of-type(2) {
+  background-color: $bg-color;
+  color: $f-color;
+  border: 1px solid #fff;
+  height: 1.5rem;
+}
+#point {
+  background-color: $bg-color1;
+  color: $f-color;
+  text-align: center;
+  padding: 0.2rem;
+}

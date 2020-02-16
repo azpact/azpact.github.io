@@ -1,0 +1,17 @@
+<snippet>
+  <content><![CDATA[new Vue({
+  data() {
+    return {
+      ms: "123"
+    };
+  },
+  methods() {
+
+  },
+  mounted() {
+    //
+  }
+}).\$mount("#app");]]></content>
+  <tabTrigger>am_vue_el</tabTrigger>
+  <description>Vue el 實例片段</description>
+</snippet>

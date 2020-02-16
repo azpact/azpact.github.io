@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/element-ui/lib/theme-chalk/index.css"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.js"></script>
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <style>
+      img {
+        min-width: 90px;
+        width: 100%;
+      }
+      .mouseStatus {
+        opacity: 0;
+        color: #fff;
+        background-color: rgb(39, 39, 39);
+        position: relative;
+        top: -191px;
+        left: 0px;
+        width: 100%;
+        display: inline-block;
+        height: 186px;
+        margin-bottom: -262px;
+        text-align: left;
+      }
+      .box {
+        text-align: center;
+        width: 100%;
+        max-width: 300px;
+        box-shadow: 1px 1px 1px 1px rgb(177, 177, 177);
+        margin-bottom: 1rem;
+        transition: all 0.3s;
+      }
+      .box:hover {
+        box-shadow: 1px 1px 8px 1px rgb(177, 177, 177);
+      }
+      .box:hover .mouseStatus {
+        animation-delay: 1s;
+        animation: block 0.6s forwards;
+        transition: all 1.6s;
+      }
+      @keyframes block {
+        0% {
+          opacity: 0;
+        }
+        100% {
+          opacity: 0.8;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <div class="box" style="width:250px;height:250px;">
+        <h1>Title</h1>
+        <img
+          src="https://st2.depositphotos.com/2809911/9353/i/950/depositphotos_93539752-stock-photo-3d-number-750-gold.jpg"
+          alt=""
+        />
+        <div class="mouseStatus">
+          <h2 style="text-align: center;">title</h2>
+          <ul>
+            <li>Value</li>
+            <li>Text</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <script>
+      new Vue({
+        data: {
+          ms: '123'
+        }
+      }).$mount('#app')
+    </script>
+  </body>
+</html>

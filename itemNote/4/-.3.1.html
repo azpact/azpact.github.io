@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/element-ui/lib/theme-chalk/index.css"
+    />
+    <script
+      src="https://code.jquery.com/jquery-3.4.1.min.js"
+      integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.js"></script>
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <button id="getButton">取得</button>
+      <button id="putButton">取得</button>
+      <div id="listOne">
+        <ul>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+        </ul>
+      </div>
+    </div>
+
+    <script>
+      new Vue({
+        data() {
+          return {};
+        },
+        mounted() {
+          $("#getButton").click(fGet);
+          $("#putButton").click(fPut);
+
+          function fGet() {
+            $.ajax({
+              url: "https://api.jsonbin.io/b/5df85634bda54254c5edebc8",
+              method: "GET",
+              headers: {
+                "secret-key":
+                  "$2a$10$XflNqIVbG42ADERhOMsvp.KChlqUCodB/fEQFGSdjmIfKOqonOJci",
+                "Content-Type": "application/json",
+                versioning: false
+              },
+              success: function(e) {
+                console.log("成功");
+
+                $("li:nth-of-type(1)").append(function() {
+                  `<li>${$(this).text(e.listOne[0].label)}</li>`;
+                });
+                $("li:nth-of-type(2)").append(function() {
+                  `<li>${$(this).text(e.listOne[0].value)}</li>`;
+                });
+                $("li:nth-of-type(3)").append(function() {
+                  `<li>${$(this).text(e.listOne[1].label)}</li>`;
+                });
+                $("li:nth-of-type(4)").append(function() {
+                  `<li>${$(this).text(e.listOne[1].value)}</li>`;
+                });
+              },
+              error: function() {
+                console.log("失敗");
+              }
+            });
+          }
+          function fPut() {
+            $.ajax({
+              url: "https://api.jsonbin.io/b/5df85634bda54254c5edebc8",
+              method: "PUT",
+              headers: {
+                "secret-key":
+                  "$2a$10$XflNqIVbG42ADERhOMsvp.KChlqUCodB/fEQFGSdjmIfKOqonOJci",
+                "Content-Type": "application/json",
+                versioning: false
+              },
+              data: {
+                listOne: [
+                  {
+                    value: "1",
+                    label: "Tone"
+                  },
+                  {
+                    value: "2",
+                    label: "Ben"
+                  }
+                ]
+              },
+              error: function() {
+                console.log("成功");
+              },
+              success: function() {
+                console.log("失敗");
+              }
+            });
+          }
+        }
+      }).$mount("#app");
+    </script>
+  </body>
+</html>

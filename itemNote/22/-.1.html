@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/element-ui/lib/theme-chalk/index.css"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.js"></script>
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <el-select v-model="selectValue" placeholder="請選擇">
+        <el-option
+          v-for="item in options"
+          :key="item.value"
+          :label="item.label"
+          :value="item.label"
+        >
+        </el-option>
+      </el-select>
+      {{selectValue}}
+    </div>
+    <script>
+      new Vue({
+        data: {
+          selectValue: "",
+          options: [
+            {
+              value: "el-icon-warning",
+              label: "warning"
+            },
+            {
+              value: "el-icon-success",
+              label: "success"
+            },
+            {
+              value: "el-icon-error",
+              label: "error"
+            }
+          ]
+        }
+      }).$mount("#app");
+    </script>
+  </body>
+</html>

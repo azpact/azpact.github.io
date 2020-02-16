@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>Document</title>
+  <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css" />
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.js"></script>
+  <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.12.0/d3.min.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    <button @click="fDatum()">set datum</button>
+    <button @click="fData()">set data</button>
+    <p class="datum">Apple</p>
+    <p class="datum">Banana</p>
+    <p class="data">Apple</p>
+    <p class="data">Banana</p>
+    <p class="data">lemon</p>
+  </div>
+  <script>
+  new Vue({
+    methods: {
+      fDatum() {},
+      fData() {},
+    },
+    mounted() {
+      this.fDatum = function fDatum() {
+        let body = d3.select("body");
+        let str = "change";
+        let pdatum = body.selectAll(".datum");
+
+        pdatum.datum(str).text(function(d, i) {
+          return "第 " + (i + 1) + " 個 " + d;
+        });
+      };
+      this.fData = function fData() {
+        let body = d3.select("body");
+        let fruits = ["蘋果", "香蕉", "檸檬"];
+        let pdata = body.selectAll(".data");
+
+        pdata.data(fruits).text(function(d) {
+          return d;
+        });
+      };
+
+    }
+  }).$mount("#app");
+  </script>
+</body>
+
+</html>

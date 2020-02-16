@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/element-ui/lib/theme-chalk/index.css"
+    />
+    <script
+      src="https://code.jquery.com/jquery-3.4.1.min.js"
+      integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.js"></script>
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <button @click="getData()">同時抓取兩個來源-單筆資料</button>
+      <button @click="fetchAll()">fetchAll</button>
+      <pre>{{html}}</pre>
+      <div v-for="item in listTwo" :key="item.id">
+        {{item}}
+      </div>
+      <div v-for="item in listThree" :key="item.id">
+        {{item.CityName}} {{item.CityEngName}}
+      </div>
+    </div>
+    <script>
+      new Vue({
+        data: {
+          html: "資料下載中...",
+          listOne: [],
+          listTwo: [],
+          listThree: []
+        },
+        methods: {
+          getData() {},
+          async fetchAll() {
+            try {
+              const instance = axios.create({
+                timeout: 6000
+              });
+              const getOne = await instance.get(
+                "https://raw.githubusercontent.com/azpact/Json-Library/master/text.json"
+              );
+              const getTwo = await instance.get(
+                "https://raw.githubusercontent.com/donma/TaiwanAddressCityAreaRoadChineseEnglishJSON/master/AllData.json"
+              );
+              // let { data } = getOne; //資料在 data 屬性
+              this.listTwo = getOne.data.listOne; //將GET的資料放到Vue上的groupList陣列中
+              this.listThree = getTwo.data;
+            } catch (error) {
+              throw new Error(error);
+            }
+          }
+        },
+        mounted() {
+          this.getData = async function getData() {
+            const dataListOne = await axios.get(
+              "https://raw.githubusercontent.com/azpact/Json-Library/master/text.json"
+            );
+            const dataListTwo = axios.get(
+              "https://raw.githubusercontent.com/donma/TaiwanAddressCityAreaRoadChineseEnglishJSON/master/AllData.json"
+            );
+            const [dataOne, dataTwo] = await Promise.all([
+              dataListOne,
+              dataListTwo
+            ]);
+            this.html = `
+          API 來源一: ${dataOne.data.listOne[0].label}
+          API 來源二 ${dataTwo.data[0].CityName}
+          兩個 API 都下載完成時才顯示
+         `;
+          };
+        }
+      }).$mount("#app");
+    </script>
+  </body>
+</html>

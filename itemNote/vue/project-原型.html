@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/element-ui/lib/theme-chalk/index.css"
+    />
+    <link rel="stylesheet" href="style/style.css" />
+    <script
+      src="https://code.jquery.com/jquery-3.4.1.min.js"
+      integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.js"></script>
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <script src="VComponent.js"></script>
+  </head>
+  <body>
+    <div id="app">
+        {{elData}}
+      <V-input :text="elData"></V-input>
+    </div>
+    <script>
+      let VInput = Vue.component("v-input", {
+        props:{
+         text: String
+        },
+        template: `<div class="VInput">{{text}}<input placeholder="test"/></div>
+    `
+      });
+      new Vue({
+        data() {
+          return {
+            elData: "123",
+
+          };
+        },
+        components: {
+          "v-input": VInput
+        }
+      }).$mount("#app");
+    </script>
+  </body>
+</html>
