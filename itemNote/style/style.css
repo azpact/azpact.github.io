@@ -1,10 +1,13 @@
 @charset "UTF-8";
+[v-cloak] {
+  display: none; }
+
 ::-webkit-scrollbar {
   width: 0.5rem;
   height: 0.5rem;
   background-color: #e5ebe7; }
 
-/* �޸ĝL�ӗl�e���С���K��ʽ */
+/* ÐÞ¸ÄL„Ó—lÑeÃæµÄÐ¡·½‰K˜ÓÊ½ */
 ::-webkit-scrollbar-thumb {
   border-radius: 100px;
   background: #414040; }
@@ -91,7 +94,9 @@ li {
       padding: 0.3rem;
       -webkit-transition: all 0.3s;
       -o-transition: all 0.3s;
-      transition: all 0.3s; }
+      transition: all 0.3s;
+      margin-top: 0.5rem;
+      margin-right: 2rem; }
       #TheImageBox div:nth-of-type(1) .close:hover {
         background-color: #F4606C; }
   #TheImageBox div:nth-of-type(2) {
@@ -325,6 +330,7 @@ li {
   left: 0; }
 
 #TheMessageBox {
+  z-index: 30;
   bottom: 3rem; }
   #TheMessageBox div {
     width: 100%;
@@ -353,35 +359,70 @@ li {
     #TheSaveBox div button {
       width: 30%; }
 
-#TheCloseBox {
-  z-index: 1;
+#TheMoreBox {
+  z-index: 20;
+  top: 0;
   position: fixed;
-  right: 1rem;
-  bottom: 0.25rem;
+  background-color: #414040;
   color: #FFF;
-  background-color: #c2a380;
-  padding: 0;
-  border-radius: 50%;
-  font-size: 1.5rem;
-  line-height: 1rem;
-  width: 1rem;
-  height: 1rem;
-  text-align: center;
-  padding: 0.5rem;
-  -webkit-transition: all 0.3s;
-  -o-transition: all 0.3s;
-  transition: all 0.3s; }
-  #TheCloseBox:hover {
-    -webkit-box-shadow: 1px 1px 5px 1px #666;
-    box-shadow: 1px 1px 5px 1px #666; }
-  #TheCloseBox i {
-    margin-left: -0.2rem;
-    margin-top: -0.2rem; }
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  width: 100%; }
+  #TheMoreBox div:nth-of-type(1) {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: end;
+    -ms-flex-pack: end;
+    justify-content: flex-end;
+    width: 100%;
+    max-height: 2rem; }
+    #TheMoreBox div:nth-of-type(1) .close {
+      color: #666;
+      background-color: #c2a380;
+      width: 2rem;
+      height: 2rem;
+      line-height: 2rem;
+      text-align: center;
+      border-radius: 50%;
+      font-size: 1.5rem;
+      padding: 0.3rem;
+      -webkit-transition: all 0.3s;
+      -o-transition: all 0.3s;
+      transition: all 0.3s;
+      margin-top: 0.5rem;
+      margin-right: 0.5rem; }
+      #TheMoreBox div:nth-of-type(1) .close:hover {
+        color: #FFF;
+        background-color: #F4606C; }
+  #TheMoreBox div:nth-of-type(2) {
+    width: 100%;
+    height: 100vh;
+    padding: 2% 5%; }
+    #TheMoreBox div:nth-of-type(2) tr:nth-of-type(1) td {
+      font-size: 1.5rem;
+      text-align: center;
+      padding: 0; }
+    #TheMoreBox div:nth-of-type(2) td {
+      font-size: 1.25rem;
+      padding-bottom: 1rem;
+      padding-right: 1em; }
+    #TheMoreBox div:nth-of-type(2) button {
+      height: 1.75rem; }
 
+#TheCloseBox {
+  right: 0.75rem; }
+
+#TheOpenMore {
+  right: 3rem; }
+
+#TheCloseBox,
 #TheOpenMore {
   z-index: 1;
   position: fixed;
-  right: 1rem;
   bottom: 0.25rem;
   color: #FFF;
   background-color: #c2a380;
@@ -396,6 +437,14 @@ li {
   -webkit-transition: all 0.3s;
   -o-transition: all 0.3s;
   transition: all 0.3s; }
+  #TheCloseBox:hover,
+  #TheOpenMore:hover {
+    -webkit-box-shadow: 1px 1px 5px 1px #666;
+    box-shadow: 1px 1px 5px 1px #666; }
+  #TheCloseBox i,
+  #TheOpenMore i {
+    margin-left: -0.2rem;
+    margin-top: -0.2rem; }
 
 @media only screen and (min-width: 851px) and (max-width: 870px) {
   #TheMain {
@@ -432,12 +481,30 @@ li {
   #TheSearchBar {
     width: 61%; } }
 
-@media only screen and (max-width: 760px) {
+@media only screen and (min-width: 601px) and (max-width: 760px) {
   #TheMain {
     margin-left: 39%; }
   #TheFeatures,
   #TheSearchBar {
     width: 61%; } }
+
+@media only screen and (max-width: 600px) {
+  #TheMain {
+    margin-left: 0%; }
+  #TheFeatures,
+  #TheSearchBar {
+    width: 100%; }
+  #TheOpenMore,
+  #TheCloseBox {
+    bottom: 6.5rem; }
+  #TheFeatures section div:nth-of-type(2) {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap; }
+  #TheSide {
+    display: none; } }
 
 .in-place-enter-active {
   -webkit-animation: goInPlace .3s;

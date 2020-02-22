@@ -12,37 +12,39 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.js"></script>
   <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+  <style>
+    #app{
+      padding: 1rem;
+    }
+    #app > div{
+      height:100vh;
+    }
+    #app > a{
+      background-color:orange;
+      padding: 0.5rem;
+    }
+  </style>
 </head>
 
 <body>
   <div id="app">
-    {{ ms }}
+    <span>0 位置</span>
+    <div>內容</div>
+    <a href="#app" id="gotop">Gotop</a>
   </div>
   <script>
   new Vue({
     data() {
       return {
-        ms: "123",
+       
       };
     },
-    methods: {
-      //各種要用的 function 寫在這
-      m1: function(event) {
-        //方法一
-      }
-    },
-    computed: {
-      //計算屬性
-      c1: function() {
-        //計算一
-        return this.col1 + " " + this.col2;
-      }
-    },
     mounted() {
-      // 接API通常放這兒
-      $.ajax({
-        url: this.endpoint
-      }).done(res => console.log(JSON.parse(res)));
+      let gotop = $("#gotop"); //置頂icon
+      $(gotop).click(function() {
+        $("html, body").animate({ scrollTop: 0 }, 900);
+        return false;
+      })
     }
   }).$mount("#app");
   </script>

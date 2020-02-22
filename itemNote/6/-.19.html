@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>Document</title>
+  <link rel="stylesheet" href="https://unpkg.com/normalize.css@8.0.1/normalize.css" />
+  <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css" />
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.js"></script>
+  <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+  <style>
+  * {
+    margin: 0;
+    padding: 0;
+  }
+
+  #app {
+    margin: 1rem;
+  }
+  </style>
+</head>
+
+<body>
+  <div id="app">
+    <div>
+      <h2>fourSpace (銀行卡號 每四個字隔一個空格)</h2>
+      <p>{{ ms | fourSpace}}</p>
+    </div>
+    <div>
+      <h2>noGap (去除最左最右邊空格)</h2>
+      <p>{{ ms | noGap}}</p>
+    </div>
+    <div>
+      <h2>money (金錢三位一逗號，小數位保留兩位)</h2>
+      <p>{{money | money}}</p>
+    </div>
+    <div>
+      <h2>telFormat (電話號碼過濾)</h2>
+      <p>{{phone|telFormat}}</p>
+    </div>
+    <div>
+      <h2>idcardFormat (身分證字號過濾)</h2>
+      <p>{{id |idcardFormat}}</p>
+    </div>
+  </div>
+  <script>
+  //每四個字隔一個空格
+  Vue.filter('fourSpace', function(val) {
+    if (val) {
+      return val.replace(/\s/g, '').replace(/(.{4})/g, "$1 ")
+    }
+  });
+  //去除最左最右邊空格
+  Vue.filter('noGap', function(val) {
+    let str = val.trim();
+    return str
+  });
+  //金錢三位一逗號，小數位保留兩位
+  Vue.filter('money', function(val) {
+    val = val.toString().replace(/\$|\,/g, '');
+    if (isNaN(val)) {
+      val = "0";
+    }
+    let sign = (val == (val = Math.abs(val)));
+    val = Math.floor(val * 100 + 0.50000000001);
+    let cents = val % 100;
+    val = Math.floor(val / 100).toString();
+    if (cents < 10) {
+      cents = "0" + cents
+    }
+    for (var i = 0; i < Math.floor((val.length - (1 + i)) / 3); i++) {
+      val = val.substring(0, val.length - (4 * i + 3)) + ',' + val.substring(val.length - (4 * i + 3));
+    }
+
+    return (((sign) ? '' : '-') + val + '.' + cents);
+  })
+
+  //電話號碼過濾
+  Vue.filter('telFormat', function(val) {
+    if (val) {
+      return val.replace(/^(.{3})(?:\d+)(.{4})$/, "$1****$2")
+    }
+  });
+  //身分證字號過濾
+  Vue.filter('idcardFormat', function(val) {
+    if (val) {
+      return val.replace(/^(.{4})(?:\d+)(.{3})$/, "$1***$2")
+    }
+  });
+
+  new Vue({
+    data() {
+      return {
+        ms: " 這是我們的資 料是由網 路來的 ",
+        money: "1212102.36",
+        phone: "0923010256",
+        id: "k122639248"
+      };
+    }
+  }).$mount("#app");
+  </script>
+</body>
+
+</html>

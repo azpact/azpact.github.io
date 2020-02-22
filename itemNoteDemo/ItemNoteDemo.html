@@ -216,6 +216,8 @@
       fTheSideImage() {
         if (this.theSideImage == "") {
           EventBus.$emit("fMessageBox3", 1, "請點選項目")
+        } else if (this.theSideImage == " ") {
+          EventBus.$emit("fMessageBox3", 1, "請點選項目")
         } else {
           this.$emit("emit")
         }
@@ -508,20 +510,24 @@
         <td colspan="2">更多功能</td>
       </tr>
       <tr>
-        <td>清除所有事項資料</td>
         <td><v-button name="清除" @click.native="fClear()"></v-button></td>
+        <td>清除所有事項資料</td>
       </tr>
       <tr>
-        <td>還原說明筆記-尚未開放</td>
         <td><v-button name="還原"></v-button></td>
+        <td>還原說明筆記-尚未開放</td>
       </tr>
       <tr>
-        <td>下載項目筆記 - Excel 檔</td>
         <td><v-button name="下載" @click.native="fExoprt"></v-button></td>
+        <td>下載項目筆記 - Excel 檔</td>
       </tr>
       <tr>
         <td>聯絡我</td>
-        <td>Email:w53652456@gmail.com</td>
+        <td>Email: w53652456@gmail.com</td>
+      </tr>
+      <tr>
+        <td>版本</td>
+        <td>v 1.0</td>
       </tr>
     </table>
      </div>
@@ -533,8 +539,9 @@
       fExoprt() {
         this.$emit("export-data")
       },
-      fClear(){
+      fClear() {
         this.$emit("clear")
+        this.fTheMoreBoxWay()
       }
     },
     component: {
@@ -1076,6 +1083,7 @@
         searchArray: "",
         searchResult: "",
         exportData: "",
+        newStyle: "",
         rows: {},
         listOne: listOne,
       };
@@ -1119,14 +1127,14 @@
     },
     methods: {
       async feachList() {
-        //
+        console.log("feachList")
       },
       async putList() {
-        //
+        console.log("putList")
       },
-      fClear(){
+      fClear() {
         this.listOne = []
-        this.fMessageBox(1,"已清除所有事項資料")
+        this.fMessageBox(1, "已清除所有事項資料")
       },
       fTheMainWay(val) {
         this.listOne[val].modify = !this.listOne[val].modify
@@ -1200,8 +1208,10 @@
             this.time = setTimeout(
               () => (
                 this.fMessageBox(2, "尚未儲存文件"),
+                this.theSearchBar = false,
                 this.fSaveBox(2)),
-              300000
+              // 300000
+              5000
             );
             break;
           case 2:
@@ -1269,12 +1279,13 @@
             ) {
               this.fMessageBox(1, "尚未填滿資料")
             } else {
+              this.checkData();
               vm.rows = {
                 value: this.addValue,
                 label: this.addLabel,
                 image: this.addImage,
                 styleValue: 1,
-                style: "font-weight:bold;margin-left:0",
+                style: this.newStyle,
                 status: "warning",
                 modify: true,
                 text: "",
@@ -1406,6 +1417,24 @@
             break;
           default:
             console.log('lose message')
+            break;
+        }
+      },
+      checkData() {
+        let p = this.addValue
+        let c = p.split(".").length;
+
+        switch (c) {
+          case 1:
+            this.newStyle = "font-weight:bold;margin-left:0"
+            break;
+          case 2:
+            this.newStyle = "margin-left:1rem"
+            break;
+          case 3:
+            this.newStyle = "margin-left:2rem;font-style:italic"
+            break;
+          default:
             break;
         }
       },
@@ -1670,6 +1699,7 @@
     },
     mounted() {
       this.feachList()
+      this.checkData();
     },
     components: {
       "the-side": TheSide,

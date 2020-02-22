@@ -12,37 +12,36 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.js"></script>
   <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+  <script src="db.js"></script>
+  <style>
+    img{
+      width: auto;
+      height: 200px;
+    }
+    #app{
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+    }
+  </style>
 </head>
 
 <body>
   <div id="app">
-    {{ ms }}
+    <div v-for="item in listOne" :key="item.id">
+      <img v-bind:src="item.url" :alt="item.who">
+    </div>
+    
   </div>
   <script>
   new Vue({
     data() {
       return {
-        ms: "123",
+        listOne: ""
       };
     },
-    methods: {
-      //各種要用的 function 寫在這
-      m1: function(event) {
-        //方法一
-      }
-    },
-    computed: {
-      //計算屬性
-      c1: function() {
-        //計算一
-        return this.col1 + " " + this.col2;
-      }
-    },
     mounted() {
-      // 接API通常放這兒
-      $.ajax({
-        url: this.endpoint
-      }).done(res => console.log(JSON.parse(res)));
+      this.listOne = results
     }
   }).$mount("#app");
   </script>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>Document</title>
+  <link rel="stylesheet" href="https://unpkg.com/normalize.css@8.0.1/normalize.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <style>
+  * {
+    margin: 0;
+    padding: 0;
+  }
+
+  image {
+    max-width: 100%;
+    height: auto;
+  }
+
+  .parallax-container {
+    height: 180px;
+    z-index: 20;
+  }
+
+  .parallax img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  #app {
+    padding: 1rem;
+    background-image: url('backgroundImage.png');
+    background-repeat: no-repeat;
+    background-position: 48% top;
+  }
+
+  #app>div:nth-of-type(1) {
+    color: #FFF;
+  }
+  </style>
+</head>
+
+<body>
+  <div id="app" style="">
+    <div>背景圖片滑動</div>
+    <div class="parallax-container">
+      <div class="parallax"><img src="backgroundImage.png"></div>
+    </div>
+    <div class="section white">
+      <div class="row container">
+        <h2 class="header">Parallax</h2>
+        <p class="grey-text text-darken-3 lighten-3">Parallax is an effect where the background content or image in this case, is moved at a different speed than the foreground content while scrolling.</p>
+      </div>
+    </div>
+    <div class="parallax-container">
+      <div class="parallax"><img src="logo.jpg"></div>
+    </div>
+    <div style="margin-top:100vh">&nbs;</div>
+  </div>
+  <script>
+  new Vue({
+    data() {
+      return {
+        ms: "123",
+      };
+    },
+    mounted() {
+      $(document).ready(function() {
+        $('.parallax').parallax();
+      });
+    }
+  }).$mount("#app");
+  </script>
+</body>
+
+</html>

@@ -2,7 +2,7 @@ https://api.jsonbin.io/b/5dcd09ab9e3eb3638dc01524
 *前端勸退指南
 https://github.com/roger-hiro/BlogFN
 
-資料組件化-局部組件 : 
+資料組件化-局部組件:
 body
 div(="app")
 OK|-TheSide (id)

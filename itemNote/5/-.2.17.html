@@ -12,37 +12,57 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.js"></script>
   <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+  <style>
+    *{
+      margin: 0;
+      padding: 0;
+    }
+    #app{
+      margin: 1rem;
+    }
+    #app section:last-child{
+      margin-top: 200vh;
+    }
+  </style>
 </head>
 
 <body>
   <div id="app">
-    {{ ms }}
+    <section>
+      <a href="#" @click="to('point')">To Point</a>
+    </section>
+    <section>
+      <div id="point"> The Point</div>
+      <a href="#" @click="to('app')">Go top</a>
+    </section>
   </div>
   <script>
   new Vue({
     data() {
       return {
-        ms: "123",
+        //
       };
     },
     methods: {
-      //各種要用的 function 寫在這
-      m1: function(event) {
-        //方法一
-      }
-    },
-    computed: {
-      //計算屬性
-      c1: function() {
-        //計算一
-        return this.col1 + " " + this.col2;
+      async to(id) {
+        let element = `#${id}` //取得元素 id
+        const elementOffsetTop = await $(element).offset().top; //取得元素距離body頂部距離
+        $("html, body").animate({ scrollTop: elementOffsetTop }, 900); //移動到元素距離
       }
     },
     mounted() {
-      // 接API通常放這兒
-      $.ajax({
-        url: this.endpoint
-      }).done(res => console.log(JSON.parse(res)));
+      let vm = this;
+      function thOffsetTop(key){
+        switch (key) {
+          case 1:
+            vm.to('point');
+            break;
+          default:
+             vm.to('app');
+            break;
+        }
+      }
+      thOffsetTop(1);
     }
   }).$mount("#app");
   </script>

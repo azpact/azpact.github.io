@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>Document</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.js"></script>
+  <style>
+    #app {
+        display: flex;
+        justify-content: left;
+        flex-wrap: wrap;
+      }
+      div {
+        width: 100%;
+        margin-bottom: 1rem;
+      }
+      .a {
+        background-color: rgb(101, 101, 206);
+        color: #FFF;
+      }
+      .styleOne,
+      .styleTwo,
+      .a{
+        padding: 0.5rem;
+        border: none;
+        outline: none;
+      }
+      .styleOne {
+        background-color: #FFF;
+        border:2px solid rgb(66,221,167);
+
+      }
+      .styleTwo {
+        background-color: rgb(66,221,167);
+      }
+    </style>
+</head>
+
+<body>
+  <div id="app">
+    <h1>申明書確認</h1>
+    <div>
+      <p>請詳閱內容，並勾選</p>
+    </div>
+    <div>
+      <input type="checkbox" v-model="check" value="checkA">
+      <label for="checked1">確認1，請詳閱細部內容</label>
+    </div>
+    <div>
+      <input type="checkbox" v-model="check" value="checkB">
+      <label for="checked1">確認2，請詳閱細部內容</label>
+    </div>
+    <div>
+      <input type="checkbox" v-model="check" value="checkC">
+      <label for="checked1">確認3，請詳閱細部內容</label>
+    </div>
+    <div style="height:60px;">
+      <p>第一種方式 v-if </p>
+      <input v-if="isButton" type="button" value="確認送出" class="a"></input>
+    </div>
+    <div>
+      <p>第二種方式 :class</p>
+      <input type="button" value="確認送出" :class="classList">
+    </div>
+  </div>
+  <script>
+  let vm = new Vue({
+    data: {
+      check: [],
+      isButton: false,
+      classList: {
+        styleOne: true,
+        styleTwo: false
+      }
+    },
+    watch: {
+      check() {
+        if (this.check.length == 3) {
+          this.isButton = true
+          this.classList.styleTwo = true
+        } else {
+          this.isButton = false
+          this.classList.styleTwo = false
+        }
+      }
+    }
+  }).$mount('#app')
+  </script>
+</body>
+
+</html>

@@ -1,4 +1,7 @@
 @charset "UTF-8";
+[v-cloak] {
+  display: none; }
+
 ::-webkit-scrollbar {
   width: 0.5rem;
   height: 0.5rem;
@@ -91,7 +94,9 @@ li {
       padding: 0.3rem;
       -webkit-transition: all 0.3s;
       -o-transition: all 0.3s;
-      transition: all 0.3s; }
+      transition: all 0.3s;
+      margin-top: 0.5rem;
+      margin-right: 2rem; }
       #TheImageBox div:nth-of-type(1) .close:hover {
         background-color: #F4606C; }
   #TheImageBox div:nth-of-type(2) {
@@ -387,7 +392,9 @@ li {
       padding: 0.3rem;
       -webkit-transition: all 0.3s;
       -o-transition: all 0.3s;
-      transition: all 0.3s; }
+      transition: all 0.3s;
+      margin-top: 0.5rem;
+      margin-right: 0.5rem; }
       #TheMoreBox div:nth-of-type(1) .close:hover {
         color: #FFF;
         background-color: #F4606C; }
@@ -474,12 +481,30 @@ li {
   #TheSearchBar {
     width: 61%; } }
 
-@media only screen and (max-width: 760px) {
+@media only screen and (min-width: 601px) and (max-width: 760px) {
   #TheMain {
     margin-left: 39%; }
   #TheFeatures,
   #TheSearchBar {
     width: 61%; } }
+
+@media only screen and (max-width: 600px) {
+  #TheMain {
+    margin-left: 0%; }
+  #TheFeatures,
+  #TheSearchBar {
+    width: 100%; }
+  #TheOpenMore,
+  #TheCloseBox {
+    bottom: 6.5rem; }
+  #TheFeatures section div:nth-of-type(2) {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap; }
+  #TheSide {
+    display: none; } }
 
 .in-place-enter-active {
   -webkit-animation: goInPlace .3s;

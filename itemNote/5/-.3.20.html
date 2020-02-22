@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>Document</title>
+  <script src="http://code.jquery.com/jquery-3.3.1.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.js"></script>
+  <style>
+  #app {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  #app div {
+    width: 49.5%;
+    text-align: center;
+    background-color: #faf0de;
+    margin: 0.25%;
+  }
+
+  </style>
+</head>
+
+<body>
+  <div id="app">
+    <div>
+      <p>最小值:1 最大值:5，點擊按鈕開始計算</p>
+    </div>
+    <div>
+      <button @click="flottery()">亂數計算</button>
+    </div>
+    <div>
+      <p>
+        {{ms}}
+      </p>
+    </div>
+  </div>
+  <script>
+  new Vue({
+    data() {
+      return {
+        ms: "初始計算"
+      };
+    },
+    methods: {
+      flottery() {
+        const maxNumber = 5
+        const minNumber = 1
+        let cNumber =
+          Math.floor(Math.random() * (maxNumber - minNumber + 1)) + minNumber
+        this.ms = cNumber
+      }
+    }
+
+  }).$mount("#app");
+  </script>
+</body>
+
+</html>
