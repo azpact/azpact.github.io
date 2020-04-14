@@ -1,0 +1,261 @@
+V-Calendar> 2020-02-12
+
+
+參考資料
+V-Calendar
+https://vcalendar.io/dates.html#single-dates
+
+--data
+data: {
+  mode: 'sigle',
+  dates:null,
+}
+
+--取得單一的日期
+<v-date-picker 
+  :mode='mode' 
+  v-model='dates' />
+
+--設定單一日期，最小值
+min-date=""  在最小值以前的日期，無法使用
+
+<v-date-picker 
+  :min-date='new Date()'
+  :mode='mode' 
+  v-model='dates' />
+--設定假期日期無法點擊
+:disabled-dates='{ weekdays: [1, 7] }' ，假日無法點擊
+
+<v-date-picker 
+  :disabled-dates='{ weekdays: [1, 7] }'
+  :mode='mode'
+  v-model='dates' />
+
+
+get stock
+
+
+
+*use pyquery 套件擷取網頁內容
+*use beautifulsoup4 抓取與解析資料
+conda install beautifulsoup4
+
+
+爬蟲抓台銀匯率
+https://www.youtube.com/watch?v=-c5rrzjsN34
+exchange rate (匯率)
+
+
+*use numpy 套件
+將 list 類型轉換成 array
+import numpy as np
+
+list_temp = [[1,2,3],[4,5,6]]
+list_temp = np.array(list_temp)
+print(list_temp) #現在是類型為 array
+
+
+*其他資訊
+# 202 已接受，服務器接受請求，但未處理
+# 404 找不到頁面、403 被禁止、408 訪問超時
+
+參考資料
+用 Python 抓網頁？你想問的都幫答好了，你還有不懂的嗎？
+https://kknews.cc/code/6o9mqo3.html
+
+
+*request 送出 UA
+requests 送出的 user-agent，瀏覽器在送出request的時候會送出header告訴server一些資訊，包含瀏覽器是什麼，UA就是瀏覽器的識別字串。
+
+通常不用登入、用get傳參數，還會發生問題的，就送假UA去試試看。
+
+import requests
+
+headers = {'user-agent': 'Mozilla/5.0 (Macintosh Intel Mac OS X 10_13_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.181 Safari/537.36'}
+
+res = requests.get("https://shopee.tw/api/v2/search_items/?by=pop&limit=30&match_id=3625341&newest=0&order=desc&page_type=shop", headers=headers)
+print(res.request.headers)    # 看requests送出的header
+print(res.text)
+
+參考資料
+關於Python使用requests的爬蟲問題
+https://ithelp.ithome.com.tw/m/questions/10189512
+
+*requests 與 BeautifulSoup 共同使用(初步)
+import requests
+from bs4 import BeautifulSoup
+
+def get_page_content(url,type):
+  headers = {'user-agent': 'Mozilla/5.0 (Macintosh Intel Mac OS X 10_13_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.181 Safari/537.36'}
+  # 自定義 Headers
+  data = requests.get(url, headers=headers, timeout=10)
+  # timeout 設定網站響應式的時間，表示請求時最最長等待多少秒
+  if(type==1):
+    return data.status_code # 回傳 HTTP 狀態
+  elif (type==2):
+    return data.content # 回傳內容
+
+def main():
+  url = 'https://www.ptt.cc/bbs/NBA/index.html'
+
+  if(get_page_content(url,1)==200):
+    soup = BeautifulSoup(get_page_content(url,2),"lxml") # 第二個參數控制輸出文件類型
+    prettify = soup.prettify() # 顯示 HTML 程式碼
+    find = soup.find(text="bad") # 找到文字，找文字為 bad
+    i = soup.i # 找元素，找到 i 元素 <i>HTML</i>
+    a = soup.a # 找元素，找到 a 元素
+    div_class_One = soup.find("div",class_="title")
+    # 找到第一個 class 為 title 的元素
+    div_class_Two = soup.find_all("div",class_="title")
+    # 找到全部 class 為 title 的元素
+    print(div_class_Two) # 把排版後的 html 打印出來
+  else:
+    print(get_page_content(url,1)) 
+
+if __name__ == '__main__':
+    main()
+
+
+*組合某一筆資料
+import requests as rq
+from bs4 import BeautifulSoup
+
+def get_page_content(url,type):
+  headers = {'user-agent': 'Mozilla/5.0 (Macintosh Intel Mac OS X 10_13_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.181 Safari/537.36'}
+  # 自定義 Headers
+  data = rq.get(url, headers=headers, timeout=10)
+  # timeout 設定網站響應式的時間，表示請求時最最長等待多少秒
+  if(type==1):
+    return data.status_code # 回傳 HTTP 狀態
+  elif (type==2):
+    return data.content # 回傳全部內容
+  elif (type==3):
+    return data.text # 回傳 Doc 文件內容
+    # 使用 text 可以針對搜尋的元素，其元素所包含的子元素也一併回傳
+    # text屬性就是 html 檔案
+def main():
+  url = 'https://www.ptt.cc/bbs/NBA/index.html'
+  soup = BeautifulSoup(get_page_content(url,3),"lxml")
+  text = soup.find_all("div", class_ = "r-ent")
+
+  author_ids = [] # 建立一個空的 list 來放置作者 id
+  for e in text:
+      author_ids.extend(e.find("div",class_="author"))
+
+  print(author_ids)
+
+if __name__ == '__main__':
+    main() 
+
+
+*use selenium 套件
+解析 js 動態產生的資料
+
+
+*進階
+pandas 線性代數的分析
+https://ithelp.ithome.com.tw/articles/10186119
+
+
+*use ipython
+使用 ipython 命令進入交互環境
+
+*執行 ipython
+cd ipython_notebook_workplace
+ipython notebook
+
+*use jupyterlab
+conda install -c conda-forge jupyterlab
+*切換環境 ju (環境)
+conda activate ju
+*執行 IDE 環境
+jupyter notebook
+
+*快速鍵
+x 刪除當前選擇的 cell
+a 在當前選擇的上方新增一個cell
+b 在當前選擇的下方新增一個cell
+shift + enter 會自動執行目前正在選取的cell
+M markerdown code 模式間轉換
+
+[系列文章]
+*use import requests
+conda install requests
+
+*about pandas as pd
+import pandas as pd # 引用套件
+obj = pd.Series([4, 7, -5, 3]) # 建立類似陣列的物件
+print(obj.values) # [ 4  7 -5  3]，顯示數值 
+print(obj.index) # RangeIndex(start=0, stop=4, step=1)，顯示陣列
+
+*檔案讀取
+使用 read_csv() 讀取一個 csv 的檔案
+df = pd.read_csv('./csv檔案位置')
+df.head(3) #顯示前面5筆資料，預設5筆
+df.tail(2)  #顯示後面2筆資料，預設2筆
+
+參考資料
+使用Python進行資料分析
+https://ithelp.ithome.com.tw/articles/10197248
+
+*use urllib3 HTTP 客戶端的 python
+import urllib3
+http = urllib3.PoolManager() 
+# 創建 PoolManager 對象生成請求，由該實例對象處理與線程池的連線以及線程安全的所有細節
+res = http.request('GET', 'http://www.baidu.com') # GET方式請求
+print(res.status,res.data.decode('utf-8')) #獲得狀態碼, html源碼(utf-8編碼)
+
+
+
+[系列文章]
+*使用 get 方式下載網頁
+import requests # 引入套件
+r = requests.get('https://www.google.com.tw/') # GET 普通網頁
+print(r.text) # 查看原始 html 程式碼
+
+參考資料
+Python 使用 requests 模組產生 HTTP 請求，下載網頁資料教學
+https://blog.gtwang.org/programming/python-requests-module-tutorial/
+
+*處理 GET 編碼錯誤
+import requests
+
+r = requests.get('https://www.findrate.tw/bank/2/#.XmERFEpS_IU')
+r.encoding = 'utf8' # 將編碼變成 utf8
+
+參考資料
+Python requests 中文亂碼解決方法
+https://sjkou.net/2017/01/06/python-requests-encoding/
+
+*ues pandas
+conda install pandas
+*use lxml
+速度快，唯一支持 XML 解析器
+conda install lxml 
+*use html5lib
+conda install html5lib
+
+
+關於爬蟲就此封鍵盤
+https://zhuanlan.zhihu.com/p/22097627
+>02.簡單的嘗試
+
+a.py
+test.py
+
+*[爬蟲實戰] 如何撰寫Python爬蟲抓取台灣銀行的牌告匯率?
+https://www.youtube.com/watch?v=-c5rrzjsN34
+
+
+輕鬆學習 Python：在學習網站爬蟲之前
+https://medium.com/datainpoint/python-essentials-before-web-scraping-822b0b351bb3
+
+Python 與網頁資料擷取
+https://medium.com/datainpoint/web-scraping-with-python/home
+
+
+[Flask教學] 簡單的 GET 和 Post 方法取得 Flask 網頁資料
+https://www.maxlist.xyz/2019/03/17/flask-get-post/
+
+
+

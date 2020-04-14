@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>Stock</title>
+  <link rel="stylesheet" href="https://unpkg.com/normalize.css@8.0.1/normalize.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <script src="https://momentjs.com/downloads/moment-with-locales.js"></script>
+  <script type="module" src="./index.js"></script>
+  <style>
+    a,i{
+    cursor: pointer;
+   }
+   .point{
+    display: block;
+    width: 100%;
+    background-color: yellow;
+    font-weight: bold;
+    padding: 0.75rem;
+    text-align: center;
+    font-size: 1.1rem;
+   }
+    .container {
+    width: 98%;
+  }
+   .row i{
+    margin-top: -4.5rem;
+    transition: .3s all;
+    border-radius: 50%;
+    padding: 0.5rem;
+  }
+  .row i:hover{
+    color: #FFF;
+    background-color: red;
+  }
+  .flex {
+    display: flex;
+  }
+
+  .flex-center {
+    flex-wrap: : wrap !important;
+    justify-content: center;
+  }
+
+  .w {
+    width: 100px;
+  }
+
+  .in-place-enter-active {
+    animation: goInPlace .3s;
+  }
+
+  .in-place-leave-active {
+    animation: backInPlace .3s;
+  }
+
+  #input h2{
+    width: 100%;
+  }
+  #purchaseList .collapsible span{
+    width: 100%;
+    text-align: center;
+    display: block;
+  }
+  #purchaseList .collapsible-header{
+    justify-content: center;
+  }
+  #purchaseList .collapsible-header div{
+    display: flex;
+    width: 100%;
+  }
+  #purchaseList .collapsible-body {
+    padding: 0;
+  }
+  #purchaseList .collapsible-body div{
+    display: flex;
+  }
+  #purchaseList .collapsible-body li{
+    display: flex;
+    flex-wrap: wrap;
+  }
+  #purchaseList .collapsible-body li div{
+    width: 100%;
+    display: flex;
+    align-items: center;
+  }
+  #purchaseList .collapsible-body li span{
+    padding: 0.75rem;
+  }
+  #purchaseList .collapsible-body li:nth-of-type(2n+1){
+    background-color: rgba(242, 242, 242, 0.5);
+  }
+  #purchaseList input{
+    text-align:center
+  }
+  @keyframes goInPlace {
+    from {
+      opacity: 0;
+      width: 0;
+    }
+
+    to {
+      opacity: 1;
+      width: 100%;
+    }
+  }
+
+  @keyframes backInPlace {
+    from {
+      opacity: 1;
+      width: 100%;
+    }
+
+    to {
+      opacity: 0;
+      width: 0;
+    }
+  }
+  </style>
+</head>
+
+<body>
+  <div id="app">
+    <div id="watchList" class="container">
+      <div>
+        <a class="btn" @click="fWatchList(1,1)">新增觀察</a>
+        <a class="btn" @click="fWatchList(5,1)">當日</a>
+        <a class="btn" @click="fWatchList(5,2)">當月均</a>
+        <a class="btn" @click="fWatchList(5,3)">當年均</a>
+        <a class="btn" @click="fWatchList(5,4)">全部</a>
+      </div>
+      <table class="striped">
+        <thead>
+          <tr>
+            <th>觀察序號</th>
+            <th>代號 </th>
+            <th>名稱</th>
+            <th>類別</th>
+            <th>更新日期</th>
+            <th v-if="watchFilter =='day' || watchFilter =='all'">日淨值</th>
+            <th v-if="watchFilter =='month' || watchFilter =='all'">月均淨值</th>
+            <th v-if="watchFilter =='year' || watchFilter =='all'">年均淨值</th>
+            <th>觀察狀態</th>
+            <th>觀察操作</th>
+            <th>基本資料</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(item,index) in listOne" :key="item.id">
+            <td>{{index+1}}</td>
+            <td>{{item.code}}</td>
+            <td>{{item.name}}</td>
+            <td>
+              <div v-for="qitem in queryList" :key="qitem.id">
+                <span v-if="qitem.type == item.sort">{{qitem.name}}</span>
+              </div>
+            </td>
+            <td>{{item.date}}</td>
+            <td v-if="watchFilter =='day' || watchFilter =='all'">{{item.dayNetWorth}}</td>
+            <td v-if="watchFilter =='month' || watchFilter =='all'">{{item.monthAverageNetWorth}}</td>
+            <td v-if="watchFilter =='year' || watchFilter =='all'">{{item.yearAverageNetWorth}}</td>
+            <td>
+              <div v-if="!item.watchType">
+                <div v-for="qitem in queryList" :key="qitem.id">
+                  <span v-if="qitem.type == 21">{{qitem.name}}</span>
+                </div>
+              </div>
+              <div v-if="item.watchType">
+                <div v-for="qitem in queryList" :key="qitem.id">
+                  <span v-if="qitem.type == 32">{{qitem.name}}</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <div v-if="!item.watchType">
+                <div v-for="qitem in queryList" :key="qitem.id">
+                  <a v-if="qitem.type == 31" @click="fWatchList(4,2,index)">{{qitem.name}}</a>
+                </div>
+              </div>
+              <div v-if="item.watchType">
+                <div v-for="qitem in queryList" :key="qitem.id">
+                  <a v-if="qitem.type == 22" @click="fWatchList(4,1,index)">{{qitem.name}}</a>
+                </div>
+                <div v-for="qitem in queryList" :key="qitem.id">
+                  <a v-if="qitem.type == 33" @click="fWatchList(4,3,index)">{{qitem.name}}</a>
+                </div>
+              </div>
+            </td>
+            <td>
+              <div v-for="qitem in queryList" :key="qitem.id">
+                <a v-if="qitem.type == item.baseInformation" @click="fWatchList(3,1,index)">{{qitem.name}}</a>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <section style="display:flex;overflow-x:hidden;">
+      <transition enter-active-class="in-place-enter-active" leave-active-class="in-place-leave-active">
+        <div v-show="inputWatchList" id="input" class="container">
+          <h3>新增</h3>
+          <p v-if="pointShow" class="point">{{point}}</p>
+          <div class="row">
+            <div class="col 12">
+              <p>代號: {{code}} | 名稱: {{name}} | 分類:<span v-if="sort==41">股票</span><span v-if="sort==42">基金</span> | 手續費: {{handlingFee}} | 管理費: {{managementFee}}</p>
+            </div>
+            <div class="col s12">
+              <i class="material-icons float right" @click="fWatchList(1,2)">close</i>
+            </div>
+            <div class="col s12 m6">
+              <label>代號</label>
+              <input type="text" v-model="code" placeholder="SDIV (限制輸入英文與數字)">
+            </div>
+            <div class="col s12 m6">
+              <label>名稱</label>
+              <input type="text" v-model="name" placeholder="SUPERDIVIDEND ETF">
+            </div>
+            <div class="col s12 m12">
+              <div class="input-field">
+                <select v-model="sort">
+                  <option value="41" selected>股票</option>
+                  <option value="42">基金</option>
+                </select>
+              </div>
+            </div>
+            <div class="col s12 m6">
+              <label>手續費 %</label>
+              <input type="text" v-model="handlingFee" placeholder="0.5 (限制輸入數字與 . )">
+            </div>
+            <div class="col s12 m6">
+              <label>管理費 %</label>
+              <input type="text" v-model="managementFee" placeholder="0.58  (限制輸入數字與 . )">
+            </div>
+            <div class="col s12">
+              <a class="btn" @click="fWatchList(2)">完成</a>
+            </div>
+          </div>
+        </div>
+      </transition>
+      <transition enter-active-class="in-place-enter-active" leave-active-class="in-place-leave-active">
+        <div v-show="baseWatchList" id="base" class="container">
+          <div>
+            <h3>基本資料</h3>
+          </div>
+          <div class="row">
+            <div class="col s12">
+              <i class="material-icons float right" @click="fWatchList(3,2)">close</i>
+            </div>
+            <div class="col 12">
+              <a class="btn" @click="fWatchList(3,3,watchIndex)">編輯</a>
+              <p>代號: {{code}} | 手續費: {{handlingFee}} | 管理費: {{managementFee}}</p>
+              <div v-for="qitem in queryList" :key="qitem.id">
+                <a v-if="qitem.type == 12" @click="fWatchList(4,4,watchIndex)">{{qitem.name}}</a>
+              </div>
+            </div>
+            <section v-if="baseWatchListShow">
+              <div class="col s12">
+                <hr>
+                <label>代號</label>
+                <input type="text" v-model="code" placeholder="SDIV">
+              </div>
+              <div class="col s12 m6">
+                <label>手續費 %</label>
+                <input type="text" v-model="handlingFee" placeholder="0.5">
+              </div>
+              <div class="col s12 m6">
+                <label>管理費 %</label>
+                <input type="text" v-model="managementFee" placeholder="0.58">
+              </div>
+              <div class="col s12 flex flex-center">
+                <a class="btn" @click="fWatchList(3,4,watchIndex)">確定</a>
+              </div>
+            </section>
+          </div>
+        </div>
+      </transition>
+    </section>
+    <section>
+      <div id="purchaseList">
+        <ul class="collapsible">
+          <li v-for="(item,index) in purchaseList" :key="item.id">
+            <div class="collapsible-header">
+              <div>
+                <span>申購序號</span>
+                <span>{{index}}</span>
+                <span>代號</span>
+                <span>{{item.code}}</span>
+              </div>
+            </div>
+            <div class="collapsible-body">
+              <ul>
+                <li v-for="(pitem,pindex) in item.purchaseFull" :key="pitem.id">
+                  <div>
+                    <span>{{pindex}}</span>
+                    <span>
+                      申購時間 {{pitem.purchaseDate}}<br>
+                      出售時間 {{pitem.saleDate}}
+                    </span>
+                    <span>
+                      申購淨值 {{pitem.purchaseNet}}<br>
+                      出售淨值 {{pitem.saleNet}}
+                    </span>
+                    <span>
+                      申購單位 {{pitem.purchaseUnit}}<br>
+                      出售單位 {{pitem.saleUnit}}
+                    </span>
+                    <span>
+                      <a style="display:block" @click="fPurchaseList(1,index,pindex)">編輯</a>
+                      <a style="display:block" @click="fPurchaseList(2,index,pindex)">刪除</a>
+                    </span>
+                  </div>
+                  <div>
+                    <span style="padding:0.75rem;font-weight:10;">
+                      持有年月 {{pitem.holeYears}} 年 {{pitem.holeMonths}} 月 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                      持有總月 {{pitem.holeTotalMonths}} 個月 &nbsp;&nbsp;
+                    </span>
+                    <span style='width:24%;background-color:orange;color:#FFF;font-weight:bold'>{{pitem.hold}}</span>
+                  </div>
+                  <div v-if="pitem.editPurchase">
+                    <span>{{pindex}}</span>
+                    <span>
+                      申購時間 {{pitem.purchaseDate}}<br>
+                      出售時間 {{pitem.saleDate}}
+                    </span>
+                    <span>
+                      申購淨值 <input type="text" v-model="pitem.purchaseNet"><br>
+                      出售淨值 <input type="text" v-model="pitem.saleNet">
+                    </span>
+                    <span>
+                      申購單位 <input type="text" v-model="pitem.purchaseUnit"><br>
+                      出售單位 <input type="text" v-model="pitem.saleUnit">
+                    </span>
+                    <span>
+                      <a style="display:block" @click="fPurchaseList(1,index,pindex)">完成</a>
+                    </span>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </section>
+  </div>
+  <script>
+  /*
+  
+
+  purchaseList (申購名單)
+   申請序號 purchaseNmber
+   代號 code
+   --申購詳細 purchaseFull
+   申購日 purchaseDate
+   出售日 saleDate
+   持有月數 holeMonths
+   申購淨值 purchaseNet
+   申購單位數 purchaseUnit
+   出售淨值 saleNet
+   出售單位數 saleUnit
+
+   watchList (觀察名單)
+   觀察序號 watchListNmber
+   代號 code
+   名稱 name
+   類別 sort
+   更新日期 date
+   日淨值 dayNetWorth
+   月均淨值 monthAverageNetWorth
+   年均淨值 yearAverageNetWorth
+   觀察狀態 watchStatus
+   觀察操作 watchOperating
+   基本資料 baseInformation
+   手續費 handlingFee
+   管理費 managementFee
+
+   -- queryList (查詢清單)
+   type name
+   11 刪除
+   12 新增
+   21 觀察中
+   31 申購
+   32 已申購
+   41 股票
+   42 基金
+   --irrList (年報酬率) 
+   IRR指數 irrIndex
+   管理費金額 managementFeeAmount
+   總配息金額 totalDividendAmount
+   IRR年分析 irrAnnualAnalysis
+
+   purchaseList (申購名單)
+   申請序號 purchaseNmber
+   代號 code
+   --申購詳細 purchaseFull
+   申購日 purchaseDate
+   出售日 saleDate
+   持有月數 holeMonths
+   申購淨值 purchaseNet
+   申購單位數 purchaseUnit
+   出售淨值 saleNet
+   出售單位數 saleUnit
+   持有 hold
+
+
+   historyDividend (歷史配息)
+   配息序號 dividendNumber
+   代號 code
+   配息日期 dividendData
+   配息金額 dividendAount
+   配息操作 dividendOperating
+
+   */
+  let purchaseList = [{
+      code: "LDIV",
+      purchaseFull: [{
+        purchaseDate: "2020-01-06",
+        saleDate: "2021-02-23",
+        holeYears: "1",
+        holeMonths: "6",
+        holeTotalMonths: "18",
+        purchaseNet: "30.1",
+        purchaseUnit: "21",
+        saleNet: "31.2",
+        saleUnit: "21",
+        hold: "持有中",
+        editPurchase:true
+      }, {
+        purchaseDate: "2020-01-06",
+        saleDate: "2021-02-23",
+        holeYears: "1",
+        holeMonths: "2",
+        holeTotalMonths: "9",
+        purchaseNet: "30.1",
+        purchaseUnit: "21",
+        saleNet: "31.2",
+        saleUnit: "21",
+        hold: "售出",
+        editPurchase:false
+      }]
+    },
+    {
+      code: "DVV",
+      purchaseFull: [{
+        purchaseDate: "2020-01-06",
+        saleDate: "2021-02-23",
+        holeYears: "1",
+        holeMonths: "6",
+        holeTotalMonths: "18",
+        purchaseNet: "30.1",
+        purchaseUnit: "21",
+        saleNet: "31.2",
+        saleUnit: "21",
+        hold: "持有中",
+        editPurchase:false
+      }, {
+        purchaseDate: "2020-01-06",
+        saleDate: "2021-02-23",
+        holeYears: "1",
+        holeMonths: "2",
+        holeTotalMonths: "9",
+        purchaseNet: "30.1",
+        purchaseUnit: "21",
+        saleNet: "31.2",
+        saleUnit: "21",
+        hold: "持有中",
+        editPurchase:false
+      }]
+    },
+    {
+      code: "DIV",
+      purchaseFull: [{
+        purchaseDate: "2020-01-06",
+        saleDate: "2021-02-23",
+        holeYears: "1",
+        holeMonths: "6",
+        holeTotalMonths: "18",
+        purchaseNet: "30.1",
+        purchaseUnit: "21",
+        saleNet: "31.2",
+        saleUnit: "21",
+        hold: "持有中",
+        editPurchase:false
+      }, {
+        purchaseDate: "2020-01-06",
+        saleDate: "2021-02-23",
+        holeYears: "1",
+        holeMonths: "2",
+        holeTotalMonths: "9",
+        purchaseNet: "30.1",
+        purchaseUnit: "21",
+        saleNet: "31.2",
+        saleUnit: "21",
+        hold: "持有中",
+        editPurchase:false
+      }]
+    },
+  ]
+
+  let queryList = [
+    { type: 11, name: "刪除" },
+    { type: 12, name: "刪除此資料" },
+    { type: 13, name: "新增" },
+    { type: 14, name: "基本資料" },
+    { type: 21, name: "觀察中" },
+    { type: 22, name: "移至觀察" },
+    { type: 31, name: "立即申購" },
+    { type: 32, name: "已申購" },
+    { type: 33, name: "繼續申請" },
+    { type: 41, name: "股票" },
+    { type: 42, name: "基金" }
+  ]
+  let listOne = [{
+      code: "SDIV",
+      name: "sps",
+      sort: 42,
+      date: "2020-02-25",
+      dayNetWorth: "30.7",
+      monthAverageNetWorth: "30.8",
+      yearAverageNetWorth: "30.9",
+      watchStatus: 21,
+      watchOperating: 31,
+      baseInformation: 14,
+      watchType: false,
+      basewatchList: false,
+      handlingFee: 0.5,
+      managementFee: 0.58
+    },
+    {
+      code: "DIV",
+      name: "sps",
+      sort: 42,
+      date: "2020-02-25",
+      dayNetWorth: "30.7",
+      monthAverageNetWorth: "31.8",
+      yearAverageNetWorth: "31.9",
+      watchStatus: 21,
+      watchOperating: 31,
+      baseInformation: 14,
+      watchType: false,
+      basewatchList: false,
+      handlingFee: 0.6,
+      managementFee: 0.68
+    }
+  ]
+  </script>
+</body>
+
+</html>

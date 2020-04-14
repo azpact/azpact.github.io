@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>collapsible</title>
+  <link rel="stylesheet" href="https://unpkg.com/normalize.css@8.0.1/normalize.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+  <script src="https://momentjs.com/downloads/moment-with-locales.js"></script>
+</head>
+<!-- 
+參考資料
+http://www.freetimelearning.com/materialize-css/index.php
+ -->
+<body>
+  <div id="app">
+    <div class="container">
+      <div>
+        <a class="btn" @click="fCollapsible(1)">開啟全部</a>
+        <a class="btn" @click="fCollapsible(2)">關閉全部</a>
+        <a class="btn" @click="fCollapsible(3)">開啟與關閉的提示</a>
+        <a class="btn" @click="fCollapsible(4)">開啟第1個</a>
+        <a class="btn" @click="fCollapsible(5)">關閉第1個</a>
+      </div>
+      <ul class="collapsible" data-collapsible="expandable">
+        <li>
+          <div class="collapsible-header"><i class="mdi-navigation-chevron-right"></i><a name="987" />First</a></div>
+          <div class="collapsible-body">
+            <p>First Things First</p>
+          </div>
+        </li>
+        <li>
+          <div class="collapsible-header"><i class="mdi-navigation-chevron-right"></i>Second</div>
+          <div class="collapsible-body">
+            <p>Give me a second ...</p>
+          </div>
+        </li>
+        <li>
+          <div class="collapsible-header"><i class="mdi-navigation-chevron-right"></i>Third</div>
+          <div class="collapsible-body">
+            <p>I don't like being a third wheel
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <script>
+  new Vue({
+    data() {
+      return {
+        ms: "123"
+      };
+    },
+    methods: {
+      fCollapsible(key) {
+        /*
+          1.開啟全部
+          2.關閉全部
+        */
+        switch (key) {
+          case 1:
+            $(".collapsible-header").addClass("active");
+            $(".collapsible").collapsible({ accordion: false });
+            break;
+          case 2:
+            $(".collapsible-header").removeClass(function() {
+              return "active";
+            });
+            $(".collapsible").collapsible({ accordion: true });
+            $(".collapsible").collapsible({ accordion: false });
+            break;
+          case 3:
+            $('.collapsible').collapsible({
+              accordion: false, // A setting that changes the collapsible behavior to expandable instead of the default accordion style
+              onOpen: function(el) { alert('Open'); }, // Callback for Collapsible open
+              onClose: function(el) { alert('Closed'); } // Callback for Collapsible close
+            });
+            break;
+          case 4:
+            $('.collapsible').collapsible('open', 1);
+            break;
+          case 5:
+            $('.collapsible').collapsible('close', 1);
+            break;
+          default:
+            break;
+        }
+      }
+    },
+    mounted() {
+
+    }
+  }).$mount("#app");
+  $(document).ready(function() {
+    $('.collapsible').collapsible();
+  });
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>Document</title>
+  <link rel="stylesheet" href="https://unpkg.com/normalize.css@8.0.1/normalize.css" />
+  <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.js"></script>
+  <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+
+</head>
+<!-- 
+參考資料
+vue 中使用定時器 setTimeout
+https://www.cnblogs.com/jin-zhe/p/10001236.html
+ -->
+
+<body>
+  <div id="app" class="container">
+    <a class="btn" @click="fAddCount()">取得</a>
+    <p>{{ point }}</p>
+    <p>{{count}}</p>
+    <div>
+      <h2>基本資料</h2>
+      <ul>
+        <li>代號: {{symbol}}</li>
+        <li>更新時間: {{lastRefreshed}}</li>
+      </ul>
+    </div>
+    <div>
+      <h2>數據資料</h2>
+    </div>
+  </div>
+  <script>
+let c = {
+    "Meta Data": {
+        "1. Information": "Daily Prices (open, high, low, close) and Volumes",
+        "2. Symbol": "MSFT",
+        "3. Last Refreshed": "2020-02-28",
+        "4. Output Size": "Full size",
+        "5. Time Zone": "US/Eastern"
+    },
+    "Time Series (Daily)": {
+        "2020-02-28": {
+            "1. open": "152.4100",
+            "2. high": "163.7100",
+            "3. low": "152.0000",
+            "4. close": "162.0100",
+            "5. volume": "96388312"
+        },
+        "2020-02-27": {
+            "1. open": "163.3200",
+            "2. high": "167.0300",
+            "3. low": "157.9800",
+            "4. close": "158.1800",
+            "5. volume": "93174906"
+        },
+        "2020-02-26": {
+            "1. open": "169.7100",
+            "2. high": "173.2600",
+            "3. low": "168.2100",
+            "4. close": "170.1700",
+            "5. volume": "56387148"
+        },
+        "2020-02-25": {
+            "1. open": "174.2000",
+            "2. high": "174.8400",
+            "3. low": "167.6462",
+            "4. close": "168.0700",
+            "5. volume": "68073295"
+        },
+      }
+    }
+
+
+  new Vue({
+    data() {
+      return {
+        point: null,
+        count: 0,
+        timer: '',
+        listOne: "",
+        timeSeries:"",
+        //
+        symbol:"", //代號
+        lastRefreshed:"", //更新時間,
+        c:c
+      };
+    },
+    filters: {
+      compFilter: function(value, format) {
+        let o = {
+          "M+": value.getMonth() + 1,
+          "d+": value.getDate(),
+          "h+": value.getHours(),
+          "m+": value.getMinutes(),
+          "s+": value.getSeconds(),
+        }
+        if (/(y+)/.test(format)) {
+          format = format.replace(RegExp.$1, (value.getFullYear() + "").substr(4 - RegExp.$1.length));
+          for (let k in o) {
+            if (new RegExp(`(${k})`).test(format)) {
+              format = format.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)))
+            }
+          }
+          return format;
+        }
+      }
+    },
+    methods: {
+      async fGetStock() {
+        try {
+          const instance = axios.create({
+            timeout: 6000
+          });
+          const get = await instance.get(
+            "https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=MSFT&interval=5min&apikey=demo"
+          );
+          const { data } = get; //資料在 data 屬性
+
+
+          this.symbol = data["Meta Data"]["2. Symbol"]
+          this.lastRefreshed = data["Meta Data"]["3. Last Refreshed"].substr(0,10)
+          this.timeSeries = data["Time Series (5min)"]
+
+          this.timeSeries
+
+        } catch (error) {
+          throw new Error(error);
+        }
+      },
+      fGetAllStock(){
+        let symbol = this.c["Meta Data"]["2. Symbol"]
+        let lastRefreshed = this.c["Meta Data"]["3. Last Refreshed"]
+        let timeSeries = this.c["Time Series (Daily)"]
+
+        let keyList = Object.keys(timeSeries) //取得 key 陣列
+        // let valueList = Object.values(timeSeries)[0]["4. close"]  //162.0100
+        let valueList = Object.values(timeSeries).map(item=>item["4. close"])
+        console.log(valueList)
+      },
+      fAddCount() {
+        if (!this.timer) {
+          this.fSetTime();
+        }
+        if (this.count < 4) {
+          this.count += 1;
+          this.fGetStock();
+        } else {
+          this.point = "請稍後點擊"
+        }
+      },
+      fSetTime() {
+        this.timer = setTimeout(this.fResetTime, 3000);
+      },
+      fResetTime() {
+        this.count = 0
+        this.timer = ''
+        this.point = "Reset Timer"
+        clearTimeout(this.timer);
+      }
+    },
+    mounted() {
+      this.fGetStock()
+      this.fGetAllStock()
+
+    },
+    beforeDestroy() {
+      clearTimeout(this.timer);
+    },
+  }).$mount("#app");
+  </script>
+</body>
+
+</html>

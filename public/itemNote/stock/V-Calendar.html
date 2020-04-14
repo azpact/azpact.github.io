@@ -1,0 +1,142 @@
+<html>
+
+<head>
+  <meta charset='utf-8'>
+  <meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no'>
+  <meta http-equiv='x-ua-compatible' content='ie=edge'>
+  <script src='https://unpkg.com/vue/dist/vue.js'></script>
+  <script src='https://unpkg.com/v-calendar@next'></script>
+</head>
+
+<body>
+  <div id='app'>
+    <div>
+      <p>申購日期 {{purchaseDate | compFilter('yyyy-MM-dd')}}</p>
+      <p>出售日期 {{saleDate| compFilter('yyyy-MM-dd')}} </p>
+    </div>
+    <div>
+      <p>申購日期</p>
+      <v-date-picker color="red" is-dark :mode='mode' v-model='purchaseDate' />
+    </div>
+    <div>
+      <p>出售日期</p>
+      <v-date-picker color="red" is-dark :mode='mode' v-model='saleDate' :min-date='purchaseDate' />
+    </div>
+    <div>
+      <p>持有年份/月份: {{conversionYear}} y {{conversionMonth}} m</p>
+      <p>持有月份: {{conversionOnlyMonth}} m</p>
+    
+    </div>
+  </div>
+  <script>
+  new Vue({
+    el: '#app',
+    data: {
+      mode: 'sigle',
+      purchaseDate: new Date(),
+      saleDate: new Date(),
+      pDate: '123',
+      dates: null,
+    },
+    filters: {
+      compFilter: function(value, format) {
+        let o = {
+          "M+": value.getMonth() + 1,
+          "d+": value.getDate(),
+          "h+": value.getHours(),
+          "m+": value.getMinutes(),
+          "s+": value.getSeconds(),
+        }
+        if (/(y+)/.test(format)) {
+          format = format.replace(RegExp.$1, (value.getFullYear() + "").substr(4 - RegExp.$1.length));
+          for (let k in o) {
+            if (new RegExp(`(${k})`).test(format)) {
+              format = format.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)))
+            }
+          }
+          return format;
+        }
+      }
+    },
+    methods: {
+      fCompFilter(value, format) {
+        let o = {
+          "M+": value.getMonth() + 1,
+          "d+": value.getDate(),
+          "h+": value.getHours(),
+          "m+": value.getMinutes(),
+          "s+": value.getSeconds(),
+        }
+        if (/(y+)/.test(format)) {
+          format = format.replace(RegExp.$1, (value.getFullYear() + "").substr(4 - RegExp.$1.length));
+          for (let k in o) {
+            if (new RegExp(`(${k})`).test(format)) {
+              format = format.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)))
+            }
+          }
+          return format;
+        }
+      },
+      fSplitDate(array,index){
+        return Number(array.split("-", 2)[index])
+      }
+    },
+    computed: {
+      conversionYear() {
+        let timeOne = this.fCompFilter(this.purchaseDate,'yyyy-MM-dd')
+        let timeTwo = this.fCompFilter(this.saleDate,'yyyy-MM-dd')
+        let yearOne = this.fSplitDate(timeOne,0)
+        let yearTwo = this.fSplitDate(timeTwo,0)
+        let monthOne = this.fSplitDate(timeOne,1)
+        let monthTwo = this.fSplitDate(timeTwo,1)
+        let subYear = yearTwo - yearOne
+        let subMonth = monthTwo - monthOne
+        let m =
+          subYear > 0 ?
+          subMonth < 0 ?
+          subYear - 1 :
+          subYear :
+          subYear == 0 ?
+          subYear : this.point = '出售年份輸入錯誤'
+        return m
+      },
+      conversionMonth() {
+        let timeOne = this.fCompFilter(this.purchaseDate,'yyyy-MM-dd')
+        let timeTwo = this.fCompFilter(this.saleDate,'yyyy-MM-dd')
+        let yearOne = this.fSplitDate(timeOne,0)
+        let yearTwo = this.fSplitDate(timeTwo,0)
+        let monthOne = this.fSplitDate(timeOne,1)
+        let monthTwo = this.fSplitDate(timeTwo,1)
+        let subYear = yearTwo - yearOne
+        let subMonth = monthTwo - monthOne
+        let m =
+          subYear > 0 ?
+          (12 - monthOne + monthTwo) == 12 ?
+          0 :
+          12 - monthOne + monthTwo :
+          subMonth < 0 ?
+          this.point = '出售月份輸入錯誤' :
+          subMonth
+        return m
+      },
+      conversionOnlyMonth() {
+        let timeOne = this.fCompFilter(this.purchaseDate,'yyyy-MM-dd')
+        let timeTwo = this.fCompFilter(this.saleDate,'yyyy-MM-dd')
+        let yearOne = this.fSplitDate(timeOne,0)
+        let yearTwo = this.fSplitDate(timeTwo,0)
+        let monthOne = this.fSplitDate(timeOne,1)
+        let monthTwo = this.fSplitDate(timeTwo,1)
+        let subYear = yearTwo - yearOne
+        let subMonth = monthTwo - monthOne
+        let m =
+          subYear > 0 ?
+          subYear * 12 + subMonth :
+          subMonth
+        return m
+      }
+    }
+  })
+  </script>
+</body>
+
+</html>

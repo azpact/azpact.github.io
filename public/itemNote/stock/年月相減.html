@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>Document</title>
+  <link rel="stylesheet" href="https://unpkg.com/normalize.css@8.0.1/normalize.css" />
+  <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css" />
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.js"></script>
+  <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+  <script src="https://momentjs.com/downloads/moment-with-locales.js"></script>
+</head>
+
+<body> 
+  <div id="app">
+    <h1>{{point}}</h1>
+    <ul>
+      <li>申購時間: {{timeOne}}</li>
+      <li>出售時間: {{timeTwo}}</li>
+      <li>持有年份/月份: {{conversionYear}} y {{conversionMonth}} m</li>
+      <li>持有月份: {{conversionOnlyMonth}} m</li>
+    </ul>
+  </div>
+  <script>
+  new Vue({
+    data() {
+      return {
+        now: moment().format("YYYY-MM-DD"),
+        time: "",
+        timeOne: "2020-05-27",
+        timeTwo: "2028-06-29",
+        point:""
+      };
+    },
+    computed: {
+      conversionYear() {
+        let timeOne = this.timeOne
+        let timeTwo = this.timeTwo
+        let yearOne = Number(timeOne.split("-", 2)[0])
+        let yearTwo = Number(timeTwo.split("-", 2)[0])
+        let monthOne = Number(timeOne.split("-", 2)[1])
+        let monthTwo = Number(timeTwo.split("-", 2)[1])
+        let subYear = yearTwo - yearOne
+        let subMonth = monthTwo - monthOne
+        let m = 
+        subYear > 0 ? 
+        subMonth < 0 ? 
+        subYear - 1 : 
+        subYear : 
+        subYear == 0 ? 
+        subYear : this.point = '出售年份輸入錯誤'
+        return m
+      },
+      conversionMonth() {
+        let timeOne = this.timeOne
+        let timeTwo = this.timeTwo
+        let yearOne = Number(timeOne.split("-", 2)[0])
+        let yearTwo = Number(timeTwo.split("-", 2)[0])
+        let monthOne = Number(timeOne.split("-", 2)[1])
+        let monthTwo = Number(timeTwo.split("-", 2)[1])
+        let subYear = yearTwo - yearOne
+        let subMonth = monthTwo - monthOne
+        let m = 
+        subYear > 0 ?
+        (12 - monthOne + monthTwo) == 12 ?
+        0 :
+        12 - monthOne + monthTwo :
+        subMonth < 0 ?
+        this.point = '出售月份輸入錯誤' :
+        subMonth
+        return m
+      },
+      conversionOnlyMonth() {
+        let timeOne = this.timeOne
+        let timeTwo = this.timeTwo
+        let yearOne = Number(timeOne.split("-", 2)[0])
+        let yearTwo = Number(timeTwo.split("-", 2)[0])
+        let monthOne = Number(timeOne.split("-", 2)[1])
+        let monthTwo = Number(timeTwo.split("-", 2)[1])
+        let subYear = yearTwo - yearOne
+        let subMonth = monthTwo - monthOne
+        let m = 
+        subYear > 0 ?
+        subYear * 12 + subMonth :
+        subMonth
+        return m
+      }
+    },
+    mounted() {}
+  }).$mount("#app");
+
+  /*
+  時間相減
+
+  momentjs
+  https://momentjs.com/
+  vue picker time
+  https://vuejsexamples.com/lightweight-and-mobile-friendly-date-time-picker-with-vue/
+  */
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>Document</title>
+  <link rel="stylesheet" href="https://unpkg.com/normalize.css@8.0.1/normalize.css" />
+  <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css" />
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.js"></script>
+  <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+</head>
+
+<!-- 
+參考資料 
+vue filter 完美時間日期格式
+https://segmentfault.com/a/1190000019606454
+
+-->
+<body>
+  <div id="app">
+    <p>原始日期 {{ date }}</p>
+    <p>filter 日期含分秒 {{date |compFilter('yyyy-MM-dd hh:mm')}}</p>
+    <p>filter 日期 {{date |compFilter('yyyy-MM-dd')}}</p>
+  </div>
+  <script>
+  new Vue({
+    data() {
+      return {
+        date: new Date(),
+      };
+    },
+    filters: {
+      compFilter: function(value, format) {
+        let o = {
+          "M+": value.getMonth() + 1,
+          "d+": value.getDate(),
+          "h+": value.getHours(),
+          "m+": value.getMinutes(),
+          "s+": value.getSeconds(),
+        }
+        if (/(y+)/.test(format)) {
+          format = format.replace(RegExp.$1, (value.getFullYear() + "").substr(4 - RegExp.$1.length));
+          for (let k in o) {
+            if (new RegExp(`(${k})`).test(format)) {
+              format = format.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)))
+            }
+          }
+          return format;
+        }
+      }
+    }
+  }).$mount("#app");
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>Document</title>
+  <link rel="stylesheet" href="https://unpkg.com/normalize.css@8.0.1/normalize.css" />
+  <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css" />
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.js"></script>
+  <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+</head>
+<!-- 
+參考資料
+vue 中使用定時器 setTimeout
+https://www.cnblogs.com/jin-zhe/p/10001236.html
+ -->
+<body>
+  <div id="app">
+    <button @click="fAddCount()">取得</button>
+    <p>{{ point }}</p>
+    <p>{{count}}</p>
+  </div>
+  <script>
+  new Vue({
+    data() {
+      return {
+        point: null,
+        count: 0,
+        timer: ''
+      };
+    },
+    methods: {
+      fAddCount() {
+        if (!this.timer) {
+          this.fSetTime();
+        }
+        if (this.count < 4) {
+          this.count += 1;
+        } else {
+          this.point = "請稍後點擊"
+        }
+      },
+      fSetTime() {
+        this.timer = setTimeout(this.fResetTime, 3000);
+      },
+      fResetTime() {
+        this.count = 0
+        this.timer = ''
+        this.point = "Reset Timer"
+        clearTimeout(this.timer);
+      }
+    },
+    beforeDestroy() {
+      clearTimeout(this.timer);
+    },
+  }).$mount("#app");
+  </script>
+</body>
+
+</html>

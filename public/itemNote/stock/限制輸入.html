@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>Document</title>
+  <link rel="stylesheet" href="https://unpkg.com/normalize.css@8.0.1/normalize.css" />
+  <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css" />
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.js"></script>
+  <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+  <style>
+    #app{
+    margin: 0 2%;
+  }
+</style>
+</head>
+
+<body>
+  <div id="app">
+    <ul>
+      <li>
+        <label>只能輸入英文</label>
+        <input type="text" v-model="limitEnglish">
+      </li>
+      <li>
+        <label>只能輸入數字</label>
+        <input type="text" v-model="limitNumber">
+      </li>
+      <li>
+        <label>只能輸入數字，英文</label>
+        <input type="text" v-model="limitEngNum">
+      </li>
+      <li>
+        <label>只能輸入數字，英文及中文</label>
+        <input type="text" v-model="limitEngNumCh">
+      </li>
+      <li>
+        <label>只能輸入數字 . 符號</label>
+        <input type="text" v-model="limitNumPoint">
+      </li>
+      <li>
+        <label>限制</label>
+        <input type="text" v-model="limit">
+      </li>
+    </ul>
+  </div>
+  <script>
+  new Vue({
+    data: () => ({
+      ms: "",
+      limitEnglish:"",
+      limitNumber:"",
+      limitEngNum:"",
+      limitEngNumCh:"",
+      limitNumPoint:"",
+      limit:""
+    }),
+    watch: {
+      limitEnglish(){
+        this.limitEnglish = this.limitEnglish.replace(/[^A-Za-z]/g,'');
+      },
+      limitNumber(){
+        this.limitNumber = this.limitNumber.replace(/[^0-9]/g, '');
+      },
+      limitEngNum(){
+        this.limitEngNum = this.limitEngNum.replace(/[\W]/g,'');
+      },
+      limitEngNumCh(){
+        this.limitEngNumCh = this.limitEngNumCh.replace(/[^A-Za-z0-9\u4e00-\u9fa5]/g,'');
+      },
+      limitNumPoint() {
+        this.limitNumPoint = this.limitNumPoint.replace(/[^0-9\.]/g, '');
+      },
+      limit(){
+        this.limit = this.limit.replace(/[^9]/g, '你好');
+      }
+    }
+  }).$mount("#app");
+  /*
+      let limitText = /\D/.test("JK") //true 限制為文字
+      let limitNumber = /\d/.test(123) //true 限制數字
+      let limitPoint = /\./.test('.') //true 限制 . 符號
+      let limeitNumberText = /\d\./.test('1.2') // true 限制數字及. 符號
+
+  */
+  /*
+    html 新屬性自動檢核表單與欄位格式是否正確
+    只需在input的標籤加入「required」
+    input(name="text" type="text" required)
+
+    參考資料
+    解決vue中監聽input只能輸入數字及英文或者其他情況的問題
+    https://www.itread01.com/article/1535599890.html
+  */
+  </script>
+</body>
+
+</html>
