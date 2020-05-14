@@ -1,2 +1,0 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[29],{158:function(t,i,s){"use strict";s.r(i);var n={name:"nativeIcon",data:()=>({}),props:{icon:{type:Array,default:()=>[]}}},a=s(7),e=Object(a.a)(n,(function(){var t=this.$createElement,i=this._self._c||t;return i("div",{attrs:{id:"nativeIcon"}},[i("i",{staticClass:"material-icons"},[this._v(this._s(this.icon[0].icon))]),this._v(" "),i("p",[this._v(this._s(this.icon[0].name))])])}),[],!1,null,"697f8058",null);i.default=e.exports}}]);
-//# sourceMappingURL=29.bundle.9310001e5c78d4141c12.js.map
