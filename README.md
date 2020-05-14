@@ -1,5 +1,8 @@
-# 關於網站
-網站至 2019 年開始撰寫，從純 HTML+CSS 到 Vue 組件編寫，再到腳手架方式優化網站至現在。
+# About Webside
+The website will be written in 2019, from pure HTML + CSS to Vue component writing, and then to the scaffolding method to optimize the website to now.
 
-# 網站
-[連結](https://azpact.github.io/#/)
+# Link
+[web link](https://azpact.github.io/#/)
+
+# Authors
+Ben Li

@@ -1,2 +1,0 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[18],{116:function(t,s,a){"use strict";a.r(s);var e=a.p+"assets/c97325b.jpg",i={name:"VCircularImg",props:{src:{type:String,default:e},alt:{type:String,default:"Vue Image"}},data:()=>({img:e})},r=a(7),l=Object(r.a)(i,(function(){var t=this.$createElement,s=this._self._c||t;return s("div",{staticClass:"VCircularImg"},[s("img",{staticClass:"circle responsive-img",attrs:{src:this.img,alt:this.alt}})])}),[],!1,null,null,null);s.default=l.exports}}]);
-//# sourceMappingURL=18.bundle.65e2f2eb714be0acc510.js.map

@@ -190,13 +190,13 @@ i{
 }
 }
 #TheScrollViewer{
-  width:100%;
-  height: 80vh;
-  overflow-y: scroll;
-  ul{
-    padding-left: 0.75rem;
+	width:100%;
+	height: 80vh;
+	overflow-y: scroll;
+	ul{
+		padding-left: 0.75rem;
 
-    li {
+		li {
       display: flex;
       align-items: start;
       height: 2.5rem;
@@ -351,6 +351,7 @@ i{
    }
    pre{
     max-width:30px;
+    white-space: pre-wrap;
    }
  }
 }
